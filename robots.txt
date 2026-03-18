@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://octopye.com/sitemap.xml
+
+# LLM context file
+# https://octopye.com/llms.txt

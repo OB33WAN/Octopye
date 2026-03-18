@@ -1,0 +1,86 @@
+# Octopye
+
+> Octopye is a UK-based digital agency offering custom web design, web applications, mobile app development, SEO, social media management, and Google Ads management. All work is hand-delivered by the same core team with transparent pricing and no template lock-in.
+
+## Company
+
+- **Website:** https://octopye.com
+- **Location:** United Kingdom
+- **Services:** Web design, web apps, mobile apps, SEO, social media management, Google Ads management, CMS development, brand design, hosting and maintenance
+- **Pricing currency:** GBP
+- **Approach:** Conversion-first builds. No WordPress templates. No platform lock-in. Code and all assets are handed to the client on delivery.
+
+## Key Pages
+
+- [Home](https://octopye.com/) — Overview, free conversion teardown offer, estimator, pricing, FAQ
+- [Services](https://octopye.com/services.html) — Full service list with pricing across web, apps, marketing, and add-ons
+- [Web Design](https://octopye.com/web-design.html) — Custom web design and AI-assisted web builds
+- [App Design](https://octopye.com/app-design.html) — Web applications, dashboards, and mobile app development
+- [SEO](https://octopye.com/seo.html) — Technical SEO, on-page optimisation, local SEO, content strategy, Google Ads management
+- [Social Media](https://octopye.com/social-media.html) — Monthly social media management with content creation, scheduling, and reporting
+- [Packages](https://octopye.com/packages.html) — Bundled one-off and retainer pricing tiers
+- [Projects](https://octopye.com/projects.html) — Portfolio of delivered work
+- [Industries](https://octopye.com/industries.html) — Industry-specific service positioning
+- [Estimator](https://octopye.com/estimate.html) — Instant quote estimator (under 60 seconds)
+- [Booking](https://octopye.com/booking.html) — Booking request form (email, Zoom, Teams, or WhatsApp)
+
+## Services and Pricing
+
+### Web Design
+- Custom Web Design — from £2,999 (5–10 pages, mobile-first, SEO-ready, conversion-focused)
+- AI-Assisted Web Design — from £1,500 (4-week delivery for startups and small businesses)
+
+### Web and Mobile Apps
+- Web Applications — from £4,999 (dashboards, portals, SaaS, automation apps)
+- Mobile App Development — from £2,500 (cross-platform iOS and Android, Play Store submission included)
+
+### SEO
+- Starter SEO — £450/mo (technical audit, 5-page on-page, Google Business Profile, monthly report)
+- Growth SEO — £850/mo (10 pages, 2 content briefs/mo, citations)
+- Scale SEO — £1,250/mo (15 pages, 4 content pieces, link building, conversion tracking)
+- Authority SEO — £1,750/mo (20+ pages, weekly check-ins, priority implementation)
+
+### Social Media Management
+- Starter Social — £300/mo (6 posts, 2 platforms, graphics, report)
+- Active Social — £550/mo (12 posts, 3 platforms, stories, community management)
+- Growth Social — £850/mo (20 posts, all platforms, reels, paid social, weekly monitoring)
+
+### Google Ads Management
+- Custom quote — campaign setup, keyword targeting, ad copy, bid management, monthly optimisation
+
+### Add-ons
+- Custom CMS — from £1,999
+- Hosting and Maintenance — from £75/mo
+- Logo Design — £150
+- Brand Guidelines — £250
+- Content Writing — £250/page
+- Ad-Hoc Requests — £150/request
+
+## Common Client Pain Points Solved
+
+- Locked into a CMS or agency with no way to make updates without paying
+- Website loads slowly on mobile; Core Web Vitals failing
+- Google Ads spend with no conversions — landing page disconnect or no conversion tracking
+- Inconsistent or non-existent social media presence
+- CRM, booking system, and website not integrated — manual data entry
+- Multiple agencies with no coordination and no unified reporting
+
+## Technology
+
+- All builds are hand-coded (no page builders, no WordPress templates)
+- Static and JAMstack-capable output
+- CMS options: lightweight custom CMS or headless options
+- Integration experience: HubSpot, Salesforce, Calendly, Acuity, Stripe, GoCardless, Xero, custom APIs
+- SEO tooling: Google PageSpeed Insights, Core Web Vitals, Google Business Profile optimisation
+- Apps: SEO IT (Android) — https://play.google.com/store/apps/details?id=com.seoit.app
+- Apps: Is This Safe? (Android) — https://play.google.com/store/apps/details?id=com.isthissafe
+
+## Booking and Contact
+
+All enquiries go through a structured booking request at https://octopye.com/booking.html
+Available channels: email response, Zoom, Microsoft Teams, WhatsApp
+No surprise calls — all bookings are confirmed by email before any call is scheduled.
+
+## Schema
+
+LocalBusiness schema is present on https://octopye.com/ with service catalog, pricing, and client reviews.

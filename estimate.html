@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Octopye instant quote estimator based on service, industry, scope, integrations, timeline, and retainer needs." />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="canonical" href="https://octopye.com/estimate.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Octopye" />
+  <meta property="og:title" content="Octopye Estimator | Instant Quote" />
+  <meta property="og:description" content="Octopye instant quote estimator based on service, industry, scope, integrations, timeline, and retainer needs." />
+  <meta property="og:url" content="https://octopye.com/estimate.html" />
+  <meta property="og:image" content="https://octopye.com/images/octopye-transparent.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Octopye Estimator | Instant Quote" />
+  <meta name="twitter:description" content="Octopye instant quote estimator based on service, industry, scope, integrations, timeline, and retainer needs." />
+  <meta name="twitter:image" content="https://octopye.com/images/octopye-transparent.webp" />
+  <title>Octopye Estimator | Instant Quote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    window.OCTOPYE_CONFIG = {
+      web3FormsAccessKey: "def6e6ac-11ac-4b24-9c11-6238ea733b58",
+      analyticsDebug: false
+    };
+  </script>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-wrap">
+      <a class="brand" href="index.html" aria-label="Octopye Digital Designs home"><img src="images/octopye-transparent.webp" alt="Octopye Digital Designs logo" class="brand-logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>Custom Builds • SEO • Growth Systems</small></span></a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="packages.html">Packages</a>
+        <a href="estimate.html">Estimator</a>
+        <a href="industries.html">Industries</a>
+        <a href="booking.html">Booking</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><line x1="2" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="11" x2="20" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="16" x2="20" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <a class="btn btn-sm" data-event="cta_click" data-cta-location="header" data-cta-label="Request Booking Slot" href="booking.html">Request Booking Slot</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="section-pad page-hero">
+      <div class="container">
+        <p class="eyebrow">Instant quote engine</p>
+        <h1 class="page-title">Get your recommended offer and budget now</h1>
+        <p class="lead">This matrix is tuned to your current sales process: service type, industry complexity, page volume, integrations, timeline, and retainer scope.</p>
+      </div>
+    </section>
+
+    <section class="section-pad pt-0" id="estimate">
+      <div class="container estimator-wrap">
+        <div class="estimator-shell">
+          <div class="estimator-progress" aria-label="Estimator progress">
+            <div class="estimator-progress-bar" id="estimatorProgress"></div>
+          </div>
+
+          <form id="estimateForm" class="estimate-form" novalidate>
+            <fieldset class="estimate-step is-active" data-step="1">
+              <legend>What are you buying first?</legend>
+              <label class="option-card"><input type="radio" name="solution" value="ai-site" required />AI Web Design</label>
+              <label class="option-card"><input type="radio" name="solution" value="website" required />Custom Web Design</label>
+              <label class="option-card"><input type="radio" name="solution" value="web-app" required />Web Application Development</label>
+              <label class="option-card"><input type="radio" name="solution" value="mobile-app" required />Mobile App Development</label>
+              <label class="option-card"><input type="radio" name="solution" value="seo" required />SEO Services</label>
+              <label class="option-card"><input type="radio" name="solution" value="social" required />Social Media Management</label>
+            </fieldset>
+
+            <fieldset class="estimate-step" data-step="2">
+              <legend>Which industry are you in?</legend>
+              <label class="option-card"><input type="radio" name="industry" value="trades" required />Trades (Plumbers, Electricians, Construction)</label>
+              <label class="option-card"><input type="radio" name="industry" value="it" required />IT / SaaS / Cybersecurity</label>
+              <label class="option-card"><input type="radio" name="industry" value="restaurants" required />Restaurants / Hospitality</label>
+              <label class="option-card"><input type="radio" name="industry" value="healthcare" required />Healthcare / Medical</label>
+              <label class="option-card"><input type="radio" name="industry" value="solicitors" required />Legal / Solicitors</label>
+              <label class="option-card"><input type="radio" name="industry" value="accountants" required />Finance / Accountancy</label>
+              <label class="option-card"><input type="radio" name="industry" value="general" required />Other</label>
+            </fieldset>
+
+            <fieldset class="estimate-step" data-step="3">
+              <legend>How many pages/screens do you expect?</legend>
+              <label class="option-card"><input type="radio" name="pageCount" value="5" required />Up to 5</label>
+              <label class="option-card"><input type="radio" name="pageCount" value="10" required />Up to 10</label>
+              <label class="option-card"><input type="radio" name="pageCount" value="15" required />Up to 15</label>
+              <label class="option-card"><input type="radio" name="pageCount" value="20+" required />20+</label>
+            </fieldset>
+
+            <fieldset class="estimate-step" data-step="4">
+              <legend>What integrations/features are needed?</legend>
+              <label class="option-card"><input type="checkbox" name="integrations" value="booking" />Booking system</label>
+              <label class="option-card"><input type="checkbox" name="integrations" value="payments" />Payments integration</label>
+              <label class="option-card"><input type="checkbox" name="integrations" value="crm" />CRM integration</label>
+              <label class="option-card"><input type="checkbox" name="integrations" value="portal" />Client portal</label>
+              <label class="option-card"><input type="checkbox" name="integrations" value="marketplace" />Marketplace workflow</label>
+              <label class="option-card"><input type="checkbox" name="integrations" value="ai" />AI-assisted feature</label>
+            </fieldset>
+
+            <fieldset class="estimate-step" data-step="5">
+              <legend>How soon do you want to launch?</legend>
+              <label class="option-card"><input type="radio" name="timeline" value="standard" required />Standard timeline (best value)</label>
+              <label class="option-card"><input type="radio" name="timeline" value="accelerated" required />Accelerated timeline (priority)</label>
+            </fieldset>
+
+            <fieldset class="estimate-step" data-step="6">
+              <legend>Do you want monthly growth support?</legend>
+              <label class="option-card"><input type="radio" name="retainer" value="none" required />No, one-off project only</label>
+              <label class="option-card"><input type="radio" name="retainer" value="seo" required />SEO retainer</label>
+              <label class="option-card"><input type="radio" name="retainer" value="social" required />Social media management (GBP 300/mo)</label>
+              <label class="option-card"><input type="radio" name="retainer" value="ads" required />Google Ads management (GBP 200/mo)</label>
+              <label class="option-card"><input type="radio" name="retainer" value="social-ads" required />Social + Google Ads (GBP 500/mo)</label>
+              <label class="option-card"><input type="radio" name="retainer" value="seo-social" required />SEO + Social retainer</label>
+              <label class="option-card"><input type="radio" name="retainer" value="full-growth" required />SEO + Social + Google Ads</label>
+            </fieldset>
+
+            <div class="estimate-actions">
+              <button type="button" class="btn btn-ghost" id="estimateBack">Back</button>
+              <button type="button" class="btn" id="estimateNext">Next question</button>
+              <button type="submit" class="btn" id="estimateSubmit">Get my estimate</button>
+            </div>
+            <p class="form-status" id="estimateStatus" role="status" aria-live="polite"></p>
+          </form>
+
+          <aside class="estimate-result" id="estimateResult" aria-live="polite">
+            <p class="result-kicker">Recommended offer</p>
+            <h3 id="estimateOffer">Complete the questions to unlock your quote</h3>
+            <p class="estimate-price" id="estimatePrice">GBP -</p>
+            <p id="estimateSummary">Your estimate will include one-off build range plus monthly recommendation when selected.</p>
+            <p class="retainer-note" id="estimateRetainer">Monthly retainer recommendation appears here.</p>
+            <ul id="estimateBreakdown"></ul>
+            <a class="btn btn-full" data-event="cta_click" data-cta-location="estimator" data-cta-label="Get Detailed Proposal" id="estimateCta" href="booking.html">Get Detailed Proposal</a>
+            <div class="proposal-capture" id="proposalCapture">
+              <label>
+                Your name
+                <input type="text" id="proposalClientName" placeholder="Jane Smith" />
+              </label>
+              <label>
+                Your email
+                <input type="email" id="proposalClientEmail" placeholder="you@business.com" />
+              </label>
+              <label>
+                Company (optional)
+                <input type="text" id="proposalClientCompany" placeholder="Business name" />
+              </label>
+              <p class="form-status" id="proposalStatus" role="status" aria-live="polite"></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p><strong>Octopye</strong> | Custom web design and growth systems</p>
+      <div class="footer-links">
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="packages.html">Packages</a>
+      </div>
+      <p class="tiny">Copyright <span id="year"></span> Octopye. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

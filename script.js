@@ -13,6 +13,15 @@ const auditPreviewList = document.getElementById('auditPreviewList');
 const auditFallback = document.getElementById('auditFallback');
 const seoItDownloadLink = document.getElementById('seoItDownloadLink');
 const isThisSafeDownloadLink = document.getElementById('isThisSafeDownloadLink');
+const leadMagnetForm = document.getElementById('leadMagnetForm');
+const leadMagnetStatus = document.getElementById('leadMagnetStatus');
+const availabilityChip = document.getElementById('availabilityChip');
+const roiForm = document.getElementById('roiForm');
+const roiVisitors = document.getElementById('roiVisitors');
+const roiCurrent = document.getElementById('roiCurrent');
+const roiTarget = document.getElementById('roiTarget');
+const roiDeal = document.getElementById('roiDeal');
+const roiResult = document.getElementById('roiResult');
 const ctaElements = document.querySelectorAll('[data-event="cta_click"], [data-event="form_submit_click"]');
 const toggleButtons = document.querySelectorAll('.toggle-btn');
 const priceCards = document.querySelectorAll('.price-card');
@@ -138,24 +147,57 @@ if (bookingDate) {
   bookingDate.min = `${yyyy}-${mm}-${dd}`;
 }
 
+if (availabilityChip) {
+  const now = new Date();
+  const day = now.getDay();
+  const daysUntilMonday = day === 0 ? 1 : Math.max(1, 8 - day);
+  const nextSlot = new Date(now);
+  nextSlot.setDate(now.getDate() + daysUntilMonday);
+  const slotsLeft = Math.max(1, 8 - day);
+  const label = nextSlot.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
+  availabilityChip.textContent = `${slotsLeft} strategy slots left this week | Next available: ${label}`;
+}
+
 if (floatingCta) {
+  const hideFloatingCtaOnPath = ['/booking.html', '/booking'];
+  if (hideFloatingCtaOnPath.includes(window.location.pathname.toLowerCase())) {
+    floatingCta.style.display = 'none';
+  }
+
   window.addEventListener('scroll', () => {
-    const show = window.scrollY > 500;
+    const isSuppressed = hideFloatingCtaOnPath.includes(window.location.pathname.toLowerCase());
+    const show = !isSuppressed && window.scrollY > 500;
     floatingCta.classList.toggle('is-visible', show);
   });
 }
 
 // Mobile nav hamburger toggle
 if (navToggle && mainNav) {
+  if (!mainNav.id) {
+    mainNav.id = 'primaryNav';
+  }
+  navToggle.setAttribute('aria-controls', mainNav.id);
+
   navToggle.addEventListener('click', () => {
     const isOpen = mainNav.classList.toggle('is-open');
     navToggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('nav-open', isOpen);
   });
 
   document.addEventListener('click', (e) => {
     if (!navToggle.contains(e.target) && !mainNav.contains(e.target)) {
       mainNav.classList.remove('is-open');
       navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mainNav.classList.contains('is-open')) {
+      mainNav.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
+      navToggle.focus();
     }
   });
 
@@ -164,6 +206,7 @@ if (navToggle && mainNav) {
     link.addEventListener('click', () => {
       mainNav.classList.remove('is-open');
       navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
     });
   });
 
@@ -171,6 +214,7 @@ if (navToggle && mainNav) {
     if (window.innerWidth > 980) {
       mainNav.classList.remove('is-open');
       navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
     }
   });
 }
@@ -808,8 +852,8 @@ if (teardownForm) {
     const url = String(formData.get('url') || '').trim();
     const goal = String(formData.get('goal') || '').trim();
     const submitButton = teardownForm.querySelector('button[type="submit"]');
-    if (!name || !email || !url || !goal) {
-      formStatus.textContent = 'Please fill in all fields.';
+    if (!name || !email || !url) {
+      formStatus.textContent = 'Please fill in name, email, and website URL.';
       formStatus.style.color = '#b91c1c';
       trackEvent('form_submit_error', {
         reason: 'missing_fields',
@@ -865,7 +909,7 @@ if (teardownForm) {
         `Name: ${name}`,
         `Email: ${email}`,
         `Website URL: ${url}`,
-        `Growth Goal: ${goal}`,
+        `Growth Goal: ${goal || 'Not provided'}`,
         '',
         'Automated Audit Summary:',
         ...(audit?.highlights || []),
@@ -916,6 +960,108 @@ if (teardownForm) {
   });
 }
 
+if (leadMagnetForm && leadMagnetStatus) {
+  leadMagnetForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const data = new FormData(leadMagnetForm);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const submitButton = leadMagnetForm.querySelector('button[type="submit"]');
+
+    if (!name || !email) {
+      leadMagnetStatus.textContent = 'Please enter your name and email.';
+      leadMagnetStatus.style.color = '#b91c1c';
+      return;
+    }
+
+    const emailOkay = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailOkay) {
+      leadMagnetStatus.textContent = 'Please use a valid email address.';
+      leadMagnetStatus.style.color = '#b91c1c';
+      return;
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+    }
+
+    leadMagnetStatus.textContent = 'Sending your checklist request...';
+    leadMagnetStatus.style.color = '#0f766e';
+
+    const payload = {
+      name,
+      email,
+      replyto: email,
+      subject: `Checklist Request - ${name}`,
+      from_name: 'Octopye Lead Magnet',
+      message: [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        'Requested asset: 7-point Homepage Conversion Checklist',
+        `Source: ${String(data.get('source') || 'Homepage Lead Magnet')}`,
+        `Page: ${window.location.href}`,
+        `Submitted at: ${new Date().toISOString()}`
+      ].join('\n')
+    };
+
+    try {
+      await sendViaWeb3Forms(payload);
+      leadMagnetStatus.textContent = 'Checklist requested. We will send it to your email shortly.';
+      leadMagnetStatus.style.color = '#065f46';
+      leadMagnetForm.reset();
+      trackEvent('lead_magnet_requested', {
+        source: 'homepage_checklist'
+      });
+    } catch (error) {
+      leadMagnetStatus.textContent = `Could not send request: ${error.message}`;
+      leadMagnetStatus.style.color = '#b91c1c';
+      trackEvent('lead_magnet_error', {
+        reason: error.message
+      });
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Get Conversion Checklist';
+      }
+    }
+  });
+}
+
+if (roiForm && roiVisitors && roiCurrent && roiTarget && roiDeal && roiResult) {
+  roiForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const visitors = Number(roiVisitors.value || 0);
+    const current = Number(roiCurrent.value || 0) / 100;
+    const target = Number(roiTarget.value || 0) / 100;
+    const deal = Number(roiDeal.value || 0);
+
+    if (!visitors || !current || !target || !deal || target <= current) {
+      roiResult.textContent = 'Enter valid values where target conversion rate is higher than your current rate.';
+      roiResult.style.color = '#b91c1c';
+      return;
+    }
+
+    const currentLeads = visitors * current;
+    const targetLeads = visitors * target;
+    const extraLeads = targetLeads - currentLeads;
+    const extraRevenue = extraLeads * deal;
+
+    roiResult.textContent = `Estimated uplift: +${Math.round(extraLeads)} leads/mo and roughly GBP ${Math.round(extraRevenue).toLocaleString('en-GB')} additional monthly revenue.`;
+    roiResult.style.color = '#065f46';
+
+    trackEvent('roi_calculated', {
+      visitors,
+      current_rate: Number((current * 100).toFixed(2)),
+      target_rate: Number((target * 100).toFixed(2)),
+      deal_value: deal,
+      est_extra_revenue: Math.round(extraRevenue)
+    });
+  });
+}
+
 if (bookingForm && bookingStatus) {
   bookingForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -930,10 +1076,14 @@ if (bookingForm && bookingStatus) {
     const preferredTime = String(data.get('preferredTime') || '').trim();
     const timezone = String(data.get('timezone') || '').trim();
     const priority = String(data.get('priority') || '').trim();
+    const meetingLength = String(data.get('meetingLength') || '').trim();
+    const budgetRange = String(data.get('budgetRange') || '').trim();
+    const readiness = String(data.get('readiness') || '').trim();
+    const monthlyLeads = String(data.get('monthlyLeads') || '').trim();
     const questions = String(data.get('questions') || '').trim();
     const submitButton = bookingForm.querySelector('button[type="submit"]');
 
-    if (!name || !email || !bookingType || !preferredDate || !preferredTime || !timezone || !priority) {
+    if (!name || !email || !bookingType || !preferredDate || !preferredTime || !timezone || !priority || !meetingLength || !budgetRange || !readiness) {
       bookingStatus.textContent = 'Please complete all required booking fields.';
       bookingStatus.style.color = '#b91c1c';
       return;
@@ -958,8 +1108,12 @@ if (bookingForm && bookingStatus) {
         `Company: ${company || 'N/A'}`,
         `Website: ${website || 'N/A'}`,
         `Booking preference: ${bookingType}`,
+        `Call type: ${meetingLength}`,
         `Preferred slot: ${preferredDate} at ${preferredTime} (${timezone})`,
         `Priority: ${priority}`,
+        `Budget range: ${budgetRange}`,
+        `Readiness: ${readiness}`,
+        `Current monthly leads: ${monthlyLeads || 'Not provided'}`,
         `Questions: ${questions || 'N/A'}`,
         `Source: ${String(data.get('source') || 'Octopye Booking Page')}`,
         `Page: ${window.location.href}`,
@@ -989,6 +1143,9 @@ if (bookingForm && bookingStatus) {
       bookingStatus.style.color = '#065f46';
       trackEvent('booking_request_submitted', {
         booking_type: bookingType,
+        meeting_length: meetingLength,
+        budget_range: budgetRange,
+        readiness,
         priority,
         timezone
       });

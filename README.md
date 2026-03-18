@@ -42,6 +42,7 @@ This site is static and can be deployed to GitHub Pages or any static hosting pr
 
 ## License
 
-This project is licensed under the MIT License. See `LICENSE` for details.
+This project is proprietary and owned by Octopye. No distribution rights are
+granted to any third party. See LICENSE for full terms.
 
 Copyright (c) Octopye 2026

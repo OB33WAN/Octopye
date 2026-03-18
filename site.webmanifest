@@ -1,0 +1,22 @@
+{
+  "name": "Octopye Digital Designs",
+  "short_name": "Octopye",
+  "description": "Custom web design, SEO, and growth systems for UK businesses.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#eef8f8",
+  "theme_color": "#0b2a33",
+  "icons": [
+    {
+      "src": "/images/app-icon-180.webp",
+      "sizes": "180x180",
+      "type": "image/webp"
+    },
+    {
+      "src": "/images/app-icon-180.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

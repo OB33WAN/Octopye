@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Octopye builds custom websites and web apps that generate leads. No templates. No platform lock-in. Conversion-first builds for UK businesses." />
+  <link rel="icon" type="image/webp" href="images/app-icon-180.webp" />
+  <link rel="apple-touch-icon" href="images/app-icon-180.webp" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="description" content="Octopye Digital Designs builds conversion-focused websites, SEO systems, and booking funnels for UK businesses. Book a free 15-min strategy teardown." />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <link rel="canonical" href="https://octopye.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Octopye" />
-  <meta property="og:title" content="Octopye | Conversion-Focused Web Design" />
-  <meta property="og:description" content="Octopye builds custom websites and web apps that generate leads. No templates. No platform lock-in. Conversion-first builds for UK businesses." />
+  <meta property="og:title" content="Octopye Digital Designs | More Leads, Better Booking Rates" />
+  <meta property="og:description" content="Conversion-first websites, SEO, and growth systems for UK businesses. Book a free 15-min strategy teardown." />
   <meta property="og:url" content="https://octopye.com/" />
-  <meta property="og:image" content="https://octopye.com/images/octopye-transparent.webp" />
+  <meta property="og:image" content="https://octopye.com/images/app-icon-180.webp" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Octopye | Conversion-Focused Web Design" />
-  <meta name="twitter:description" content="Octopye builds custom websites and web apps that generate leads. No templates. No platform lock-in. Conversion-first builds for UK businesses." />
-  <meta name="twitter:image" content="https://octopye.com/images/octopye-transparent.webp" />
-  <title>Octopye | Conversion-Focused Web Design</title>
+  <meta name="twitter:title" content="Octopye Digital Designs | More Leads, Better Booking Rates" />
+  <meta name="twitter:description" content="Conversion-first websites, SEO, and growth systems for UK businesses. Book a free 15-min strategy teardown." />
+  <meta name="twitter:image" content="https://octopye.com/images/app-icon-180.webp" />
+  <title>Octopye Digital Designs | Conversion-First Websites for UK Businesses</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet" />
@@ -169,6 +172,46 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long does a project take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most builds launch in 4-6 weeks. AI-assisted builds can go live in around 4 weeks, while larger platform projects can take 10-16 weeks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you improve my existing website instead of rebuilding it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We start with a conversion and technical audit, then recommend either high-impact page improvements or a full rebuild when needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you provide SEO and Google Ads after launch?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. SEO retainers start from GBP 450/mo and Google Ads management is available standalone or bundled with social and SEO services."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you integrate our website with CRM and booking tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We regularly integrate websites and web apps with CRM, booking systems, and payment platforms to automate lead handling."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header" id="top">
@@ -201,15 +244,17 @@
 
       <div class="container hero-stage-text reveal">
         <p class="eyebrow">Corporate-grade digital design for growth-focused businesses</p>
+        <p class="availability-chip" id="availabilityChip">Checking next strategy slot...</p>
         <h1>Professional websites, campaigns, and growth systems built to convert.</h1>
         <p class="lead">
           Octopye Digital Designs builds hand-coded websites and lead-generation systems for businesses that need
           sharper positioning, stronger trust, and a cleaner route from visitor to enquiry.
         </p>
         <div class="hero-cta-row">
-          <a class="btn btn-lg" data-event="cta_click" data-cta-location="hero" data-cta-label="Get Free Quote" href="https://octopye.com/quote" target="_blank" rel="noopener noreferrer">Get Free Quote</a>
-          <a class="btn btn-ghost btn-lg" data-event="cta_click" data-cta-location="hero" data-cta-label="Request Booking Slot" href="booking.html">Request Booking Slot</a>
+          <a class="btn btn-lg btn-warm" data-event="cta_click" data-cta-location="hero" data-cta-label="Get Free Quote" href="https://octopye.com/quote" target="_blank" rel="noopener noreferrer">Get Free Quote</a>
+          <a class="btn-link" data-event="cta_click" data-cta-location="hero" data-cta-label="Request Booking Slot" href="booking.html">Or request a strategy slot</a>
         </div>
+        <p class="hero-proof-line">Trusted by 50+ businesses | 5.0 average rating | 300% average traffic growth</p>
         <ul class="hero-points" aria-label="Quick trust points">
           <li>One-time custom builds with clear scope and ownership</li>
           <li>Optional monthly growth: Social at GBP 300/mo and Ads at GBP 200/mo</li>
@@ -240,7 +285,7 @@
               </label>
               <label>
                 Biggest growth goal
-                <input type="text" name="goal" placeholder="More calls, better leads, higher close rate" required />
+                <input type="text" name="goal" placeholder="More calls, better leads, higher close rate" />
               </label>
               <button class="btn btn-full" type="submit" data-event="form_submit_click">Send My Teardown Request</button>
               <p class="form-note">By submitting, you agree to be contacted by Octopye. We also run an automated crawl/performance audit and include it in your request.</p>
@@ -261,6 +306,27 @@
           </aside>
       </div>
 
+      <div class="container lead-magnet reveal delay-1">
+        <div>
+          <p class="lead-magnet-kicker">Not ready to book yet?</p>
+          <h3>Get the free 7-point Homepage Conversion Checklist</h3>
+          <p>Use the same framework we apply during paid conversion teardowns to identify fast lead wins on your current site.</p>
+        </div>
+        <form id="leadMagnetForm" class="lead-magnet-form" novalidate>
+          <input type="hidden" name="source" value="Homepage Lead Magnet" />
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Your name" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="you@business.com" required />
+          </label>
+          <button class="btn" type="submit" data-event="form_submit_click" data-cta-location="lead-magnet" data-cta-label="Get Conversion Checklist">Get Conversion Checklist</button>
+          <p class="form-status" id="leadMagnetStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
       <div class="container trust-strip reveal delay-2" id="proof">
         <p>Trusted by businesses across the UK and Ireland with proven delivery metrics</p>
         <ul>
@@ -279,7 +345,7 @@
       </div>
     </section>
 
-    <section class="section-pad" id="services">
+    <section class="section-pad section-tone-mint" id="services">
       <div class="container">
         <p class="eyebrow">What we build</p>
         <h2 class="section-title reveal">Conversion-first digital services</h2>
@@ -298,6 +364,35 @@
             <h3>Web Apps & Dashboards</h3>
             <p>Client portals, SaaS products, and internal systems that automate workflows and reduce admin time.</p>
             <p class="price-tag">From GBP 4,999</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad pt-0" id="fit">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">Qualification</p>
+          <h2 class="section-title">Who this is for and who it is not for</h2>
+        </div>
+        <div class="fit-grid reveal delay-1">
+          <article class="fit-card">
+            <h3>Best fit</h3>
+            <ul>
+              <li>Businesses already getting traffic but weak enquiry rates</li>
+              <li>Teams wanting one partner for build + SEO + growth channels</li>
+              <li>Owners who need measurable ROI and cleaner reporting</li>
+              <li>Businesses prepared to action recommendations quickly</li>
+            </ul>
+          </article>
+          <article class="fit-card fit-card-muted">
+            <h3>Not a fit (yet)</h3>
+            <ul>
+              <li>Projects needing same-day full website delivery</li>
+              <li>Businesses unwilling to track leads and conversions</li>
+              <li>One-off design-only work with no growth objective</li>
+              <li>Very early idea-stage projects with no defined offer</li>
+            </ul>
           </article>
         </div>
       </div>
@@ -324,7 +419,7 @@
       </div>
     </section>
 
-    <section class="section-pad" id="process">
+    <section class="section-pad section-tone-sun" id="process">
       <div class="container">
         <p class="eyebrow">How we deliver</p>
         <h2 class="section-title reveal">A process designed for speed and outcomes</h2>
@@ -353,7 +448,7 @@
       </div>
     </section>
 
-    <section class="section-pad" id="pricing">
+    <section class="section-pad section-tone-sky" id="pricing">
       <div class="container">
         <div class="pricing-header reveal">
           <p class="eyebrow">Pricing</p>
@@ -397,7 +492,7 @@
               <li>Lead form and booking flow</li>
               <li>Analytics and event tracking</li>
             </ul>
-            <a class="btn btn-full" data-event="cta_click" data-cta-location="pricing" data-cta-label="Start This Package" href="https://octopye.com/quote" target="_blank" rel="noopener noreferrer">Start This Package</a>
+            <a class="btn btn-quiet btn-full" data-event="cta_click" data-cta-location="pricing" data-cta-label="Start This Package" href="https://octopye.com/quote" target="_blank" rel="noopener noreferrer">Start This Package</a>
           </article>
 
           <article class="price-card featured reveal delay-1" data-base="4999" data-fast="5999">
@@ -411,13 +506,13 @@
               <li>Dashboard or portal components</li>
               <li>Priority delivery and support</li>
             </ul>
-            <a class="btn btn-full" data-event="cta_click" data-cta-location="pricing" data-cta-label="Request Strategy Slot" href="booking.html">Request Strategy Slot</a>
+            <a class="btn btn-full btn-warm" data-event="cta_click" data-cta-location="pricing" data-cta-label="Request Strategy Slot" href="booking.html">Request Strategy Slot</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section-pad" id="estimate">
+    <section class="section-pad section-tone-rose" id="estimate">
       <div class="container estimator-wrap">
         <div class="reveal">
           <p class="eyebrow">Instant estimator</p>
@@ -473,7 +568,7 @@
             <p class="estimate-price" id="estimatePrice">GBP -</p>
             <p id="estimateSummary">Your estimate will include scope, delivery timeline, and suggested add-ons.</p>
             <ul id="estimateBreakdown"></ul>
-            <a class="btn btn-full" data-event="cta_click" data-cta-location="estimator" data-cta-label="Get Detailed Proposal" id="estimateCta" href="booking.html">Get Detailed Proposal</a>
+            <a class="btn btn-full btn-warm" data-event="cta_click" data-cta-location="estimator" data-cta-label="Get Detailed Proposal" id="estimateCta" href="booking.html">Get Detailed Proposal</a>
             <div class="proposal-capture" id="proposalCapture">
               <label>
                 Your name
@@ -490,6 +585,34 @@
               <p class="form-status" id="proposalStatus" role="status" aria-live="polite"></p>
             </div>
           </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad pt-0" id="roi">
+      <div class="container">
+        <div class="roi-card reveal">
+          <div>
+            <p class="eyebrow">ROI Snapshot</p>
+            <h2 class="section-title">Estimate what a conversion uplift could be worth</h2>
+            <p class="lead">Quick benchmark only. Use this to frame opportunity before your strategy call.</p>
+          </div>
+          <form id="roiForm" class="roi-form" novalidate>
+            <label>Monthly website visitors
+              <input type="number" min="0" step="1" id="roiVisitors" placeholder="2000" required />
+            </label>
+            <label>Current conversion rate (%)
+              <input type="number" min="0" step="0.1" id="roiCurrent" placeholder="1.2" required />
+            </label>
+            <label>Target conversion rate (%)
+              <input type="number" min="0" step="0.1" id="roiTarget" placeholder="2.4" required />
+            </label>
+            <label>Average deal value (GBP)
+              <input type="number" min="0" step="1" id="roiDeal" placeholder="850" required />
+            </label>
+            <button class="btn" type="submit" data-event="cta_click" data-cta-location="roi" data-cta-label="Calculate ROI">Calculate ROI</button>
+          </form>
+          <p class="roi-result" id="roiResult">Enter your numbers to estimate monthly revenue uplift.</p>
         </div>
       </div>
     </section>
@@ -658,4 +781,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
+
 

@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/webp" href="images/app-icon-180.webp" />
+  <link rel="apple-touch-icon" href="images/app-icon-180.webp" />
+  <link rel="manifest" href="site.webmanifest" />
   <meta name="description" content="Request a booking slot with Octopye. Choose email responses, Zoom, Teams, or WhatsApp and submit your preferred time." />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <link rel="canonical" href="https://octopye.com/booking.html" />
@@ -11,11 +14,11 @@
   <meta property="og:title" content="Octopye Booking | Request a Slot" />
   <meta property="og:description" content="Request a booking slot with Octopye. Choose email responses, Zoom, Teams, or WhatsApp and submit your preferred time." />
   <meta property="og:url" content="https://octopye.com/booking.html" />
-  <meta property="og:image" content="https://octopye.com/images/octopye-transparent.webp" />
+  <meta property="og:image" content="https://octopye.com/images/app-icon-180.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Octopye Booking | Request a Slot" />
   <meta name="twitter:description" content="Request a booking slot with Octopye. Choose email responses, Zoom, Teams, or WhatsApp and submit your preferred time." />
-  <meta name="twitter:image" content="https://octopye.com/images/octopye-transparent.webp" />
+  <meta name="twitter:image" content="https://octopye.com/images/app-icon-180.webp" />
   <title>Octopye Booking | Request a Slot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -93,6 +96,41 @@
 
           <div class="booking-grid">
             <label>
+              Call type
+              <select name="meetingLength" required>
+                <option value="" selected disabled>Select one</option>
+                <option value="quick-15">Quick strategy call (15 mins)</option>
+                <option value="deep-30">Deep dive call (30 mins)</option>
+              </select>
+            </label>
+            <label>
+              Project budget range
+              <select name="budgetRange" required>
+                <option value="" selected disabled>Select one</option>
+                <option value="1500-3000">GBP 1,500 - 3,000</option>
+                <option value="3000-6000">GBP 3,000 - 6,000</option>
+                <option value="6000-12000">GBP 6,000 - 12,000</option>
+                <option value="12000+">GBP 12,000+</option>
+              </select>
+            </label>
+            <label>
+              How soon are you planning to start?
+              <select name="readiness" required>
+                <option value="" selected disabled>Select one</option>
+                <option value="ready-now">Ready now (0-14 days)</option>
+                <option value="30-days">Within 30 days</option>
+                <option value="90-days">Within 90 days</option>
+                <option value="researching">Researching options</option>
+              </select>
+            </label>
+            <label>
+              Current monthly leads (optional)
+              <input type="text" name="monthlyLeads" placeholder="e.g. 12-20" />
+            </label>
+          </div>
+
+          <div class="booking-grid">
+            <label>
               Preferred date
               <input type="date" id="bookingDate" name="preferredDate" required />
             </label>
@@ -128,6 +166,7 @@
 
           <button class="btn btn-full" type="submit" data-event="form_submit_click">Request Booking Slot</button>
           <p class="form-note">Submitting this form sends a booking request only. We will confirm by email before any call slot is final.</p>
+          <p class="form-note">Prefer a quick message? WhatsApp request option can be selected above under booking preference.</p>
           <p class="form-status" id="bookingStatus" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -150,3 +189,6 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
+

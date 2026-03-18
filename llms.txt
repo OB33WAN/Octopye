@@ -74,6 +74,29 @@
 - SEO tooling: Google PageSpeed Insights, Core Web Vitals, Google Business Profile optimisation
 - Apps: SEO IT (Android) — https://play.google.com/store/apps/details?id=com.seoit.app
 - Apps: Is This Safe? (Android) — https://play.google.com/store/apps/details?id=com.isthissafe
+- Apps: AllerGen (Android) — https://play.google.com/store/apps/details?id=com.allergen
+- Apps: Quit It (Android) — https://play.google.com/store/apps/details?id=com.quitit.app
+- Apps: OctoPass (Android) — https://play.google.com/store/apps/details?id=com.octopass
+- Apps: Is This Safe? (Android) — https://play.google.com/store/apps/details?id=com.isthissafe
+- Apps: Cyber Scam Simulator (Android) — https://play.google.com/store/apps/details?id=com.cybersentinel.app
+- Apps: Family Tapestry (Android) — https://play.google.com/store/apps/details?id=com.familytapestry.app
+- Apps: Install It Right (Android) — https://play.google.com/store/apps/details?id=com.installitright
+
+## Project Case Studies
+
+- [SEO IT Case Study](https://octopye.com/project-seo-it.html) — Free mobile SEO auditor app. React Native + Expo Go.
+- [AllerGen Case Study](https://octopye.com/project-allergen.html) — Allergy and symptom tracker. React Native + Expo Go.
+- [Quit It Case Study](https://octopye.com/project-quit-it.html) — Habit-change support app. React Native + Expo Go.
+- [Cyber Scam Simulator Case Study](https://octopye.com/project-cyber-sentinel.html) — Phishing and fraud detection training. React Native + Expo Go.
+- [OctoPass Case Study](https://octopye.com/project-octopass.html) — Password manager with AES-256 encryption. React Native + Expo Go.
+- [Is This Safe? Case Study](https://octopye.com/project-is-this-safe.html) — Link and DNS scanner. React Native + Expo Go.
+- [Install It Right Case Study](https://octopye.com/project-installitright.html) — Trades marketplace app. React Native + Expo Go.
+- [Family Tapestry Case Study](https://octopye.com/project-family-tapestry.html) — Family tree builder. React Native + Expo Go.
+- [Upfront Dance Radio Case Study](https://octopye.com/project-upfrontdance.html) — Dance radio web platform. React JS, Tailwind CSS, TypeScript, Vite Router, PostgreSQL.
+- [RewindUK Live Case Study](https://octopye.com/project-rewinduk-live.html) — Streaming radio website. HTML, CSS, JS.
+- [Prestige Flow Case Study](https://octopye.com/project-prestige-flow.html) — Plumbing lead-gen website. HTML, CSS, JS.
+- [Robotics & Control Ltd Case Study](https://octopye.com/project-rcltd.html) — Industrial automation website. HTML, CSS, JS.
+- [Tuned Performance Case Study](https://octopye.com/project-tuned-performance.html) — Vehicle tuning website. HTML, CSS, JS.
 
 ## Booking and Contact
 

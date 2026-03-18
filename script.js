@@ -15,6 +15,7 @@ const seoItDownloadLink = document.getElementById('seoItDownloadLink');
 const isThisSafeDownloadLink = document.getElementById('isThisSafeDownloadLink');
 const leadMagnetForm = document.getElementById('leadMagnetForm');
 const leadMagnetStatus = document.getElementById('leadMagnetStatus');
+const projectEnquiryForms = document.querySelectorAll('.project-enquiry-form');
 const availabilityChip = document.getElementById('availabilityChip');
 const roiForm = document.getElementById('roiForm');
 const roiVisitors = document.getElementById('roiVisitors');
@@ -1026,6 +1027,105 @@ if (leadMagnetForm && leadMagnetStatus) {
         submitButton.textContent = 'Get Conversion Checklist';
       }
     }
+  });
+}
+
+if (projectEnquiryForms.length) {
+  projectEnquiryForms.forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const company = String(data.get('company') || '').trim();
+      const website = String(data.get('website') || '').trim();
+      const budgetRange = String(data.get('budgetRange') || '').trim();
+      const timeline = String(data.get('timeline') || '').trim();
+      const goal = String(data.get('goal') || '').trim();
+      const notes = String(data.get('notes') || '').trim();
+      const projectName = String(data.get('projectName') || 'Project Case Study').trim();
+      const source = String(data.get('source') || `${projectName} Case Study`).trim();
+      const submitButton = form.querySelector('button[type="submit"]');
+      const status = form.querySelector('.form-status');
+
+      if (!name || !email || !budgetRange || !timeline || !goal) {
+        if (status) {
+          status.textContent = 'Please complete all required fields.';
+          status.style.color = '#b91c1c';
+        }
+        return;
+      }
+
+      const emailOkay = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!emailOkay) {
+        if (status) {
+          status.textContent = 'Please enter a valid email address.';
+          status.style.color = '#b91c1c';
+        }
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending request...';
+      }
+
+      if (status) {
+        status.textContent = 'Submitting your enquiry...';
+        status.style.color = '#0f766e';
+      }
+
+      const payload = {
+        name,
+        email,
+        replyto: email,
+        subject: `Case Study Enquiry - ${projectName} - ${name}`,
+        from_name: 'Octopye Case Study Enquiry',
+        message: [
+          `Project of interest: ${projectName}`,
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Company: ${company || 'N/A'}`,
+          `Website: ${website || 'N/A'}`,
+          `Budget range: ${budgetRange}`,
+          `Preferred timeline: ${timeline}`,
+          `Goal: ${goal}`,
+          `Notes: ${notes || 'N/A'}`,
+          `Source: ${source}`,
+          `Page: ${window.location.href}`,
+          `Submitted at: ${new Date().toISOString()}`
+        ].join('\n')
+      };
+
+      try {
+        await sendViaWeb3Forms(payload);
+        form.reset();
+        if (status) {
+          status.textContent = 'Thanks, your enquiry has been sent. We will respond shortly.';
+          status.style.color = '#065f46';
+        }
+        trackEvent('project_enquiry_submitted', {
+          project_name: projectName,
+          budget_range: budgetRange,
+          timeline
+        });
+      } catch (error) {
+        if (status) {
+          status.textContent = `Could not send enquiry: ${error.message}`;
+          status.style.color = '#b91c1c';
+        }
+        trackEvent('project_enquiry_error', {
+          project_name: projectName,
+          reason: error.message
+        });
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Request a Similar Build';
+        }
+      }
+    });
   });
 }
 

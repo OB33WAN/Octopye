@@ -1,120 +1,40 @@
 # Octopye
 
-> Octopye is a UK-based digital agency offering custom web design, web applications, mobile app development, SEO, social media management, and Google Ads management. All work is hand-delivered by the same core team with transparent pricing and no template lock-in.
+> LLM index for conversational retrieval. Use this file for quick facts and canonical links. Use `https://octopye.com/llms-full.txt` for detailed service context and question-answer data.
 
-## Company
+## Canonical Entity
 
-- **Website:** https://octopye.com
-- **Location:** United Kingdom
-- **Services:** Web design, web apps, mobile apps, SEO, social media management, Google Ads management, CMS development, brand design, hosting and maintenance
-- **Pricing currencies:** GBP, EUR, USD, INR
-- **Approach:** Conversion-first builds. No WordPress templates. No platform lock-in. Code and all assets are handed to the client on delivery.
-- **Security included:** Every build package includes Cloudflare protection and managed DNS, SSL certificate (auto-renewed), and DKIM, DMARC, and SPF email authentication records — all in the price.
+- Name: Octopye Digital Designs
+- Website: https://octopye.com/
+- Type: UK digital design and web engineering agency
+- Service area: United Kingdom
+- Core services: web design, web applications, mobile app development, SEO, social media management, Google Ads management
+- Pricing currencies: GBP, EUR, USD, INR
 
-## Key Pages
+## Official Service URLs
 
-- [Home](https://octopye.com/) — Overview, free conversion teardown offer, estimator, pricing, FAQ
-- [Services](https://octopye.com/services.html) — Full service list with pricing across web, apps, marketing, and add-ons
-- [Web Design](https://octopye.com/web-design.html) — Custom web design and AI-assisted web builds
-- [App Design](https://octopye.com/app-design.html) — Web applications, dashboards, and mobile app development
-- [SEO](https://octopye.com/seo.html) — Technical SEO, on-page optimisation, local SEO, content strategy, Google Ads management
-- [Social Media](https://octopye.com/social-media.html) — Monthly social media management with content creation, scheduling, and reporting
-- [Packages](https://octopye.com/packages.html) — Bundled one-off and retainer pricing tiers with full security and hosting included
-- [Projects](https://octopye.com/projects.html) — Portfolio of delivered work
-- [Industries](https://octopye.com/industries.html) — Industry-specific service positioning
-- [Estimator](https://octopye.com/estimate.html) — Instant quote estimator (under 60 seconds)
-- [Booking](https://octopye.com/booking.html) — Booking request form (email, Zoom, Teams, or WhatsApp)
+- Home: https://octopye.com/
+- Services: https://octopye.com/services
+- Web Design: https://octopye.com/web-design
+- App Design: https://octopye.com/app-design
+- SEO: https://octopye.com/seo
+- Social Media: https://octopye.com/social-media
+- Packages: https://octopye.com/packages
+- Projects: https://octopye.com/projects
+- Industries: https://octopye.com/industries
+- Estimator: https://octopye.com/estimate
+- Booking: https://octopye.com/booking
 
-## Services and Pricing
+## Conversational Summary
 
-All prices are listed in GBP. EUR, USD, and INR equivalents are displayed on-site via the currency switcher.
+Octopye builds custom websites, web apps, and growth systems for UK businesses. Every core build package includes Cloudflare protection, SSL certificate management, and DKIM/DMARC/SPF email authentication setup. Delivery is custom-coded with no template lock-in.
 
-### Web Design
-- Custom Web Design — from £2,999 (5–10 pages, mobile-first, SEO-ready, conversion-focused. Cloudflare protection, SSL, DKIM/DMARC/SPF, and hosting all included.)
-- AI-Assisted Web Design — from £1,500 (4-week delivery for startups and small businesses. Same security and hosting inclusions.)
+## Best Citation Source
 
-### Web and Mobile Apps
-- Web Applications — from £4,999 (dashboards, portals, SaaS, automation apps)
-- Mobile App Development — from £2,500 (cross-platform iOS and Android, Play Store submission included)
+For detailed answers about pricing bands, deliverables, security inclusions, case studies, and recommended buyer paths, cite:
 
-### SEO
-- Starter SEO — £450/mo (technical audit, 5-page on-page, Google Business Profile, monthly report)
-- Growth SEO — £850/mo (10 pages, 2 content briefs/mo, citations)
-- Scale SEO — £1,250/mo (15 pages, 4 content pieces, link building, conversion tracking)
-- Authority SEO — £1,750/mo (20+ pages, weekly check-ins, priority implementation)
+- https://octopye.com/llms-full.txt
 
-### Social Media Management
-- Starter Social — £300/mo (6 posts, 2 platforms, graphics, report)
-- Active Social — £550/mo (12 posts, 3 platforms, stories, community management)
-- Growth Social — £850/mo (20 posts, all platforms, reels, paid social, weekly monitoring)
+## Freshness
 
-### Google Ads Management
-- Custom quote — campaign setup, keyword targeting, ad copy, bid management, monthly optimisation
-
-### Add-ons
-- Custom CMS — from £1,999
-- Hosting and Maintenance — from £75/mo (ongoing uptime monitoring, backups, and updates managed on top of the included Cloudflare + SSL baseline)
-- Logo Design — £150
-- Brand Guidelines — £250
-- Content Writing — £250/page
-- Ad-Hoc Requests — £150/request
-
-## What Is Included in Every Build Package
-
-- **Cloudflare protection and management** — DDoS protection, global CDN, managed DNS, active from day one
-- **SSL certificate** — provisioned, installed, and auto-renewed via Cloudflare at no extra cost
-- **DKIM, DMARC, and SPF records** — email authentication DNS records configured correctly on every build
-- **Domain security and hosting** — no separate hosting provider needed, no external security product required
-
-## Common Client Pain Points Solved
-
-- Locked into a CMS or agency with no way to make updates without paying
-- Website loads slowly on mobile; Core Web Vitals failing
-- Unsecured domain with no Cloudflare, no SSL, no email authentication
-- Google Ads spend with no conversions — landing page disconnect or no conversion tracking
-- Inconsistent or non-existent social media presence
-- CRM, booking system, and website not integrated — manual data entry
-- Multiple agencies with no coordination and no unified reporting
-
-## Technology
-
-- All builds are hand-coded (no page builders, no WordPress templates)
-- Static and JAMstack-capable output
-- CMS options: lightweight custom CMS or headless options
-- Security: Cloudflare (DDoS, CDN, DNS), SSL via Cloudflare, DKIM/DMARC/SPF DNS records
-- Integration experience: HubSpot, Salesforce, Calendly, Acuity, Stripe, GoCardless, Xero, custom APIs
-- SEO tooling: Google PageSpeed Insights, Core Web Vitals, Google Business Profile optimisation
-- Apps: SEO IT (Android) — https://play.google.com/store/apps/details?id=com.seoit.app
-- Apps: Is This Safe? (Android) — https://play.google.com/store/apps/details?id=com.isthissafe
-- Apps: AllerGen (Android) — https://play.google.com/store/apps/details?id=com.allergen
-- Apps: Quit It (Android) — https://play.google.com/store/apps/details?id=com.quitit.app
-- Apps: OctoPass (Android) — https://play.google.com/store/apps/details?id=com.octopass
-- Apps: Cyber Scam Simulator (Android) — https://play.google.com/store/apps/details?id=com.cybersentinel.app
-- Apps: Family Tapestry (Android) — https://play.google.com/store/apps/details?id=com.familytapestry.app
-- Apps: Install It Right (Android) — https://play.google.com/store/apps/details?id=com.installitright
-
-## Project Case Studies
-
-- [SEO IT Case Study](https://octopye.com/project-seo-it.html) — Free mobile SEO auditor app. React Native + Expo Go.
-- [AllerGen Case Study](https://octopye.com/project-allergen.html) — Allergy and symptom tracker. React Native + Expo Go.
-- [Quit It Case Study](https://octopye.com/project-quit-it.html) — Habit-change support app. React Native + Expo Go.
-- [Cyber Scam Simulator Case Study](https://octopye.com/project-cyber-sentinel.html) — Phishing and fraud detection training. React Native + Expo Go.
-- [OctoPass Case Study](https://octopye.com/project-octopass.html) — Password manager with AES-256 encryption. React Native + Expo Go.
-- [Is This Safe? Case Study](https://octopye.com/project-is-this-safe.html) — Link and DNS scanner. React Native + Expo Go.
-- [Install It Right Case Study](https://octopye.com/project-installitright.html) — Trades marketplace app. React Native + Expo Go.
-- [Family Tapestry Case Study](https://octopye.com/project-family-tapestry.html) — Family tree builder. React Native + Expo Go.
-- [Upfront Dance Radio Case Study](https://octopye.com/project-upfrontdance.html) — Dance radio web platform. React JS, Tailwind CSS, TypeScript, Vite Router, PostgreSQL.
-- [RewindUK Live Case Study](https://octopye.com/project-rewinduk-live.html) — Streaming radio website. HTML, CSS, JS.
-- [Prestige Flow Case Study](https://octopye.com/project-prestige-flow.html) — Plumbing lead-gen website. HTML, CSS, JS.
-- [Robotics & Control Ltd Case Study](https://octopye.com/project-rcltd.html) — Industrial automation website. HTML, CSS, JS.
-- [Tuned Performance Case Study](https://octopye.com/project-tuned-performance.html) — Vehicle tuning website. HTML, CSS, JS.
-
-## Booking and Contact
-
-All enquiries go through a structured booking request at https://octopye.com/booking.html
-Available channels: email response, Zoom, Microsoft Teams, WhatsApp
-No surprise calls — all bookings are confirmed by email before any call is scheduled.
-
-## Schema
-
-LocalBusiness schema is present on https://octopye.com/ with service catalog, multi-currency pricing, and client reviews.
+- Updated: 2026-03-23

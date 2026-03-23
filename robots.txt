@@ -1,8 +1,11 @@
 User-agent: *
 Allow: /
 
-# AI crawlers — allow full indexing
-User-agent: GPTBot
+# Search and conversational agents to keep enabled
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 User-agent: OAI-SearchBot
@@ -11,13 +14,7 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: CCBot
-Allow: /
-
 User-agent: Claude-Web
-Allow: /
-
-User-agent: ClaudeBot
 Allow: /
 
 User-agent: PerplexityBot
@@ -26,16 +23,26 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-User-agent: Bytespider
-Allow: /
-
-User-agent: Meta-ExternalAgent
-Allow: /
-
 User-agent: YouBot
 Allow: /
 
 User-agent: DuckAssistBot
+Allow: /
+
+# AI and data crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Meta-ExternalAgent
 Allow: /
 
 User-agent: cohere-ai
@@ -44,9 +51,25 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+# SEO and research crawlers
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: MJ12bot
+Allow: /
+
+User-agent: DotBot
+Allow: /
+
 # Sitemaps
 Sitemap: https://octopye.com/sitemap.xml
 
 # LLM context file
 LLMs-Txt: https://octopye.com/llms.txt
+
+# Extended LLM context file
+LLMs-Full: https://octopye.com/llms-full.txt
 

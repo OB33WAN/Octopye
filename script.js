@@ -29,6 +29,9 @@ const priceCards = document.querySelectorAll('.price-card');
 const faqButtons = document.querySelectorAll('.faq-item button');
 const yearNode = document.getElementById('year');
 const runtimeConfig = window.OCTOPYE_CONFIG || {};
+const currencyStorageKey = 'octopye_currency';
+const supportedCurrencies = ['GBP', 'EUR', 'USD', 'INR'];
+let activeCurrency = 'GBP';
 const seoItPlayStoreUrl = String(runtimeConfig.seoItPlayStoreUrl || 'https://play.google.com/store/apps/details?id=com.seoit.app');
 const isThisSafePlayStoreUrl = String(runtimeConfig.isThisSafePlayStoreUrl || 'https://play.google.com/store/apps/details?id=com.isthissafe');
 let formStartedTracked = false;
@@ -53,8 +56,246 @@ let currentEstimateStep = 1;
 let latestEstimateDetails = null;
 const web3FormsEndpoint = 'https://api.web3forms.com/submit';
 const web3FormsAccessKey = String(runtimeConfig.web3FormsAccessKey || '');
-const magneticTargets = document.querySelectorAll('.btn, .filter-btn, .toggle-btn');
 const parallaxTargets = document.querySelectorAll('.hero-card, .hero-showcase-card, .detail-hero-image');
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const precisePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+const canUseParallax = !reducedMotionQuery.matches && precisePointerQuery.matches;
+
+const currencyFormatMeta = {
+  GBP: { locale: 'en-GB', label: 'GBP' },
+  EUR: { locale: 'de-DE', label: 'EUR' },
+  USD: { locale: 'en-US', label: 'USD' },
+  INR: { locale: 'en-IN', label: 'INR' }
+};
+
+// Custom market pricing table (not FX conversion) for common package anchors.
+const customCurrencyPriceTable = {
+  75: { EUR: 95, USD: 100, INR: 7900 },
+  150: { EUR: 190, USD: 210, INR: 14900 },
+  200: { EUR: 250, USD: 280, INR: 19900 },
+  250: { EUR: 310, USD: 340, INR: 24900 },
+  300: { EUR: 370, USD: 410, INR: 29900 },
+  450: { EUR: 560, USD: 620, INR: 44900 },
+  500: { EUR: 620, USD: 690, INR: 49900 },
+  550: { EUR: 690, USD: 760, INR: 54900 },
+  850: { EUR: 1050, USD: 1170, INR: 84900 },
+  900: { EUR: 1120, USD: 1240, INR: 89900 },
+  950: { EUR: 1180, USD: 1310, INR: 94900 },
+  1200: { EUR: 1490, USD: 1650, INR: 119000 },
+  1250: { EUR: 1550, USD: 1720, INR: 124000 },
+  1500: { EUR: 1850, USD: 2050, INR: 149000 },
+  1750: { EUR: 2180, USD: 2420, INR: 174000 },
+  1999: { EUR: 2490, USD: 2790, INR: 199000 },
+  2500: { EUR: 3100, USD: 3490, INR: 249000 },
+  2999: { EUR: 3690, USD: 4150, INR: 299000 },
+  3000: { EUR: 3700, USD: 4190, INR: 299900 },
+  4999: { EUR: 6190, USD: 6990, INR: 499000 },
+  5999: { EUR: 7390, USD: 8350, INR: 599000 },
+  6000: { EUR: 7400, USD: 8390, INR: 599900 },
+  9999: { EUR: 11900, USD: 13400, INR: 999000 },
+  12000: { EUR: 14200, USD: 15900, INR: 1199000 }
+};
+
+const marketFallbackModel = {
+  GBP: { multiplier: 1, step: 1 },
+  EUR: { multiplier: 1.23, step: 10 },
+  USD: { multiplier: 1.37, step: 10 },
+  INR: { multiplier: 102, step: 100 }
+};
+
+const textPriceNodes = [];
+const textPriceBaseMap = new WeakMap();
+
+const formatCurrencyNumber = (amount, currency) => {
+  const meta = currencyFormatMeta[currency] || currencyFormatMeta.GBP;
+  return Number(amount).toLocaleString(meta.locale);
+};
+
+const getLocalizedAmount = (gbpAmount, currency) => {
+  const normalizedAmount = Math.round(Number(gbpAmount) || 0);
+  if (currency === 'GBP') {
+    return normalizedAmount;
+  }
+
+  const directHit = customCurrencyPriceTable[normalizedAmount]?.[currency];
+  if (typeof directHit === 'number') {
+    return directHit;
+  }
+
+  const fallback = marketFallbackModel[currency] || marketFallbackModel.GBP;
+  const stepped = Math.round((normalizedAmount * fallback.multiplier) / fallback.step) * fallback.step;
+  return Math.max(fallback.step, stepped);
+};
+
+const formatCurrencyLabel = (gbpAmount, currency) => `${currency} ${formatCurrencyNumber(getLocalizedAmount(gbpAmount, currency), currency)}`;
+
+const convertPriceText = (rawText, currency) => {
+  if (!rawText) {
+    return rawText;
+  }
+
+  let transformed = rawText;
+
+  transformed = transformed.replace(/GBP\s*([0-9][0-9,]*)\s*-\s*([0-9][0-9,]*)(\+)?/gi, (_, minRaw, maxRaw, plusSign) => {
+    const minValue = Number(String(minRaw).replace(/,/g, ''));
+    const maxValue = Number(String(maxRaw).replace(/,/g, ''));
+    const plus = plusSign || '';
+    return `${currency} ${formatCurrencyNumber(getLocalizedAmount(minValue, currency), currency)} - ${formatCurrencyNumber(getLocalizedAmount(maxValue, currency), currency)}${plus}`;
+  });
+
+  transformed = transformed.replace(/GBP\s*([0-9][0-9,]*)(\+)?(\/?mo|\/?request)?/gi, (_, amountRaw, plusSign, suffix) => {
+    const amount = Number(String(amountRaw).replace(/,/g, ''));
+    const plus = plusSign || '';
+    const unit = suffix || '';
+    return `${currency} ${formatCurrencyNumber(getLocalizedAmount(amount, currency), currency)}${plus}${unit}`;
+  });
+
+  transformed = transformed.replace(/£\s*([0-9][0-9,]*)(\+)?(\/?mo|\/?request)?/gi, (_, amountRaw, plusSign, suffix) => {
+    const amount = Number(String(amountRaw).replace(/,/g, ''));
+    const plus = plusSign || '';
+    const unit = suffix || '';
+    return `${currency} ${formatCurrencyNumber(getLocalizedAmount(amount, currency), currency)}${plus}${unit}`;
+  });
+
+  transformed = transformed.replace(/GBP\s*-/gi, `${currency} -`);
+  transformed = transformed.replace(/£\s*-/gi, `${currency} -`);
+
+  return transformed;
+};
+
+const collectPriceTextNodes = () => {
+  textPriceNodes.length = 0;
+  if (!document.body) {
+    return;
+  }
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent) {
+        return NodeFilter.FILTER_REJECT;
+      }
+
+      const tagName = parent.tagName;
+      if (tagName === 'SCRIPT' || tagName === 'STYLE' || tagName === 'NOSCRIPT') {
+        return NodeFilter.FILTER_REJECT;
+      }
+
+      const text = node.nodeValue || '';
+      if (!/(GBP\s*([0-9]|-)|£\s*([0-9]|-))/i.test(text)) {
+        return NodeFilter.FILTER_REJECT;
+      }
+
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  let current = walker.nextNode();
+  while (current) {
+    if (!textPriceBaseMap.has(current)) {
+      textPriceBaseMap.set(current, current.nodeValue || '');
+    }
+
+    textPriceNodes.push({ node: current, baseText: textPriceBaseMap.get(current) || '' });
+    current = walker.nextNode();
+  }
+};
+
+const applyCurrencyToTextNodes = (currency) => {
+  textPriceNodes.forEach((entry) => {
+    entry.node.nodeValue = convertPriceText(entry.baseText, currency);
+  });
+};
+
+const applyCurrencyToPriceCards = (currency) => {
+  priceCards.forEach((card) => {
+    const priceWrap = card.querySelector('.price');
+    const priceValue = priceWrap?.querySelector('span');
+    if (!priceWrap || !priceValue) {
+      return;
+    }
+
+    const originalRaw = priceValue.dataset.baseValue || priceValue.textContent || '';
+    if (!priceValue.dataset.baseValue) {
+      priceValue.dataset.baseValue = originalRaw;
+    }
+
+    const amount = Number(originalRaw.replace(/[^0-9]/g, ''));
+    if (!amount) {
+      return;
+    }
+
+    const hasPlus = /\+/.test(originalRaw);
+    const updatedAmount = `${formatCurrencyNumber(getLocalizedAmount(amount, currency), currency)}${hasPlus ? '+' : ''}`;
+    priceValue.textContent = updatedAmount;
+
+    // Keep the leading currency token synchronized for structured price blocks.
+    const leadingTextNode = Array.from(priceWrap.childNodes).find((node) => node.nodeType === Node.TEXT_NODE);
+    if (leadingTextNode) {
+      leadingTextNode.nodeValue = `${currency} `;
+    }
+  });
+};
+
+const applyActiveCurrency = () => {
+  collectPriceTextNodes();
+  applyCurrencyToTextNodes(activeCurrency);
+  applyCurrencyToPriceCards(activeCurrency);
+};
+
+const mountCurrencyPicker = () => {
+  const headerWrap = document.querySelector('.header-wrap') || document.querySelector('.site-header .container');
+  if (!headerWrap || headerWrap.querySelector('.currency-picker')) {
+    return;
+  }
+
+  const picker = document.createElement('div');
+  picker.className = 'currency-picker';
+  picker.innerHTML = `
+    <label for="currencyPicker" class="currency-picker-label">Currency</label>
+    <select id="currencyPicker" class="currency-picker-select" aria-label="Select currency">
+      <option value="GBP">GBP</option>
+      <option value="EUR">EUR</option>
+      <option value="USD">USD</option>
+      <option value="INR">INR</option>
+    </select>
+  `;
+
+  const navToggleButton = headerWrap.querySelector('.nav-toggle');
+  const headerCta = headerWrap.querySelector('.btn.btn-sm');
+  if (navToggleButton) {
+    headerWrap.insertBefore(picker, navToggleButton);
+  } else if (headerCta) {
+    headerWrap.insertBefore(picker, headerCta);
+  } else {
+    headerWrap.appendChild(picker);
+  }
+
+  const pickerSelect = picker.querySelector('.currency-picker-select');
+  if (!pickerSelect) {
+    return;
+  }
+
+  pickerSelect.value = activeCurrency;
+  pickerSelect.addEventListener('change', (event) => {
+    const selected = String(event.target.value || 'GBP').toUpperCase();
+    activeCurrency = supportedCurrencies.includes(selected) ? selected : 'GBP';
+    localStorage.setItem(currencyStorageKey, activeCurrency);
+    applyActiveCurrency();
+
+    const details = latestEstimateDetails;
+    if (details) {
+      showEstimateResult(details);
+    }
+  });
+};
+
+const initializeCurrency = () => {
+  const stored = String(localStorage.getItem(currencyStorageKey) || 'GBP').toUpperCase();
+  activeCurrency = supportedCurrencies.includes(stored) ? stored : 'GBP';
+  mountCurrencyPicker();
+  applyActiveCurrency();
+};
 
 const trackEvent = (eventName, payload = {}) => {
   const eventPayload = {
@@ -99,29 +340,16 @@ const revealObserver = new IntersectionObserver(
 
 revealElements.forEach((element) => revealObserver.observe(element));
 
-parallaxTargets.forEach((element) => {
-  element.classList.add('is-parallax');
-  if (element.classList.contains('detail-hero-image')) {
-    element.classList.add('is-floating');
-  }
-});
-
-magneticTargets.forEach((element) => {
-  element.classList.add('magnetic');
-
-  element.addEventListener('mousemove', (event) => {
-    const rect = element.getBoundingClientRect();
-    const offsetX = ((event.clientX - rect.left) / rect.width - 0.5) * 10;
-    const offsetY = ((event.clientY - rect.top) / rect.height - 0.5) * 8;
-    element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+if (canUseParallax) {
+  parallaxTargets.forEach((element) => {
+    element.classList.add('is-parallax');
+    if (element.classList.contains('detail-hero-image')) {
+      element.classList.add('is-floating');
+    }
   });
+}
 
-  element.addEventListener('mouseleave', () => {
-    element.style.transform = '';
-  });
-});
-
-if (parallaxTargets.length) {
+if (canUseParallax && parallaxTargets.length) {
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     parallaxTargets.forEach((element, index) => {
@@ -522,7 +750,7 @@ const setAuditFallbackVisible = (isVisible) => {
   auditFallback.hidden = !isVisible;
 };
 
-const formatGBP = (amount) => `GBP ${Number(amount).toLocaleString('en-GB')}`;
+const formatGBP = (amount) => formatCurrencyLabel(amount, activeCurrency);
 const formatRange = (min, max, monthly = false) => `${formatGBP(min)} - ${formatGBP(max)}${monthly ? '/mo' : ''}`;
 
 const formatRecurringList = (items) => {
@@ -1149,7 +1377,7 @@ if (roiForm && roiVisitors && roiCurrent && roiTarget && roiDeal && roiResult) {
     const extraLeads = targetLeads - currentLeads;
     const extraRevenue = extraLeads * deal;
 
-    roiResult.textContent = `Estimated uplift: +${Math.round(extraLeads)} leads/mo and roughly GBP ${Math.round(extraRevenue).toLocaleString('en-GB')} additional monthly revenue.`;
+    roiResult.textContent = `Estimated uplift: +${Math.round(extraLeads)} leads/mo and roughly ${formatGBP(Math.round(extraRevenue))} additional monthly revenue.`;
     roiResult.style.color = '#065f46';
 
     trackEvent('roi_calculated', {
@@ -1270,10 +1498,13 @@ const updatePricing = (speed) => {
     const value = card.dataset[key];
     const priceNode = card.querySelector('.price span');
     if (priceNode && value) {
-      priceNode.textContent = Number(value).toLocaleString('en-GB');
+      const baseAmount = Number(value);
+      priceNode.textContent = formatCurrencyNumber(getLocalizedAmount(baseAmount, activeCurrency), activeCurrency);
     }
   });
 };
+
+initializeCurrency();
 
 toggleButtons.forEach((button) => {
   button.addEventListener('click', () => {

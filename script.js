@@ -407,25 +407,39 @@ if (navToggle && mainNav) {
   }
   navToggle.setAttribute('aria-controls', mainNav.id);
 
-  navToggle.addEventListener('click', () => {
+  const closeNav = () => {
+    mainNav.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+  };
+
+  const toggleNav = () => {
     const isOpen = mainNav.classList.toggle('is-open');
     navToggle.setAttribute('aria-expanded', String(isOpen));
     document.body.classList.toggle('nav-open', isOpen);
+  };
+
+  navToggle.addEventListener('click', (e) => {
+    if (e.button !== 0) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    toggleNav();
   });
 
   document.addEventListener('click', (e) => {
+    if (!mainNav.classList.contains('is-open')) {
+      return;
+    }
     if (!navToggle.contains(e.target) && !mainNav.contains(e.target)) {
-      mainNav.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('nav-open');
+      closeNav();
     }
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mainNav.classList.contains('is-open')) {
-      mainNav.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('nav-open');
+      closeNav();
       navToggle.focus();
     }
   });
@@ -433,17 +447,13 @@ if (navToggle && mainNav) {
   // Close nav on link click (for in-page anchors or same page)
   mainNav.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
-      mainNav.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('nav-open');
+      closeNav();
     });
   });
 
   window.addEventListener('resize', () => {
     if (window.innerWidth > 980) {
-      mainNav.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('nav-open');
+      closeNav();
     }
   });
 }

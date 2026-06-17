@@ -1,222 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/webp" href="images/app-icon-180.webp" />
-  <link rel="apple-touch-icon" href="images/app-icon-180.webp" />
-  <link rel="manifest" href="site.webmanifest" />
-  <meta name="description" content="Estimate website, SEO, app, and growth costs with Octopye's project estimator, using service type, scope, integrations, timeline, and support needs." />
+  <meta name="description" content="Run an automatic website audit and instant Octopye estimate for HTML CSS JS websites, WordPress, React SPAs, static sites, SEO, hosting and app design." />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <link rel="canonical" href="https://octopye.com/estimate" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Octopye" />
-  <meta property="og:title" content="Project Cost Estimator | Octopye" />
-  <meta property="og:description" content="Estimate website, SEO, app, and growth costs with Octopye's project estimator, using service type, scope, integrations, timeline, and support needs." />
-  <meta property="og:url" content="https://octopye.com/estimate" />
-  <meta property="og:image" content="https://octopye.com/images/app-icon-180.webp" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Project Cost Estimator | Octopye" />
-  <meta name="twitter:description" content="Estimate website, SEO, app, and growth costs with Octopye's project estimator, using service type, scope, integrations, timeline, and support needs." />
-  <meta name="twitter:image" content="https://octopye.com/images/app-icon-180.webp" />
-  <title>Project Cost Estimator | Octopye</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/webp" href="images/app-icon-180.webp" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta property="og:title" content="Automatic Website Audit and Instant Estimator | Octopye" />
+  <meta property="og:description" content="Audit a website, detect common platform signals, find priority fixes and get a realistic Octopye price range." />
+  <meta property="og:image" content="https://octopye.com/images/og-image.png" />
+  <title>Automatic Website Audit and Instant Estimator | Octopye</title>
   <link rel="stylesheet" href="styles.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Instant Project Estimator | Octopye",
-    "url": "https://octopye.com/estimate",
-    "description": "Get an instant cost estimate for web design, apps, SEO, and more in under 60 seconds. No sign-up required.",
-    "publisher": { "@type": "Organization", "name": "Octopye Digital Designs", "url": "https://octopye.com" }
-  }
-  </script>
-  <script>
-    window.OCTOPYE_CONFIG = {
-      web3FormsAccessKey: "def6e6ac-11ac-4b24-9c11-6238ea733b58",
-      gtmContainerId: "GTM-W6N5L457",
-      analyticsDebug: false
-    };
-  </script>
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer',window.OCTOPYE_CONFIG.gtmContainerId);
-  </script>
 </head>
 <body>
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W6N5L457" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <header class="site-header" id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
     <div class="container header-wrap">
-      <a class="brand" href="index" aria-label="Octopye Digital Designs home"><img src="images/octopye-transparent.webp" alt="Octopye Digital Designs logo" class="brand-logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>Digital Design • Web Engineering • SEO</small></span></a>
-      <nav class="main-nav" aria-label="Primary">
-        <a href="services">Services</a>
-        <a href="projects">Work</a>
-        <a href="packages">Packages</a>
-        <a href="estimate">Pricing Estimator</a>
-        <a href="industries">Industries</a>
-        <a href="booking">Contact</a>
-      </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><line x1="2" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="11" x2="20" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="16" x2="20" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-      <a class="btn btn-sm" data-event="cta_click" data-cta-location="header" data-cta-label="Contact" href="booking">Contact</a>
+      <a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button>
+      <nav class="main-nav" aria-label="Primary navigation"><a href="web-design.html">Web Design</a><a href="app-design.html">App Design</a><a href="seo.html">SEO</a><a href="website-care.html">Hosting</a><a href="packages.html">Pricing</a><a href="booking.html">Contact</a></nav>
+      <a class="button header-cta" href="booking.html#booking-form">Get free audit</a>
     </div>
   </header>
-
-  <main>
-    <section class="section-pad page-hero">
+  <main id="main">
+    <section class="hero compact">
       <div class="container">
-        <p class="eyebrow">Instant quote engine</p>
-        <h1 class="page-title">Get your recommended offer and budget now</h1>
-        <p class="lead">This website cost estimator and app quote calculator uses service type, industry complexity, page count, integrations, launch speed, and monthly growth support to recommend a realistic starting range.</p>
-      </div>
-    </section>
-
-    <section class="section-pad pt-0" id="estimate">
-      <div class="container estimator-wrap">
-        <div class="estimator-shell">
-          <div class="estimator-progress" aria-label="Estimator progress">
-            <div class="estimator-progress-bar" id="estimatorProgress"></div>
-          </div>
-
-          <form id="estimateForm" class="estimate-form" novalidate>
-            <fieldset class="estimate-step is-active" data-step="1">
-              <legend>What are you buying first?</legend>
-              <label class="option-card"><input type="radio" name="solution" value="ai-site" required />AI Web Design</label>
-              <label class="option-card"><input type="radio" name="solution" value="website" required />Custom Web Design</label>
-              <label class="option-card"><input type="radio" name="solution" value="web-app" required />Web Application Development</label>
-              <label class="option-card"><input type="radio" name="solution" value="mobile-app" required />Mobile App Development</label>
-              <label class="option-card"><input type="radio" name="solution" value="seo" required />SEO Services</label>
-              <label class="option-card"><input type="radio" name="solution" value="social" required />Social Media Management</label>
-            </fieldset>
-
-            <fieldset class="estimate-step" data-step="2">
-              <legend>Which industry are you in?</legend>
-              <label class="option-card"><input type="radio" name="industry" value="trades" required />Trades (Plumbers, Electricians, Construction)</label>
-              <label class="option-card"><input type="radio" name="industry" value="it" required />IT / SaaS / Cybersecurity</label>
-              <label class="option-card"><input type="radio" name="industry" value="restaurants" required />Restaurants / Hospitality</label>
-              <label class="option-card"><input type="radio" name="industry" value="healthcare" required />Healthcare / Medical</label>
-              <label class="option-card"><input type="radio" name="industry" value="solicitors" required />Legal / Solicitors</label>
-              <label class="option-card"><input type="radio" name="industry" value="accountants" required />Finance / Accountancy</label>
-              <label class="option-card"><input type="radio" name="industry" value="general" required />Other</label>
-            </fieldset>
-
-            <fieldset class="estimate-step" data-step="3">
-              <legend>How many pages/screens do you expect?</legend>
-              <label class="option-card"><input type="radio" name="pageCount" value="5" required />Up to 5</label>
-              <label class="option-card"><input type="radio" name="pageCount" value="10" required />Up to 10</label>
-              <label class="option-card"><input type="radio" name="pageCount" value="15" required />Up to 15</label>
-              <label class="option-card"><input type="radio" name="pageCount" value="20+" required />20+</label>
-            </fieldset>
-
-            <fieldset class="estimate-step" data-step="4">
-              <legend>What integrations/features are needed?</legend>
-              <label class="option-card"><input type="checkbox" name="integrations" value="booking" />Booking system</label>
-              <label class="option-card"><input type="checkbox" name="integrations" value="payments" />Payments integration</label>
-              <label class="option-card"><input type="checkbox" name="integrations" value="crm" />CRM integration</label>
-              <label class="option-card"><input type="checkbox" name="integrations" value="portal" />Client portal</label>
-              <label class="option-card"><input type="checkbox" name="integrations" value="marketplace" />Marketplace workflow</label>
-              <label class="option-card"><input type="checkbox" name="integrations" value="ai" />AI-assisted feature</label>
-            </fieldset>
-
-            <fieldset class="estimate-step" data-step="5">
-              <legend>How soon do you want to launch?</legend>
-              <label class="option-card"><input type="radio" name="timeline" value="standard" required />Standard timeline (best value)</label>
-              <label class="option-card"><input type="radio" name="timeline" value="accelerated" required />Accelerated timeline (priority)</label>
-            </fieldset>
-
-            <fieldset class="estimate-step" data-step="6">
-              <legend>Do you want monthly growth support?</legend>
-              <label class="option-card"><input type="radio" name="retainer" value="none" required />No, one-off project only</label>
-              <label class="option-card"><input type="radio" name="retainer" value="seo" required />SEO retainer</label>
-              <label class="option-card"><input type="radio" name="retainer" value="social" required />Social media management (GBP 300/mo)</label>
-              <label class="option-card"><input type="radio" name="retainer" value="ads" required />Google Ads management (GBP 200/mo)</label>
-              <label class="option-card"><input type="radio" name="retainer" value="social-ads" required />Social + Google Ads (GBP 500/mo)</label>
-              <label class="option-card"><input type="radio" name="retainer" value="seo-social" required />SEO + Social retainer</label>
-              <label class="option-card"><input type="radio" name="retainer" value="full-growth" required />SEO + Social + Google Ads</label>
-            </fieldset>
-
-            <div class="estimate-actions">
-              <button type="button" class="btn btn-ghost" id="estimateBack">Back</button>
-              <button type="button" class="btn" id="estimateNext">Next question</button>
-              <button type="submit" class="btn" id="estimateSubmit">Get my estimate</button>
-            </div>
-            <p class="form-status" id="estimateStatus" role="status" aria-live="polite"></p>
-          </form>
-
-          <aside class="estimate-result" id="estimateResult" aria-live="polite">
-            <p class="result-kicker">Recommended offer</p>
-            <h3 id="estimateOffer">Complete the questions to unlock your quote</h3>
-            <p class="estimate-price" id="estimatePrice">GBP -</p>
-            <p id="estimateSummary">Your estimate will include one-off build range plus monthly recommendation when selected.</p>
-            <p class="retainer-note" id="estimateRetainer">Monthly retainer recommendation appears here.</p>
-            <ul id="estimateBreakdown"></ul>
-            <a class="btn btn-full" data-event="cta_click" data-cta-location="estimator" data-cta-label="Get Detailed Proposal" id="estimateCta" href="booking">Get Detailed Proposal</a>
-            <div class="proposal-capture" id="proposalCapture">
-              <label>
-                Your name
-                <input type="text" id="proposalClientName" placeholder="Jane Smith" />
-              </label>
-              <label>
-                Your email
-                <input type="email" id="proposalClientEmail" placeholder="you@business.com" />
-              </label>
-              <label>
-                Company (optional)
-                <input type="text" id="proposalClientCompany" placeholder="Business name" />
-              </label>
-              <p class="form-status" id="proposalStatus" role="status" aria-live="polite"></p>
-            </div>
-          </aside>
+        <div class="hero-content">
+          <p class="eyebrow">Automatic audit and instant estimate</p>
+          <h1>Audit any website, then see what it should cost to fix or rebuild.</h1>
+          <p class="lead">Enter a URL and Octopye will run rendered checks for speed, SEO, accessibility and technical quality. It works across static HTML sites, WordPress, React/SPAs and other platforms where automated scanning is allowed, with a fallback estimate when a site blocks tools.</p>
         </div>
       </div>
     </section>
 
-    <section class="section-pad pt-0">
+    <section class="section white">
       <div class="container">
-        <p class="eyebrow">How pricing is shaped</p>
-        <h2 class="section-title">Why one project costs more than another</h2>
-        <div class="service-detail-grid">
-          <article class="detail-feature">
-            <h3>Scope and content volume</h3>
-            <p>A five-page brochure site, a content-rich corporate website, and a custom app all have different design, copy, QA, and launch demands. The page or screen count changes the delivery effort quickly.</p>
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow">Run the tool</p>
+            <h2>Start with the website URL.</h2>
+          </div>
+          <p class="page-lead">Some hosts, firewalls, login walls and bot rules block scanners. When that happens, the estimator still works from the manual inputs and flags the scan as blocked instead of giving fake results.</p>
+        </div>
+
+        <form class="form-panel lead-form audit-tool" id="audit-estimator-form">
+          <div class="form-grid">
+            <label class="field full">Website URL
+              <input name="audit_url" id="audit-url" inputmode="url" placeholder="https://example.com" required />
+            </label>
+            <label class="field">Current platform
+              <select name="platform" id="audit-platform">
+                <option value="auto">Auto-detect if possible</option>
+                <option value="static">Static HTML/CSS/JS</option>
+                <option value="wordpress">WordPress</option>
+                <option value="react">React or SPA</option>
+                <option value="builder">Wix, Squarespace or builder</option>
+                <option value="shop">Shopify or ecommerce</option>
+                <option value="unknown">Not sure</option>
+              </select>
+            </label>
+            <label class="field">Main goal
+              <select name="goal" id="audit-goal">
+                <option value="more_enquiries">More enquiries or bookings</option>
+                <option value="new_static_site">New HTML/CSS/JS website</option>
+                <option value="redesign">Fix or redesign current website</option>
+                <option value="seo">SEO and organic visibility</option>
+                <option value="hosting">Hosting, care and support</option>
+                <option value="app">App design or prototype</option>
+              </select>
+            </label>
+            <label class="field">Estimated pages
+              <select name="pages" id="audit-pages">
+                <option value="1">1 page</option>
+                <option value="3">2-3 pages</option>
+                <option value="5" selected>4-5 pages</option>
+                <option value="8">6-8 pages</option>
+                <option value="12">9-12 pages</option>
+              </select>
+            </label>
+            <label class="field">Monthly support
+              <select name="support" id="audit-support">
+                <option value="none">No monthly support</option>
+                <option value="care">Hosting and care</option>
+                <option value="growth">Growth care</option>
+                <option value="seo">SEO foundations</option>
+              </select>
+            </label>
+            <fieldset class="field full audit-checks">
+              <span>Likely extras</span>
+              <label><input type="checkbox" name="addon" value="copywriting" /> Copywriting help</label>
+              <label><input type="checkbox" name="addon" value="forms" /> Booking or enquiry forms</label>
+              <label><input type="checkbox" name="addon" value="tracking" /> Analytics and conversion tracking</label>
+              <label><input type="checkbox" name="addon" value="seo_pages" /> Extra SEO service pages</label>
+              <label><input type="checkbox" name="addon" value="hosting" /> Hosting move or care setup</label>
+              <label><input type="checkbox" name="addon" value="app_design" /> App design or prototype</label>
+            </fieldset>
+          </div>
+          <div class="hero-actions">
+            <button class="button" type="submit" id="run-audit">Run audit and estimate</button>
+            <button class="button secondary" type="button" id="estimate-only">Estimate without scan</button>
+          </div>
+          <p class="form-status" id="audit-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="audit-results-section">
+      <div class="container">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow">Results</p>
+            <h2>Audit findings and instant quote.</h2>
+          </div>
+          <p class="page-lead" id="audit-summary">Run the audit to generate scores, detected platform signals, priority fixes and a recommended Octopye package.</p>
+        </div>
+
+        <div class="audit-result-grid">
+          <div class="calculator-result audit-estimate-card" id="estimate-output" aria-live="polite">
+            <span>Instant estimate</span>
+            <strong>Complete the form</strong>
+            <p class="muted">The estimate updates after a scan or when you choose manual options.</p>
+          </div>
+          <div class="card audit-platform-card">
+            <h3>Detected setup</h3>
+            <p id="platform-output">No scan yet. Manual platform choice will be used if scanning is blocked.</p>
+          </div>
+        </div>
+
+        <div class="score-grid" id="score-grid" aria-live="polite">
+          <div class="stat"><strong>--</strong><p>Mobile performance</p></div>
+          <div class="stat"><strong>--</strong><p>Desktop performance</p></div>
+          <div class="stat"><strong>--</strong><p>SEO</p></div>
+          <div class="stat"><strong>--</strong><p>Accessibility</p></div>
+        </div>
+
+        <div class="grid two audit-panels">
+          <article class="card">
+            <h3>Priority work</h3>
+            <ul class="check-list" id="priority-list">
+              <li>Run a scan to see recommended actions.</li>
+            </ul>
           </article>
-          <article class="detail-feature">
-            <h3>Integrations and workflow complexity</h3>
-            <p>Payments, CRM integrations, portals, booking systems, custom dashboards, and role-based user journeys add build depth because they change both the interface and the underlying logic.</p>
+          <article class="card">
+            <h3>Recommended route</h3>
+            <ul class="check-list" id="recommendation-list">
+              <li>Complete the form to get a package recommendation.</li>
+            </ul>
           </article>
-          <article class="detail-feature">
-            <h3>Speed and post-launch support</h3>
-            <p>Accelerated timelines, SEO retainers, social media support, and Google Ads management all affect the recommendation because they change how much work happens before and after launch.</p>
-          </article>
+        </div>
+
+        <div class="form-panel audit-send-panel">
+          <h3>Send this audit to Octopye</h3>
+          <p class="muted">The audit summary is copied into the booking link so the enquiry starts with context.</p>
+          <div class="hero-actions">
+            <a class="button" id="audit-booking-link" href="booking.html#booking-form">Send audit and estimate</a>
+            <button class="button secondary" type="button" id="copy-audit-summary">Copy summary</button>
+          </div>
+          <p class="form-status" id="copy-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Scanning coverage</p>
+          <h2>How the auditor handles different website types.</h2>
+        </div>
+        <div class="grid four">
+          <article class="card"><h3>HTML sites</h3><p>Checks speed, SEO metadata, accessibility, best practices, forms and conversion basics.</p></article>
+          <article class="card"><h3>WordPress</h3><p>Looks for WordPress signals, plugin-heavy performance issues, image weight and SEO structure.</p></article>
+          <article class="card"><h3>React and SPAs</h3><p>Uses rendered Lighthouse-style checks so client-rendered pages can still be assessed where public crawling is allowed.</p></article>
+          <article class="card"><h3>Blocked scans</h3><p>If a firewall, login, robots rule or host blocks scanners, the tool explains the block and produces a manual estimate instead of fake scores.</p></article>
         </div>
       </div>
     </section>
   </main>
-
-  <footer class="site-footer">
-    <div class="container footer-wrap">
-      <p><strong>Octopye</strong> | Digital design and web engineering studio</p>
-      <div class="footer-links">
-        <a href="services">Services</a>
-        <a href="projects">Work</a>
-        <a href="packages">Packages</a>
-      </div>
-      <p class="tiny">Copyright <span id="year"></span> Octopye. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a><p class="muted">Email designs@octopye.com for direct enquiries.</p></div><nav class="footer-links" aria-label="Footer navigation"><a href="web-design.html">Web Design</a><a href="app-design.html">App Design</a><a href="packages.html">Pricing</a><a href="sitemap.xml">Sitemap</a></nav></div></footer>
+  <div class="sticky-mobile-cta"><a class="button secondary" href="packages.html">Pricing</a><a class="button" href="#audit-estimator-form">Run audit</a></div>
+  <script src="script.js" defer></script>
 </body>
 </html>
-
-
-
-
-

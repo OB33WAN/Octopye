@@ -1,22 +1,21 @@
 {
-  "name": "Octopye Digital Designs",
+  "name": "Octopye",
   "short_name": "Octopye",
-  "description": "Custom web design, SEO, and growth systems for UK businesses.",
-  "start_url": "/index.html",
+  "description": "Affordable conversion websites and SEO support for UK small businesses.",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#eef8f8",
-  "theme_color": "#0b2a33",
+  "background_color": "#f7f9fb",
+  "theme_color": "#0f766e",
   "icons": [
     {
-      "src": "/images/app-icon-180.webp",
+      "src": "images/app-icon-180.webp",
       "sizes": "180x180",
       "type": "image/webp"
     },
     {
-      "src": "/images/app-icon-180.webp",
-      "sizes": "512x512",
-      "type": "image/webp",
-      "purpose": "any maskable"
+      "src": "images/app-icon-32.webp",
+      "sizes": "32x32",
+      "type": "image/webp"
     }
   ]
 }

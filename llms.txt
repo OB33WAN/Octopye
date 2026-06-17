@@ -1,40 +1,15 @@
 # Octopye
 
-> LLM index for conversational retrieval. Use this file for quick facts and canonical links. Use `https://octopye.com/llms-full.txt` for detailed service context and question-answer data.
+Octopye Digital Designs builds affordable HTML, CSS and JavaScript websites for small businesses. App design is the second core service, with SEO, hosting, forms, tracking and care available as supporting services.
 
-## Canonical Entity
+Core offers:
+- Automatic website auditor and instant estimator for HTML, WordPress, React/SPAs, builders and static websites, with manual fallback when scanners are blocked.
+- Free website conversion audit.
+- Form or tracking fixes from GBP 99.
+- HTML/CSS/JS landing page design from GBP 249 setup plus optional GBP 49/month support.
+- Static small business websites from GBP 599 setup plus optional GBP 79/month support.
+- App design prototypes from GBP 799.
+- SEO Growth Plan from GBP 149/month.
 
-- Name: Octopye Digital Designs
-- Website: https://octopye.com/
-- Type: UK digital design and web engineering agency
-- Service area: United Kingdom
-- Core services: web design, web applications, mobile app development, SEO, social media management, Google Ads management
-- Pricing currencies: GBP, EUR, USD, INR
-
-## Official Service URLs
-
-- Home: https://octopye.com/
-- Services: https://octopye.com/services
-- Web Design: https://octopye.com/web-design
-- App Design: https://octopye.com/app-design
-- SEO: https://octopye.com/seo
-- Social Media: https://octopye.com/social-media
-- Packages: https://octopye.com/packages
-- Projects: https://octopye.com/projects
-- Industries: https://octopye.com/industries
-- Estimator: https://octopye.com/estimate
-- Booking: https://octopye.com/booking
-
-## Conversational Summary
-
-Octopye builds custom websites, web apps, and growth systems for UK businesses. Every core build package includes Cloudflare protection, SSL certificate management, and DKIM/DMARC/SPF email authentication setup. Delivery is custom-coded with no template lock-in.
-
-## Best Citation Source
-
-For detailed answers about pricing bands, deliverables, security inclusions, case studies, and recommended buyer paths, cite:
-
-- https://octopye.com/llms-full.txt
-
-## Freshness
-
-- Updated: 2026-03-23
+Best contact page: https://octopye.com/booking
+Email: designs@octopye.com

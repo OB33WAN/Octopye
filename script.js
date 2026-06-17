@@ -1,1607 +1,735 @@
-const revealElements = document.querySelectorAll('.reveal');
-const floatingCta = document.getElementById('floatingCta');
-const navToggle = document.getElementById('navToggle');
-const mainNav = document.querySelector('.main-nav');
-const teardownForm = document.getElementById('teardownForm');
-const formStatus = document.getElementById('formStatus');
-const formInputs = teardownForm ? teardownForm.querySelectorAll('input') : [];
-const bookingForm = document.getElementById('bookingForm');
-const bookingStatus = document.getElementById('bookingStatus');
-const bookingDate = document.getElementById('bookingDate');
-const auditPreview = document.getElementById('auditPreview');
-const auditPreviewList = document.getElementById('auditPreviewList');
-const auditFallback = document.getElementById('auditFallback');
-const seoItDownloadLink = document.getElementById('seoItDownloadLink');
-const isThisSafeDownloadLink = document.getElementById('isThisSafeDownloadLink');
-const leadMagnetForm = document.getElementById('leadMagnetForm');
-const leadMagnetStatus = document.getElementById('leadMagnetStatus');
-const projectEnquiryForms = document.querySelectorAll('.project-enquiry-form');
-const availabilityChip = document.getElementById('availabilityChip');
-const roiForm = document.getElementById('roiForm');
-const roiVisitors = document.getElementById('roiVisitors');
-const roiCurrent = document.getElementById('roiCurrent');
-const roiTarget = document.getElementById('roiTarget');
-const roiDeal = document.getElementById('roiDeal');
-const roiResult = document.getElementById('roiResult');
-const ctaElements = document.querySelectorAll('[data-event="cta_click"], [data-event="form_submit_click"]');
-const toggleButtons = document.querySelectorAll('.toggle-btn');
-const priceCards = document.querySelectorAll('.price-card');
-const faqButtons = document.querySelectorAll('.faq-item button');
-const yearNode = document.getElementById('year');
-const runtimeConfig = window.OCTOPYE_CONFIG || {};
-const currencyStorageKey = 'octopye_currency';
-const supportedCurrencies = ['GBP', 'EUR', 'USD', 'INR'];
-let activeCurrency = 'GBP';
-const seoItPlayStoreUrl = String(runtimeConfig.seoItPlayStoreUrl || 'https://play.google.com/store/apps/details?id=com.seoit.app');
-const isThisSafePlayStoreUrl = String(runtimeConfig.isThisSafePlayStoreUrl || 'https://play.google.com/store/apps/details?id=com.isthissafe');
-let formStartedTracked = false;
-const estimateForm = document.getElementById('estimateForm');
-const estimateSteps = document.querySelectorAll('.estimate-step');
-const estimateBackButton = document.getElementById('estimateBack');
-const estimateNextButton = document.getElementById('estimateNext');
-const estimateSubmitButton = document.getElementById('estimateSubmit');
-const estimateStatus = document.getElementById('estimateStatus');
-const estimateProgress = document.getElementById('estimatorProgress');
-const estimateOffer = document.getElementById('estimateOffer');
-const estimatePrice = document.getElementById('estimatePrice');
-const estimateSummary = document.getElementById('estimateSummary');
-const estimateBreakdown = document.getElementById('estimateBreakdown');
-const estimateCta = document.getElementById('estimateCta');
-const estimateRetainer = document.getElementById('estimateRetainer');
-const proposalClientName = document.getElementById('proposalClientName');
-const proposalClientEmail = document.getElementById('proposalClientEmail');
-const proposalClientCompany = document.getElementById('proposalClientCompany');
-const proposalStatus = document.getElementById('proposalStatus');
-let currentEstimateStep = 1;
-let latestEstimateDetails = null;
-const web3FormsEndpoint = 'https://api.web3forms.com/submit';
-const web3FormsAccessKey = String(runtimeConfig.web3FormsAccessKey || '');
-const parallaxTargets = document.querySelectorAll('.hero-card, .hero-showcase-card, .detail-hero-image');
-const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-const precisePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
-const canUseParallax = !reducedMotionQuery.matches && precisePointerQuery.matches;
+(function () {
+  const body = document.body;
+  const navToggle = document.querySelector(".nav-toggle");
+  const mainNav = document.querySelector(".main-nav");
 
-const currencyFormatMeta = {
-  GBP: { locale: 'en-GB', label: 'GBP' },
-  EUR: { locale: 'de-DE', label: 'EUR' },
-  USD: { locale: 'en-US', label: 'USD' },
-  INR: { locale: 'en-IN', label: 'INR' }
-};
-
-// Custom market pricing table (not FX conversion) for common package anchors.
-const customCurrencyPriceTable = {
-  75: { EUR: 95, USD: 100, INR: 7900 },
-  150: { EUR: 190, USD: 210, INR: 14900 },
-  200: { EUR: 250, USD: 280, INR: 19900 },
-  250: { EUR: 310, USD: 340, INR: 24900 },
-  300: { EUR: 370, USD: 410, INR: 29900 },
-  450: { EUR: 560, USD: 620, INR: 44900 },
-  500: { EUR: 620, USD: 690, INR: 49900 },
-  550: { EUR: 690, USD: 760, INR: 54900 },
-  850: { EUR: 1050, USD: 1170, INR: 84900 },
-  900: { EUR: 1120, USD: 1240, INR: 89900 },
-  950: { EUR: 1180, USD: 1310, INR: 94900 },
-  1200: { EUR: 1490, USD: 1650, INR: 119000 },
-  1250: { EUR: 1550, USD: 1720, INR: 124000 },
-  1500: { EUR: 1850, USD: 2050, INR: 149000 },
-  1750: { EUR: 2180, USD: 2420, INR: 174000 },
-  1999: { EUR: 2490, USD: 2790, INR: 199000 },
-  2500: { EUR: 3100, USD: 3490, INR: 249000 },
-  2999: { EUR: 3690, USD: 4150, INR: 299000 },
-  3000: { EUR: 3700, USD: 4190, INR: 299900 },
-  4999: { EUR: 6190, USD: 6990, INR: 499000 },
-  5999: { EUR: 7390, USD: 8350, INR: 599000 },
-  6000: { EUR: 7400, USD: 8390, INR: 599900 },
-  9999: { EUR: 11900, USD: 13400, INR: 999000 },
-  12000: { EUR: 14200, USD: 15900, INR: 1199000 }
-};
-
-const marketFallbackModel = {
-  GBP: { multiplier: 1, step: 1 },
-  EUR: { multiplier: 1.23, step: 10 },
-  USD: { multiplier: 1.37, step: 10 },
-  INR: { multiplier: 102, step: 100 }
-};
-
-const textPriceNodes = [];
-const textPriceBaseMap = new WeakMap();
-
-const formatCurrencyNumber = (amount, currency) => {
-  const meta = currencyFormatMeta[currency] || currencyFormatMeta.GBP;
-  return Number(amount).toLocaleString(meta.locale);
-};
-
-const getLocalizedAmount = (gbpAmount, currency) => {
-  const normalizedAmount = Math.round(Number(gbpAmount) || 0);
-  if (currency === 'GBP') {
-    return normalizedAmount;
+  if (navToggle && mainNav) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = body.classList.toggle("nav-open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+    });
   }
 
-  const directHit = customCurrencyPriceTable[normalizedAmount]?.[currency];
-  if (typeof directHit === 'number') {
-    return directHit;
-  }
-
-  const fallback = marketFallbackModel[currency] || marketFallbackModel.GBP;
-  const stepped = Math.round((normalizedAmount * fallback.multiplier) / fallback.step) * fallback.step;
-  return Math.max(fallback.step, stepped);
-};
-
-const formatCurrencyLabel = (gbpAmount, currency) => `${currency} ${formatCurrencyNumber(getLocalizedAmount(gbpAmount, currency), currency)}`;
-
-const convertPriceText = (rawText, currency) => {
-  if (!rawText) {
-    return rawText;
-  }
-
-  let transformed = rawText;
-
-  transformed = transformed.replace(/GBP\s*([0-9][0-9,]*)\s*-\s*([0-9][0-9,]*)(\+)?/gi, (_, minRaw, maxRaw, plusSign) => {
-    const minValue = Number(String(minRaw).replace(/,/g, ''));
-    const maxValue = Number(String(maxRaw).replace(/,/g, ''));
-    const plus = plusSign || '';
-    return `${currency} ${formatCurrencyNumber(getLocalizedAmount(minValue, currency), currency)} - ${formatCurrencyNumber(getLocalizedAmount(maxValue, currency), currency)}${plus}`;
-  });
-
-  transformed = transformed.replace(/GBP\s*([0-9][0-9,]*)(\+)?(\/?mo|\/?request)?/gi, (_, amountRaw, plusSign, suffix) => {
-    const amount = Number(String(amountRaw).replace(/,/g, ''));
-    const plus = plusSign || '';
-    const unit = suffix || '';
-    return `${currency} ${formatCurrencyNumber(getLocalizedAmount(amount, currency), currency)}${plus}${unit}`;
-  });
-
-  transformed = transformed.replace(/£\s*([0-9][0-9,]*)(\+)?(\/?mo|\/?request)?/gi, (_, amountRaw, plusSign, suffix) => {
-    const amount = Number(String(amountRaw).replace(/,/g, ''));
-    const plus = plusSign || '';
-    const unit = suffix || '';
-    return `${currency} ${formatCurrencyNumber(getLocalizedAmount(amount, currency), currency)}${plus}${unit}`;
-  });
-
-  transformed = transformed.replace(/GBP\s*-/gi, `${currency} -`);
-  transformed = transformed.replace(/£\s*-/gi, `${currency} -`);
-
-  return transformed;
-};
-
-const collectPriceTextNodes = () => {
-  textPriceNodes.length = 0;
-  if (!document.body) {
-    return;
-  }
-
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-    acceptNode(node) {
-      const parent = node.parentElement;
-      if (!parent) {
-        return NodeFilter.FILTER_REJECT;
-      }
-
-      const tagName = parent.tagName;
-      if (tagName === 'SCRIPT' || tagName === 'STYLE' || tagName === 'NOSCRIPT') {
-        return NodeFilter.FILTER_REJECT;
-      }
-
-      const text = node.nodeValue || '';
-      if (!/(GBP\s*([0-9]|-)|£\s*([0-9]|-))/i.test(text)) {
-        return NodeFilter.FILTER_REJECT;
-      }
-
-      return NodeFilter.FILTER_ACCEPT;
+  document.querySelectorAll(".main-nav a").forEach((link) => {
+    const current = window.location.pathname.replace(/\/$/, "") || "/index.html";
+    const href = new URL(link.getAttribute("href"), window.location.href).pathname.replace(/\/$/, "");
+    if (current === href || current === `${href}.html`) {
+      link.setAttribute("aria-current", "page");
     }
   });
 
-  let current = walker.nextNode();
-  while (current) {
-    if (!textPriceBaseMap.has(current)) {
-      textPriceBaseMap.set(current, current.nodeValue || '');
-    }
-
-    textPriceNodes.push({ node: current, baseText: textPriceBaseMap.get(current) || '' });
-    current = walker.nextNode();
-  }
-};
-
-const applyCurrencyToTextNodes = (currency) => {
-  textPriceNodes.forEach((entry) => {
-    entry.node.nodeValue = convertPriceText(entry.baseText, currency);
-  });
-};
-
-const applyCurrencyToPriceCards = (currency) => {
-  priceCards.forEach((card) => {
-    const priceWrap = card.querySelector('.price');
-    const priceValue = priceWrap?.querySelector('span');
-    if (!priceWrap || !priceValue) {
-      return;
-    }
-
-    const originalRaw = priceValue.dataset.baseValue || priceValue.textContent || '';
-    if (!priceValue.dataset.baseValue) {
-      priceValue.dataset.baseValue = originalRaw;
-    }
-
-    const amount = Number(originalRaw.replace(/[^0-9]/g, ''));
-    if (!amount) {
-      return;
-    }
-
-    const hasPlus = /\+/.test(originalRaw);
-    const updatedAmount = `${formatCurrencyNumber(getLocalizedAmount(amount, currency), currency)}${hasPlus ? '+' : ''}`;
-    priceValue.textContent = updatedAmount;
-
-    // Keep the leading currency token synchronized for structured price blocks.
-    const leadingTextNode = Array.from(priceWrap.childNodes).find((node) => node.nodeType === Node.TEXT_NODE);
-    if (leadingTextNode) {
-      leadingTextNode.nodeValue = `${currency} `;
-    }
-  });
-};
-
-const applyActiveCurrency = () => {
-  collectPriceTextNodes();
-  applyCurrencyToTextNodes(activeCurrency);
-  applyCurrencyToPriceCards(activeCurrency);
-};
-
-const mountCurrencyPicker = () => {
-  const headerWrap = document.querySelector('.header-wrap') || document.querySelector('.site-header .container');
-  if (!headerWrap || headerWrap.querySelector('.currency-picker')) {
-    return;
+  const params = new URLSearchParams(window.location.search);
+  const requestedPackage = params.get("package");
+  if (requestedPackage) {
+    document.querySelectorAll("[name='package']").forEach((field) => {
+      field.value = requestedPackage;
+    });
   }
 
-  const picker = document.createElement('div');
-  picker.className = 'currency-picker';
-  picker.innerHTML = `
-    <label for="currencyPicker" class="currency-picker-label">Currency</label>
-    <select id="currencyPicker" class="currency-picker-select" aria-label="Select currency">
-      <option value="GBP">GBP</option>
-      <option value="EUR">EUR</option>
-      <option value="USD">USD</option>
-      <option value="INR">INR</option>
-    </select>
-  `;
-
-  const navToggleButton = headerWrap.querySelector('.nav-toggle');
-  const headerCta = headerWrap.querySelector('.btn.btn-sm');
-  if (navToggleButton) {
-    headerWrap.insertBefore(picker, navToggleButton);
-  } else if (headerCta) {
-    headerWrap.insertBefore(picker, headerCta);
-  } else {
-    headerWrap.appendChild(picker);
+  const requestedWebsite = params.get("website");
+  if (requestedWebsite) {
+    document.querySelectorAll("[name='website']").forEach((field) => {
+      field.value = requestedWebsite;
+    });
   }
 
-  const pickerSelect = picker.querySelector('.currency-picker-select');
-  if (!pickerSelect) {
-    return;
-  }
-
-  pickerSelect.value = activeCurrency;
-  pickerSelect.addEventListener('change', (event) => {
-    const selected = String(event.target.value || 'GBP').toUpperCase();
-    activeCurrency = supportedCurrencies.includes(selected) ? selected : 'GBP';
-    localStorage.setItem(currencyStorageKey, activeCurrency);
-    applyActiveCurrency();
-
-    const details = latestEstimateDetails;
-    if (details) {
-      showEstimateResult(details);
-    }
-  });
-};
-
-const initializeCurrency = () => {
-  const stored = String(localStorage.getItem(currencyStorageKey) || 'GBP').toUpperCase();
-  activeCurrency = supportedCurrencies.includes(stored) ? stored : 'GBP';
-  mountCurrencyPicker();
-  applyActiveCurrency();
-};
-
-const trackEvent = (eventName, payload = {}) => {
-  const eventPayload = {
-    event: eventName,
-    timestamp: new Date().toISOString(),
-    page_path: window.location.pathname,
-    ...payload
-  };
-
-  if (Array.isArray(window.dataLayer)) {
-    window.dataLayer.push(eventPayload);
-  }
-
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', eventName, payload);
-  }
-
-  if (typeof window.plausible === 'function') {
-    window.plausible(eventName, { props: payload });
-  }
-
-  if (runtimeConfig.analyticsDebug) {
-    console.info('[Analytics event]', eventPayload);
-  }
-};
-
-if (yearNode) {
-  yearNode.textContent = String(new Date().getFullYear());
-}
-
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
+  const requestedSummary = params.get("summary");
+  if (requestedSummary) {
+    document.querySelectorAll("textarea[name='message']").forEach((field) => {
+      if (!field.value) {
+        field.value = requestedSummary;
       }
     });
-  },
-  { threshold: 0.15 }
-);
-
-revealElements.forEach((element) => revealObserver.observe(element));
-
-if (canUseParallax) {
-  parallaxTargets.forEach((element) => {
-    element.classList.add('is-parallax');
-    if (element.classList.contains('detail-hero-image')) {
-      element.classList.add('is-floating');
-    }
-  });
-}
-
-if (canUseParallax && parallaxTargets.length) {
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    parallaxTargets.forEach((element, index) => {
-      const depth = element.classList.contains('detail-hero-image') ? 0.035 : 0.02;
-      const offset = Math.max(-18, Math.min(18, scrollY * depth * (index % 2 === 0 ? 1 : 0.75)));
-      element.style.transform = `translate3d(0, ${offset}px, 0)`;
-    });
-  }, { passive: true });
-}
-
-if (seoItDownloadLink) {
-  seoItDownloadLink.href = seoItPlayStoreUrl;
-}
-
-if (isThisSafeDownloadLink) {
-  isThisSafeDownloadLink.href = isThisSafePlayStoreUrl;
-}
-
-if (bookingDate) {
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
-  bookingDate.min = `${yyyy}-${mm}-${dd}`;
-}
-
-if (availabilityChip) {
-  const now = new Date();
-  const day = now.getDay();
-  const daysUntilMonday = day === 0 ? 1 : Math.max(1, 8 - day);
-  const nextSlot = new Date(now);
-  nextSlot.setDate(now.getDate() + daysUntilMonday);
-  const slotsLeft = Math.max(1, 8 - day);
-  const label = nextSlot.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
-  availabilityChip.textContent = `${slotsLeft} strategy slots left this week | Next available: ${label}`;
-}
-
-if (floatingCta) {
-  const hideFloatingCtaOnPath = ['/booking.html', '/booking'];
-  if (hideFloatingCtaOnPath.includes(window.location.pathname.toLowerCase())) {
-    floatingCta.style.display = 'none';
   }
 
-  window.addEventListener('scroll', () => {
-    const isSuppressed = hideFloatingCtaOnPath.includes(window.location.pathname.toLowerCase());
-    const show = !isSuppressed && window.scrollY > 500;
-    floatingCta.classList.toggle('is-visible', show);
-  });
-}
-
-// Mobile nav hamburger toggle
-if (navToggle && mainNav) {
-  if (!mainNav.id) {
-    mainNav.id = 'primaryNav';
+  const bookingDate = document.querySelector("[name='preferred_date']");
+  if (bookingDate && bookingDate.type === "date") {
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+    bookingDate.min = date.toISOString().slice(0, 10);
   }
-  navToggle.setAttribute('aria-controls', mainNav.id);
 
-  const closeNav = () => {
-    mainNav.classList.remove('is-open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('nav-open');
+  const setStatus = (form, message, type) => {
+    const status = form.querySelector(".form-status");
+    if (!status) return;
+    status.textContent = message;
+    status.className = `form-status ${type || ""}`.trim();
   };
 
-  const toggleNav = () => {
-    const isOpen = mainNav.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
-    document.body.classList.toggle('nav-open', isOpen);
-  };
-
-  navToggle.addEventListener('click', (e) => {
-    if (e.button !== 0) {
-      return;
-    }
-    e.preventDefault();
-    e.stopPropagation();
-    toggleNav();
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!mainNav.classList.contains('is-open')) {
-      return;
-    }
-    if (!navToggle.contains(e.target) && !mainNav.contains(e.target)) {
-      closeNav();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mainNav.classList.contains('is-open')) {
-      closeNav();
-      navToggle.focus();
-    }
-  });
-
-  // Close nav on link click (for in-page anchors or same page)
-  mainNav.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      closeNav();
-    });
-  });
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 980) {
-      closeNav();
-    }
-  });
-}
-
-// Project filter
-const filterButtons = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card[data-type]');
-
-if (filterButtons.length && projectCards.length) {
-  filterButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      filterButtons.forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      projectCards.forEach((card) => {
-        const type = card.dataset.type || '';
-        card.style.display = filter === 'all' || type.includes(filter) ? '' : 'none';
-      });
-    });
-  });
-}
-
-ctaElements.forEach((element) => {
-  element.addEventListener('click', () => {
-    trackEvent(element.dataset.event, {
-      cta_label: element.dataset.ctaLabel || element.textContent.trim(),
-      cta_location: element.dataset.ctaLocation || 'unknown'
-    });
-  });
-});
-
-formInputs.forEach((input) => {
-  input.addEventListener('focus', () => {
-    if (formStartedTracked) {
-      return;
-    }
-
-    formStartedTracked = true;
-    trackEvent('form_start', {
-      form_id: 'teardownForm'
-    });
-  });
-});
-
-const saveLocalLeadCopy = (payload) => {
-  const storageKey = 'octopye_leads_backup';
-  const existingLeads = JSON.parse(localStorage.getItem(storageKey) || '[]');
-  existingLeads.push(payload);
-  localStorage.setItem(storageKey, JSON.stringify(existingLeads.slice(-50)));
-};
-
-const postJson = async (url, payload) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
-    body: JSON.stringify(payload)
-  });
-
-  const body = await response.json().catch(() => ({}));
-  if (!response.ok || body.ok === false) {
-    const reason = body.error || `Request failed (${response.status})`;
-    throw new Error(reason);
-  }
-
-  return body;
-};
-
-const sendViaWeb3Forms = async (payload) => {
-  if (!web3FormsAccessKey) {
-    throw new Error('Web3Forms access key is not configured.');
-  }
-
-  const requestBody = {
-    access_key: web3FormsAccessKey,
-    ...payload
-  };
-
-  const body = await postJson(web3FormsEndpoint, requestBody);
-  if (!body.success) {
-    throw new Error(body.message || 'Web3Forms submission failed.');
-  }
-
-  return body;
-};
-
-const fetchWithTimeout = async (url, options = {}, timeoutMs = 20000) => {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal
-    });
-    return response;
-  } finally {
-    clearTimeout(timeoutId);
-  }
-};
-
-const normalizeTargetUrl = (url) => {
-  const trimmed = String(url || '').trim();
-  if (!trimmed) {
-    return '';
-  }
-
-  if (/^https?:\/\//i.test(trimmed)) {
-    return trimmed;
-  }
-
-  return `https://${trimmed}`;
-};
-
-const runPageSpeed = async (targetUrl, strategy) => {
-  const endpoint = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}&strategy=${strategy}&category=performance&category=accessibility&category=best-practices&category=seo`;
-  const response = await fetchWithTimeout(endpoint, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json'
-    }
-  }, 35000);
-
-  if (!response.ok) {
-    throw new Error(`PageSpeed ${strategy} failed (${response.status})`);
-  }
-
-  return response.json();
-};
-
-const extractCategoryScore = (data, key) => {
-  const score = data?.lighthouseResult?.categories?.[key]?.score;
-  if (typeof score !== 'number') {
-    return null;
-  }
-  return Math.round(score * 100);
-};
-
-const extractTopOpportunities = (data) => {
-  const audits = data?.lighthouseResult?.audits || {};
-  const opportunities = Object.values(audits)
-    .filter((audit) => audit?.details?.type === 'opportunity' && typeof audit?.details?.overallSavingsMs === 'number')
-    .sort((a, b) => b.details.overallSavingsMs - a.details.overallSavingsMs)
-    .slice(0, 3)
-    .map((audit) => `${audit.title} (~${Math.round(audit.details.overallSavingsMs)}ms saving)`);
-
-  return opportunities;
-};
-
-const fetchTextViaProxy = async (url) => {
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-  const response = await fetchWithTimeout(proxyUrl, {
-    method: 'GET',
-    headers: {
-      Accept: 'text/plain,text/html,application/xml'
-    }
-  }, 16000);
-
-  if (!response.ok) {
-    throw new Error(`Proxy fetch failed (${response.status})`);
-  }
-
-  return response.text();
-};
-
-const runQuickCrawl = async (targetUrl) => {
-  const target = new URL(targetUrl);
-  const origin = target.origin;
-  const crawl = {
-    pagesDiscovered: 0,
-    pagesSampled: 0,
-    hasRobots: false,
-    hasSitemap: false,
-    titlePresent: false,
-    metaDescriptionPresent: false,
-    h1Count: 0
-  };
-
-  try {
-    const robots = await fetchTextViaProxy(`${origin}/robots.txt`);
-    crawl.hasRobots = /user-agent|sitemap/i.test(robots);
-  } catch (error) {
-    crawl.hasRobots = false;
-  }
-
-  try {
-    const sitemap = await fetchTextViaProxy(`${origin}/sitemap.xml`);
-    crawl.hasSitemap = /<urlset|<sitemapindex/i.test(sitemap);
-  } catch (error) {
-    crawl.hasSitemap = false;
-  }
-
-  try {
-    const homepage = await fetchTextViaProxy(targetUrl);
-    crawl.titlePresent = /<title>[^<]+<\/title>/i.test(homepage);
-    crawl.metaDescriptionPresent = /<meta[^>]+name=["']description["']/i.test(homepage);
-    crawl.h1Count = (homepage.match(/<h1\b/gi) || []).length;
-
-    const links = Array.from(homepage.matchAll(/<a[^>]+href=["']([^"'#]+)["']/gi))
-      .map((m) => m[1])
-      .map((href) => {
-        try {
-          return new URL(href, origin);
-        } catch (e) {
-          return null;
-        }
-      })
-      .filter((u) => u && u.origin === origin)
-      .map((u) => u.pathname)
-      .filter((pathname) => pathname && pathname !== '/')
-      .slice(0, 30);
-
-    const uniquePaths = Array.from(new Set(links));
-    crawl.pagesDiscovered = uniquePaths.length + 1;
-    crawl.pagesSampled = Math.min(crawl.pagesDiscovered, 6);
-  } catch (error) {
-    // Crawl data is optional and can fail on strict anti-bot setups.
-  }
-
-  return crawl;
-};
-
-const generateAutomatedAudit = async (rawUrl) => {
-  const targetUrl = normalizeTargetUrl(rawUrl);
-  if (!targetUrl) {
-    throw new Error('No valid website URL provided.');
-  }
-
-  // allSettled: crawl or one PageSpeed call being blocked will not kill the other results
-  const [mobileResult, desktopResult, crawlResult] = await Promise.allSettled([
-    runPageSpeed(targetUrl, 'mobile'),
-    runPageSpeed(targetUrl, 'desktop'),
-    runQuickCrawl(targetUrl)
-  ]);
-
-  const mobile = mobileResult.status === 'fulfilled' ? mobileResult.value : null;
-  const desktop = desktopResult.status === 'fulfilled' ? desktopResult.value : null;
-
-  // If PageSpeed failed entirely there is nothing useful to return
-  if (!mobile && !desktop) {
-    throw new Error('PageSpeed API could not reach this URL. The site may block automated scanning.');
-  }
-
-  const crawl = crawlResult.status === 'fulfilled' ? crawlResult.value : {
-    pagesDiscovered: 0, pagesSampled: 0, hasRobots: false, hasSitemap: false,
-    titlePresent: false, metaDescriptionPresent: false, h1Count: 0
-  };
-
-  const scores = {
-    mobilePerformance: mobile ? extractCategoryScore(mobile, 'performance') : null,
-    desktopPerformance: desktop ? extractCategoryScore(desktop, 'performance') : null,
-    seo: mobile ? extractCategoryScore(mobile, 'seo') : null,
-    accessibility: mobile ? extractCategoryScore(mobile, 'accessibility') : null,
-    bestPractices: mobile ? extractCategoryScore(mobile, 'best-practices') : null
-  };
-
-  const opportunities = mobile
-    ? extractTopOpportunities(mobile)
-    : (desktop ? extractTopOpportunities(desktop) : []);
-
-  const highlights = [
-    scores.mobilePerformance !== null ? `Mobile Performance: ${scores.mobilePerformance}/100` : 'Mobile Performance: unavailable',
-    scores.desktopPerformance !== null ? `Desktop Performance: ${scores.desktopPerformance}/100` : 'Desktop Performance: unavailable',
-    scores.seo !== null ? `SEO Score: ${scores.seo}/100` : 'SEO Score: unavailable',
-    scores.accessibility !== null ? `Accessibility Score: ${scores.accessibility}/100` : 'Accessibility Score: unavailable',
-    scores.bestPractices !== null ? `Best Practices Score: ${scores.bestPractices}/100` : 'Best Practices Score: unavailable',
-    `Crawl: ${crawl.pagesDiscovered || 1} pages discovered, ${crawl.pagesSampled || 1} sampled`,
-    `Robots.txt: ${crawl.hasRobots ? 'Found' : 'Not found'}`,
-    `Sitemap.xml: ${crawl.hasSitemap ? 'Found' : 'Not found'}`,
-    `Homepage <title>: ${crawl.titlePresent ? 'Present' : 'Missing'}`,
-    `Homepage meta description: ${crawl.metaDescriptionPresent ? 'Present' : 'Missing'}`,
-    `Homepage H1 count: ${crawl.h1Count}`
-  ];
-
-  return {
-    targetUrl,
-    scores,
-    opportunities,
-    crawl,
-    highlights
-  };
-};
-
-const renderAuditPreview = (audit) => {
-  if (!auditPreview || !auditPreviewList) {
-    return;
-  }
-
-  const items = [...audit.highlights];
-  if (audit.opportunities.length) {
-    items.push(`Top opportunities: ${audit.opportunities.join(' | ')}`);
-  }
-
-  auditPreviewList.innerHTML = items.map((item) => `<li>${item}</li>`).join('');
-  auditPreview.hidden = false;
-};
-
-const setAuditFallbackVisible = (isVisible) => {
-  if (!auditFallback) {
-    return;
-  }
-
-  auditFallback.hidden = !isVisible;
-};
-
-const formatGBP = (amount) => formatCurrencyLabel(amount, activeCurrency);
-const formatRange = (min, max, monthly = false) => `${formatGBP(min)} - ${formatGBP(max)}${monthly ? '/mo' : ''}`;
-
-const formatRecurringList = (items) => {
-  if (!items.length) {
-    return 'None selected';
-  }
-
-  return items.map((item) => `${item.name} (${formatRange(item.min, item.max, true)})`).join(', ');
-};
-
-const getEstimateDetails = (data) => {
-  const solution = String(data.get('solution') || data.get('projectType') || 'website');
-  const industry = String(data.get('industry') || 'general');
-  const pageCount = String(data.get('pageCount') || data.get('complexity') || '5');
-  const timeline = String(data.get('timeline') || 'standard');
-  const retainer = String(data.get('retainer') || 'none');
-  const integrations = data.getAll('integrations').length ? data.getAll('integrations') : data.getAll('addons');
-
-  const offerMatrix = {
-    'ai-site': { offerName: 'AI Web Design', min: 1500, max: 2500, ctaHref: 'https://octopye.com/quote?service=ai-web-design' },
-    website: { offerName: 'Custom Web Design', min: 2999, max: 5999, ctaHref: 'https://octopye.com/quote?service=web-design' },
-    'web-app': { offerName: 'Web Application Development', min: 4999, max: 12000, ctaHref: 'https://octopye.com/book' },
-    'mobile-app': { offerName: 'Mobile App Design & Development', min: 2500, max: 9999, ctaHref: 'https://octopye.com/quote?service=mobile-app-design' },
-    seo: { offerName: 'SEO Services', min: 450, max: 1750, ctaHref: 'https://octopye.com/quote?service=seo' },
-    social: { offerName: 'Social Media Management', min: 300, max: 850, ctaHref: 'https://octopye.com/quote?service=social-media' }
-  };
-
-  const base = offerMatrix[solution] || offerMatrix.website;
-  let min = base.min;
-  let max = base.max;
-
-  const pageMap = {
-    '5': { min: 0, max: 0, label: 'Up to 5 pages' },
-    '10': { min: 900, max: 1800, label: 'Up to 10 pages' },
-    '15': { min: 1800, max: 3200, label: 'Up to 15 pages' },
-    '20+': { min: 3000, max: 5500, label: '20+ pages' },
-    starter: { min: 0, max: 0, label: 'Starter scope' },
-    growth: { min: 900, max: 1800, label: 'Growth scope' },
-    advanced: { min: 2000, max: 4500, label: 'Advanced scope' }
-  };
-
-  const selectedPage = pageMap[pageCount] || pageMap['5'];
-  if (solution === 'website' || solution === 'ai-site' || solution === 'web-app') {
-    min += selectedPage.min;
-    max += selectedPage.max;
-  }
-
-  const integrationMap = {
-    booking: { label: 'Booking system', min: 400, max: 900 },
-    payments: { label: 'Payments integration', min: 600, max: 1500 },
-    crm: { label: 'CRM integration', min: 500, max: 1200 },
-    portal: { label: 'Client portal', min: 1200, max: 2500 },
-    marketplace: { label: 'Marketplace workflow', min: 2500, max: 6000 },
-    ai: { label: 'AI-assisted feature', min: 900, max: 2200 },
-    seo: { label: 'SEO setup and optimization', min: 450, max: 1250 },
-    branding: { label: 'Brand and content support', min: 150, max: 850 }
-  };
-
-  const recurringAddonMap = {
-    ads: { name: 'Google Ads Management', min: 200, max: 200 },
-    social: { name: 'Social Media Management', min: 300, max: 300 }
-  };
-
-  const integrationLabels = [];
-  const recurringAddons = [];
-  integrations.forEach((key) => {
-    const recurringItem = recurringAddonMap[key];
-    if (recurringItem) {
-      recurringAddons.push(recurringItem);
-      integrationLabels.push(`${recurringItem.name} (${formatRange(recurringItem.min, recurringItem.max, true)})`);
-      return;
-    }
-
-    const item = integrationMap[key];
-    if (!item) {
-      return;
-    }
-
-    min += item.min;
-    max += item.max;
-    integrationLabels.push(item.label);
-  });
-
-  const regulatedIndustries = ['healthcare', 'solicitors', 'accountants', 'government', 'airlines', 'finance'];
-  if (regulatedIndustries.includes(industry)) {
-    min = Math.round(min * 1.15);
-    max = Math.round(max * 1.2);
-  }
-
-  if (timeline === 'accelerated') {
-    min += 500;
-    max += 1200;
-  }
-
-  const retainerMap = {
-    none: null,
-    seo: { name: 'SEO Retainer', min: 450, max: 1750 },
-    social: { name: 'Social Media Management', min: 300, max: 300 },
-    ads: { name: 'Google Ads Management', min: 200, max: 200 },
-    'social-ads': { name: 'Social Media + Google Ads', min: 500, max: 500 },
-    'seo-social': { name: 'SEO + Social Retainer', min: 750, max: 2050 },
-    'full-growth': { name: 'SEO + Social + Google Ads', min: 950, max: 2250 }
-  };
-
-  const retainerRec = retainerMap[retainer] || null;
-
-  const summaryCore = timeline === 'accelerated'
-    ? 'This estimate includes a priority delivery uplift and compressed timeline planning.'
-    : 'This estimate follows a standard delivery timeline with best-value implementation.';
-  const summary = recurringAddons.length
-    ? `${summaryCore} Monthly growth services are shown separately from the one-time build estimate.`
-    : summaryCore;
-
-  return {
-    offerName: base.offerName,
-    min,
-    max,
-    summary,
-    integrations: integrationLabels,
-    ctaHref: base.ctaHref,
-    projectType: solution,
-    industry,
-    pageCount: selectedPage.label,
-    timeline,
-    retainer: retainerRec,
-    recurringAddons
-  };
-};
-
-const setEstimateStep = (step) => {
-  currentEstimateStep = Math.min(Math.max(step, 1), estimateSteps.length);
-  estimateSteps.forEach((fieldSet, index) => {
-    fieldSet.classList.toggle('is-active', index + 1 === currentEstimateStep);
-  });
-
-  if (estimateProgress) {
-    const progressPercent = (currentEstimateStep / estimateSteps.length) * 100;
-    estimateProgress.style.width = `${progressPercent}%`;
-  }
-
-  if (estimateBackButton) {
-    estimateBackButton.style.display = currentEstimateStep === 1 ? 'none' : 'inline-flex';
-  }
-
-  if (estimateNextButton && estimateSubmitButton) {
-    const isLastStep = currentEstimateStep === estimateSteps.length;
-    estimateNextButton.style.display = isLastStep ? 'none' : 'inline-flex';
-    estimateSubmitButton.style.display = isLastStep ? 'inline-flex' : 'none';
-  }
-};
-
-const validateEstimateStep = (step) => {
-  const activeStep = document.querySelector(`.estimate-step[data-step="${step}"]`);
-  if (!activeStep) {
-    return true;
-  }
-
-  const requiredInputs = activeStep.querySelectorAll('input[required]');
-  if (!requiredInputs.length) {
-    return true;
-  }
-
-  const groups = {};
-  requiredInputs.forEach((input) => {
-    if (input.type === 'radio') {
-      groups[input.name] = groups[input.name] || false;
-      if (input.checked) {
-        groups[input.name] = true;
-      }
-    } else if (input.value.trim()) {
-      groups[input.name] = true;
-    }
-  });
-
-  return Object.values(groups).every(Boolean);
-};
-
-const showEstimateResult = (details) => {
-  if (!estimateOffer || !estimatePrice || !estimateSummary || !estimateBreakdown || !estimateCta) {
-    return;
-  }
-
-  estimateOffer.textContent = details.offerName;
-  estimatePrice.textContent = formatRange(details.min, details.max);
-  estimateSummary.textContent = details.summary;
-  estimateCta.href = '#proposalCapture';
-  estimateCta.target = '';
-  estimateCta.rel = '';
-  estimateCta.textContent = 'Get Detailed Proposal';
-
-  const lines = [
-    `Industry: ${details.industry}`,
-    `Scope: ${details.pageCount}`,
-    `Timeline: ${details.timeline === 'accelerated' ? 'Accelerated (2-4 weeks)' : 'Standard (4-6+ weeks)'}`,
-    details.integrations.length ? `Integrations/Add-ons: ${details.integrations.join(', ')}` : 'Integrations/Add-ons: none selected',
-    details.recurringAddons.length ? `Monthly growth add-ons: ${formatRecurringList(details.recurringAddons)}` : 'Monthly growth add-ons: none selected'
-  ];
-
-  estimateBreakdown.innerHTML = lines.map((line) => `<li>${line}</li>`).join('');
-
-  if (estimateRetainer) {
-    estimateRetainer.textContent = details.retainer
-      ? `${details.retainer.name} recommended: ${formatRange(details.retainer.min, details.retainer.max, true)}`
-      : details.recurringAddons.length
-        ? `Selected monthly growth add-ons: ${formatRecurringList(details.recurringAddons)}`
-        : 'No monthly retainer selected. One-off project estimate only.';
-  }
-
-  latestEstimateDetails = details;
-  if (proposalStatus) {
-    proposalStatus.textContent = 'Enter your details, then click Get Detailed Proposal.';
-    proposalStatus.style.color = '#3d5963';
-  }
-};
-
-const sendDetailedProposal = async () => {
-  if (!latestEstimateDetails) {
-    if (proposalStatus) {
-      proposalStatus.textContent = 'Generate an estimate first.';
-      proposalStatus.style.color = '#b91c1c';
-    }
-    return;
-  }
-
-  if (!proposalClientName || !proposalClientEmail) {
-    return;
-  }
-
-  const clientName = proposalClientName.value.trim();
-  const clientEmail = proposalClientEmail.value.trim();
-  const clientCompany = proposalClientCompany ? proposalClientCompany.value.trim() : '';
-
-  if (!clientName || !clientEmail) {
-    if (proposalStatus) {
-      proposalStatus.textContent = 'Name and email are required to send your proposal.';
-      proposalStatus.style.color = '#b91c1c';
-    }
-    return;
-  }
-
-  const emailOkay = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail);
-  if (!emailOkay) {
-    if (proposalStatus) {
-      proposalStatus.textContent = 'Please enter a valid email address.';
-      proposalStatus.style.color = '#b91c1c';
-    }
-    return;
-  }
-
-  const proposalPayload = {
-    name: clientName,
-    email: clientEmail,
-    replyto: clientEmail,
-    company: clientCompany,
-    subject: `Detailed Proposal Request - ${latestEstimateDetails.offerName}`,
-    from_name: 'Octopye Estimator',
-    message: [
-      `Client: ${clientName}`,
-      `Email: ${clientEmail}`,
-      `Company: ${clientCompany || 'N/A'}`,
-      '',
-      `Offer: ${latestEstimateDetails.offerName}`,
-      `Estimate: ${formatRange(latestEstimateDetails.min, latestEstimateDetails.max)}`,
-      `Industry: ${latestEstimateDetails.industry}`,
-      `Scope: ${latestEstimateDetails.pageCount}`,
-      `Timeline: ${latestEstimateDetails.timeline === 'accelerated' ? 'Accelerated (2-4 weeks)' : 'Standard (4-6+ weeks)'}`,
-      `Integrations/Add-ons: ${latestEstimateDetails.integrations.length ? latestEstimateDetails.integrations.join(', ') : 'None selected'}`,
-      `Monthly add-ons: ${formatRecurringList(latestEstimateDetails.recurringAddons || [])}`,
-      latestEstimateDetails.retainer
-        ? `Monthly recommendation: ${latestEstimateDetails.retainer.name} (${formatRange(latestEstimateDetails.retainer.min, latestEstimateDetails.retainer.max, true)})`
-        : 'Monthly recommendation: none',
-      '',
-      `Accept: mailto:designs@octopye.com?subject=${encodeURIComponent(`Proposal Accepted - ${clientName}`)}`,
-      `Reject: mailto:designs@octopye.com?subject=${encodeURIComponent(`Proposal Rejected - ${clientName}`)}`,
-      '',
-      `Source page: ${window.location.href}`,
-      `Submitted at: ${new Date().toISOString()}`
-    ].join('\n')
-  };
-
-  if (estimateCta) {
-    estimateCta.setAttribute('aria-disabled', 'true');
-    estimateCta.style.pointerEvents = 'none';
-    estimateCta.textContent = 'Sending proposal...';
-  }
-
-  if (proposalStatus) {
-    proposalStatus.textContent = 'Sending your detailed proposal...';
-    proposalStatus.style.color = '#0f766e';
-  }
-
-  try {
-    await sendViaWeb3Forms(proposalPayload);
-    if (proposalStatus) {
-      proposalStatus.textContent = 'Proposal request sent. Our team will review and follow up by email.';
-      proposalStatus.style.color = '#065f46';
-    }
-    trackEvent('proposal_email_sent', {
-      project_type: latestEstimateDetails.projectType,
-      industry: latestEstimateDetails.industry,
-      min_estimate: latestEstimateDetails.min,
-      max_estimate: latestEstimateDetails.max
-    });
-  } catch (error) {
-    if (proposalStatus) {
-      proposalStatus.textContent = `Could not send proposal: ${error.message}`;
-      proposalStatus.style.color = '#b91c1c';
-    }
-    trackEvent('proposal_email_error', {
-      reason: error.message
-    });
-  } finally {
-    if (estimateCta) {
-      estimateCta.removeAttribute('aria-disabled');
-      estimateCta.style.pointerEvents = '';
-      estimateCta.textContent = 'Get Detailed Proposal';
-    }
-  }
-};
-
-if (teardownForm) {
-  teardownForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(teardownForm);
-    const name = String(formData.get('name') || '').trim();
-    const email = String(formData.get('email') || '').trim();
-    const url = String(formData.get('url') || '').trim();
-    const goal = String(formData.get('goal') || '').trim();
-    const submitButton = teardownForm.querySelector('button[type="submit"]');
-    if (!name || !email || !url) {
-      formStatus.textContent = 'Please fill in name, email, and website URL.';
-      formStatus.style.color = '#b91c1c';
-      trackEvent('form_submit_error', {
-        reason: 'missing_fields',
-        form_id: 'teardownForm'
-      });
-      return;
-    }
-
-    const emailOkay = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!emailOkay) {
-      formStatus.textContent = 'Please use a valid email address.';
-      formStatus.style.color = '#b91c1c';
-      trackEvent('form_submit_error', {
-        reason: 'invalid_email',
-        form_id: 'teardownForm'
-      });
-      return;
-    }
-
-    if (auditPreview) {
-      auditPreview.hidden = true;
-    }
-    setAuditFallbackVisible(false);
-
-    formStatus.textContent = 'Running automated crawl and performance audit (20-40s)...';
-    formStatus.style.color = '#0f766e';
-
-    let audit = null;
-    let auditSucceeded = false;
-    try {
-      audit = await generateAutomatedAudit(url);
-      auditSucceeded = true;
-      renderAuditPreview(audit);
-    } catch (error) {
-      audit = {
-        targetUrl: normalizeTargetUrl(url),
-        highlights: [`Automated audit unavailable: ${error.message}`],
-        opportunities: []
-      };
-      setAuditFallbackVisible(true);
-    }
-
-    const payload = {
-      name,
-      email,
-      // replyto lets designs@octopye.com hit Reply and reach the client directly.
-      // For Web3Forms to also auto-email the client, enable the Autoresponder at:
-      // web3forms.com → Access Keys → your key → Enable Autoresponder
-      replyto: email,
-      subject: `New Conversion Teardown Request - ${name}`,
-      from_name: 'Octopye Site',
-      message: [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Website URL: ${url}`,
-        `Growth Goal: ${goal || 'Not provided'}`,
-        '',
-        'Automated Audit Summary:',
-        ...(audit?.highlights || []),
-        ...(audit?.opportunities?.length ? ['Top Opportunities:', ...audit.opportunities] : []),
-        '',
-        `Source: ${String(formData.get('source') || 'Octopye Conversion Landing Page')}`,
-        `Page: ${window.location.href}`,
-        `Submitted at: ${new Date().toISOString()}`
-      ].join('\n')
-    };
-
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending...';
-    }
-
-    formStatus.textContent = auditSucceeded
-      ? 'Audit complete. Sending your request...'
-      : 'Audit unavailable for this URL. Sending your request anyway...';
-    formStatus.style.color = '#0f766e';
-
-    try {
-      await sendViaWeb3Forms(payload);
-
-      saveLocalLeadCopy(payload);
-      formStatus.textContent = 'Request received. Your teardown request is logged and our team will follow up shortly.';
-      formStatus.style.color = '#065f46';
-      teardownForm.reset();
-      formStartedTracked = false;
-      trackEvent('form_submit_success', {
-        form_id: 'teardownForm',
-        destination: 'web3forms'
-      });
-    } catch (error) {
-      formStatus.textContent = `Submission failed: ${error.message}`;
-      formStatus.style.color = '#b91c1c';
-      trackEvent('form_submit_error', {
-        reason: 'web3forms_failed',
-        form_id: 'teardownForm'
-      });
-      console.error(error);
-    } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Send My Teardown Request';
-      }
-    }
-  });
-}
-
-if (leadMagnetForm && leadMagnetStatus) {
-  leadMagnetForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const data = new FormData(leadMagnetForm);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const submitButton = leadMagnetForm.querySelector('button[type="submit"]');
-
-    if (!name || !email) {
-      leadMagnetStatus.textContent = 'Please enter your name and email.';
-      leadMagnetStatus.style.color = '#b91c1c';
-      return;
-    }
-
-    const emailOkay = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!emailOkay) {
-      leadMagnetStatus.textContent = 'Please use a valid email address.';
-      leadMagnetStatus.style.color = '#b91c1c';
-      return;
-    }
-
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending...';
-    }
-
-    leadMagnetStatus.textContent = 'Sending your checklist request...';
-    leadMagnetStatus.style.color = '#0f766e';
-
-    const payload = {
-      name,
-      email,
-      replyto: email,
-      subject: `Checklist Request - ${name}`,
-      from_name: 'Octopye Lead Magnet',
-      message: [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        'Requested asset: 7-point Homepage Conversion Checklist',
-        `Source: ${String(data.get('source') || 'Homepage Lead Magnet')}`,
-        `Page: ${window.location.href}`,
-        `Submitted at: ${new Date().toISOString()}`
-      ].join('\n')
-    };
-
-    try {
-      await sendViaWeb3Forms(payload);
-      leadMagnetStatus.textContent = 'Checklist requested. We will send it to your email shortly.';
-      leadMagnetStatus.style.color = '#065f46';
-      leadMagnetForm.reset();
-      trackEvent('lead_magnet_requested', {
-        source: 'homepage_checklist'
-      });
-    } catch (error) {
-      leadMagnetStatus.textContent = `Could not send request: ${error.message}`;
-      leadMagnetStatus.style.color = '#b91c1c';
-      trackEvent('lead_magnet_error', {
-        reason: error.message
-      });
-    } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Get Conversion Checklist';
-      }
-    }
-  });
-}
-
-if (projectEnquiryForms.length) {
-  projectEnquiryForms.forEach((form) => {
-    form.addEventListener('submit', async (event) => {
+  document.querySelectorAll(".js-lead-form").forEach((form) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-
+      const submit = form.querySelector("[type='submit']");
+      const originalText = submit ? submit.textContent : "";
       const data = new FormData(form);
-      const name = String(data.get('name') || '').trim();
-      const email = String(data.get('email') || '').trim();
-      const company = String(data.get('company') || '').trim();
-      const website = String(data.get('website') || '').trim();
-      const budgetRange = String(data.get('budgetRange') || '').trim();
-      const timeline = String(data.get('timeline') || '').trim();
-      const goal = String(data.get('goal') || '').trim();
-      const notes = String(data.get('notes') || '').trim();
-      const projectName = String(data.get('projectName') || 'Project Case Study').trim();
-      const source = String(data.get('source') || `${projectName} Case Study`).trim();
-      const submitButton = form.querySelector('button[type="submit"]');
-      const status = form.querySelector('.form-status');
 
-      if (!name || !email || !budgetRange || !timeline || !goal) {
-        if (status) {
-          status.textContent = 'Please complete all required fields.';
-          status.style.color = '#b91c1c';
-        }
+      if (data.get("botcheck")) {
         return;
       }
 
-      const emailOkay = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if (!emailOkay) {
-        if (status) {
-          status.textContent = 'Please enter a valid email address.';
-          status.style.color = '#b91c1c';
-        }
-        return;
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = "Sending...";
       }
 
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Sending request...';
-      }
-
-      if (status) {
-        status.textContent = 'Submitting your enquiry...';
-        status.style.color = '#0f766e';
-      }
-
-      const payload = {
-        name,
-        email,
-        replyto: email,
-        subject: `Case Study Enquiry - ${projectName} - ${name}`,
-        from_name: 'Octopye Case Study Enquiry',
-        message: [
-          `Project of interest: ${projectName}`,
-          `Name: ${name}`,
-          `Email: ${email}`,
-          `Company: ${company || 'N/A'}`,
-          `Website: ${website || 'N/A'}`,
-          `Budget range: ${budgetRange}`,
-          `Preferred timeline: ${timeline}`,
-          `Goal: ${goal}`,
-          `Notes: ${notes || 'N/A'}`,
-          `Source: ${source}`,
-          `Page: ${window.location.href}`,
-          `Submitted at: ${new Date().toISOString()}`
-        ].join('\n')
-      };
+      setStatus(form, "Sending your enquiry...", "");
 
       try {
-        await sendViaWeb3Forms(payload);
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" }
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result.success === false) {
+          throw new Error(result.message || "The form could not be submitted.");
+        }
         form.reset();
-        if (status) {
-          status.textContent = 'Thanks, your enquiry has been sent. We will respond shortly.';
-          status.style.color = '#065f46';
-        }
-        trackEvent('project_enquiry_submitted', {
-          project_name: projectName,
-          budget_range: budgetRange,
-          timeline
-        });
+        setStatus(form, "Request received. Octopye will reply with next steps.", "success");
       } catch (error) {
-        if (status) {
-          status.textContent = `Could not send enquiry: ${error.message}`;
-          status.style.color = '#b91c1c';
-        }
-        trackEvent('project_enquiry_error', {
-          project_name: projectName,
-          reason: error.message
-        });
+        setStatus(form, "Form issue. Email designs@octopye.com and mention the launch offer.", "error");
       } finally {
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Request a Similar Build';
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = originalText;
         }
       }
     });
   });
-}
 
-if (roiForm && roiVisitors && roiCurrent && roiTarget && roiDeal && roiResult) {
-  roiForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+  const auditForm = document.querySelector("#audit-estimator-form");
 
-    const visitors = Number(roiVisitors.value || 0);
-    const current = Number(roiCurrent.value || 0) / 100;
-    const target = Number(roiTarget.value || 0) / 100;
-    const deal = Number(roiDeal.value || 0);
+  if (auditForm) {
+    const auditUrl = auditForm.querySelector("#audit-url");
+    const platformInput = auditForm.querySelector("#audit-platform");
+    const goalInput = auditForm.querySelector("#audit-goal");
+    const pagesInput = auditForm.querySelector("#audit-pages");
+    const supportInput = auditForm.querySelector("#audit-support");
+    const runAuditButton = auditForm.querySelector("#run-audit");
+    const estimateOnlyButton = auditForm.querySelector("#estimate-only");
+    const auditStatus = document.querySelector("#audit-status");
+    const auditSummary = document.querySelector("#audit-summary");
+    const estimateOutput = document.querySelector("#estimate-output");
+    const platformOutput = document.querySelector("#platform-output");
+    const scoreGrid = document.querySelector("#score-grid");
+    const priorityList = document.querySelector("#priority-list");
+    const recommendationList = document.querySelector("#recommendation-list");
+    const bookingLink = document.querySelector("#audit-booking-link");
+    const copyButton = document.querySelector("#copy-audit-summary");
+    const copyStatus = document.querySelector("#copy-status");
+    let lastSummary = "";
+    let lastAuditContext = null;
 
-    if (!visitors || !current || !target || !deal || target <= current) {
-      roiResult.textContent = 'Enter valid values where target conversion rate is higher than your current rate.';
-      roiResult.style.color = '#b91c1c';
-      return;
-    }
-
-    const currentLeads = visitors * current;
-    const targetLeads = visitors * target;
-    const extraLeads = targetLeads - currentLeads;
-    const extraRevenue = extraLeads * deal;
-
-    roiResult.textContent = `Estimated uplift: +${Math.round(extraLeads)} leads/mo and roughly ${formatGBP(Math.round(extraRevenue))} additional monthly revenue.`;
-    roiResult.style.color = '#065f46';
-
-    trackEvent('roi_calculated', {
-      visitors,
-      current_rate: Number((current * 100).toFixed(2)),
-      target_rate: Number((target * 100).toFixed(2)),
-      deal_value: deal,
-      est_extra_revenue: Math.round(extraRevenue)
-    });
-  });
-}
-
-if (bookingForm && bookingStatus) {
-  bookingForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const data = new FormData(bookingForm);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const company = String(data.get('company') || '').trim();
-    const website = String(data.get('website') || '').trim();
-    const bookingType = String(data.get('bookingType') || '').trim();
-    const preferredDate = String(data.get('preferredDate') || '').trim();
-    const preferredTime = String(data.get('preferredTime') || '').trim();
-    const timezone = String(data.get('timezone') || '').trim();
-    const priority = String(data.get('priority') || '').trim();
-    const meetingLength = String(data.get('meetingLength') || '').trim();
-    const budgetRange = String(data.get('budgetRange') || '').trim();
-    const readiness = String(data.get('readiness') || '').trim();
-    const monthlyLeads = String(data.get('monthlyLeads') || '').trim();
-    const questions = String(data.get('questions') || '').trim();
-    const submitButton = bookingForm.querySelector('button[type="submit"]');
-
-    if (!name || !email || !bookingType || !preferredDate || !preferredTime || !timezone || !priority || !meetingLength || !budgetRange || !readiness) {
-      bookingStatus.textContent = 'Please complete all required booking fields.';
-      bookingStatus.style.color = '#b91c1c';
-      return;
-    }
-
-    const emailOkay = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!emailOkay) {
-      bookingStatus.textContent = 'Please use a valid email address.';
-      bookingStatus.style.color = '#b91c1c';
-      return;
-    }
-
-    const payload = {
-      name,
-      email,
-      replyto: email,
-      subject: `Booking Slot Request - ${name}`,
-      from_name: 'Octopye Booking',
-      message: [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Company: ${company || 'N/A'}`,
-        `Website: ${website || 'N/A'}`,
-        `Booking preference: ${bookingType}`,
-        `Call type: ${meetingLength}`,
-        `Preferred slot: ${preferredDate} at ${preferredTime} (${timezone})`,
-        `Priority: ${priority}`,
-        `Budget range: ${budgetRange}`,
-        `Readiness: ${readiness}`,
-        `Current monthly leads: ${monthlyLeads || 'Not provided'}`,
-        `Questions: ${questions || 'N/A'}`,
-        `Source: ${String(data.get('source') || 'Octopye Booking Page')}`,
-        `Page: ${window.location.href}`,
-        `Submitted at: ${new Date().toISOString()}`
-      ].join('\n')
+    const platformLabels = {
+      auto: "Auto-detect",
+      static: "Static HTML/CSS/JS",
+      wordpress: "WordPress",
+      react: "React or SPA",
+      builder: "Website builder",
+      shop: "Shopify or ecommerce",
+      unknown: "Unknown setup"
     };
 
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending request...';
-    }
+    const goalLabels = {
+      more_enquiries: "More enquiries or bookings",
+      new_static_site: "New HTML/CSS/JS website",
+      redesign: "Fix or redesign current website",
+      seo: "SEO and organic visibility",
+      hosting: "Hosting, care and support",
+      app: "App design or prototype"
+    };
 
-    bookingStatus.textContent = 'Submitting your booking request...';
-    bookingStatus.style.color = '#0f766e';
+    const bookingPackageLabels = {
+      "App design prototype": "App Design Prototype",
+      "Conversion landing page": "HTML/CSS/JS Landing Page",
+      "Conversion website rebuild": "Static Small Business Website",
+      "Hosting and website care": "Hosting and Website Care",
+      "HTML/CSS/JS landing page": "HTML/CSS/JS Landing Page",
+      "SEO foundations": "Local SEO Foundations",
+      "Static growth website": "Static Small Business Website",
+      "Static small business website": "Static Small Business Website",
+      "Website redesign sprint": "Website Redesign"
+    };
 
-    try {
-      await sendViaWeb3Forms(payload);
-      bookingForm.reset();
-      if (bookingDate) {
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-        bookingDate.min = `${yyyy}-${mm}-${dd}`;
-      }
-      bookingStatus.textContent = 'Booking request sent. We will confirm by email before scheduling.';
-      bookingStatus.style.color = '#065f46';
-      trackEvent('booking_request_submitted', {
-        booking_type: bookingType,
-        meeting_length: meetingLength,
-        budget_range: budgetRange,
-        readiness,
-        priority,
-        timezone
+    const formatMoney = (value) => new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      maximumFractionDigits: 0
+    }).format(Math.max(0, Math.round(value)));
+
+    const setAuditStatus = (message, type) => {
+      if (!auditStatus) return;
+      auditStatus.textContent = message;
+      auditStatus.className = `form-status ${type || ""}`.trim();
+    };
+
+    const setBusy = (isBusy) => {
+      [runAuditButton, estimateOnlyButton].forEach((button) => {
+        if (button) {
+          button.disabled = isBusy;
+        }
       });
-    } catch (error) {
-      bookingStatus.textContent = `Booking request failed: ${error.message}`;
-      bookingStatus.style.color = '#b91c1c';
-      trackEvent('booking_request_error', {
-        reason: error.message
-      });
-    } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Request Booking Slot';
+      if (runAuditButton) {
+        runAuditButton.textContent = isBusy ? "Running audit..." : "Run audit and estimate";
       }
-    }
-  });
-}
+    };
 
-const updatePricing = (speed) => {
-  priceCards.forEach((card) => {
-    const key = speed === 'fast' ? 'fast' : 'base';
-    const value = card.dataset[key];
-    const priceNode = card.querySelector('.price span');
-    if (priceNode && value) {
-      const baseAmount = Number(value);
-      priceNode.textContent = formatCurrencyNumber(getLocalizedAmount(baseAmount, activeCurrency), activeCurrency);
-    }
-  });
-};
+    const normalizeAuditUrl = (rawValue, allowEmpty) => {
+      let value = rawValue.trim();
+      if (!value && allowEmpty) {
+        return "";
+      }
+      if (!value) {
+        throw new Error("Add a website URL before running the audit.");
+      }
+      if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) {
+        value = `https://${value}`;
+      }
+      const parsed = new URL(value);
+      if (!["http:", "https:"].includes(parsed.protocol)) {
+        throw new Error("Use a public http or https website URL.");
+      }
+      return parsed.href;
+    };
 
-initializeCurrency();
-
-toggleButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    toggleButtons.forEach((btn) => btn.classList.remove('is-active'));
-    button.classList.add('is-active');
-    updatePricing(button.dataset.speed);
-  });
-});
-
-faqButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const item = button.closest('.faq-item');
-    const content = item.querySelector('.faq-content');
-    const isOpen = button.getAttribute('aria-expanded') === 'true';
-
-    faqButtons.forEach((otherButton) => {
-      const otherItem = otherButton.closest('.faq-item');
-      const otherContent = otherItem.querySelector('.faq-content');
-      otherButton.setAttribute('aria-expanded', 'false');
-      otherContent.style.maxHeight = '0px';
+    const readAuditInputs = (allowEmptyUrl) => ({
+      url: normalizeAuditUrl(auditUrl ? auditUrl.value : "", allowEmptyUrl),
+      selectedPlatform: platformInput ? platformInput.value : "auto",
+      goal: goalInput ? goalInput.value : "more_enquiries",
+      pages: pagesInput ? Number(pagesInput.value) : 5,
+      support: supportInput ? supportInput.value : "none",
+      addons: Array.from(auditForm.querySelectorAll("[name='addon']:checked")).map((field) => field.value)
     });
 
-    if (!isOpen) {
-      button.setAttribute('aria-expanded', 'true');
-      content.style.maxHeight = `${content.scrollHeight}px`;
-    }
-  });
-});
+    const fetchPageSpeed = async (url, strategy) => {
+      const controller = new AbortController();
+      const timer = window.setTimeout(() => controller.abort(), 45000);
+      const endpoint = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
+      endpoint.searchParams.set("url", url);
+      endpoint.searchParams.set("strategy", strategy);
+      ["performance", "accessibility", "best-practices", "seo"].forEach((category) => {
+        endpoint.searchParams.append("category", category);
+      });
 
-if (estimateForm) {
-  setEstimateStep(1);
+      try {
+        const response = await fetch(endpoint.toString(), { signal: controller.signal });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || payload.error) {
+          throw new Error(payload.error && payload.error.message ? payload.error.message : "Scan failed.");
+        }
+        return payload.lighthouseResult;
+      } finally {
+        window.clearTimeout(timer);
+      }
+    };
 
-  estimateCta?.addEventListener('click', async (event) => {
-    if (!latestEstimateDetails) {
-      return;
-    }
+    const runRenderedAudit = async (url) => {
+      const [mobile, desktop] = await Promise.allSettled([
+        fetchPageSpeed(url, "mobile"),
+        fetchPageSpeed(url, "desktop")
+      ]);
+      const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
+      const desktopResult = desktop.status === "fulfilled" ? desktop.value : null;
+      if (!mobileResult && !desktopResult) {
+        const reason = mobile.status === "rejected" ? mobile.reason.message : "The scan was blocked.";
+        throw new Error(reason || "The scan was blocked.");
+      }
+      return {
+        mobile: mobileResult,
+        desktop: desktopResult,
+        partial: !mobileResult || !desktopResult,
+        error: mobile.status === "rejected" ? mobile.reason.message : desktop.status === "rejected" ? desktop.reason.message : ""
+      };
+    };
 
-    event.preventDefault();
-    await sendDetailedProposal();
-  });
+    const scoreFrom = (result, category) => {
+      const categoryData = result && result.categories ? result.categories[category] : null;
+      return categoryData && typeof categoryData.score === "number" ? Math.round(categoryData.score * 100) : null;
+    };
 
-  estimateNextButton?.addEventListener('click', () => {
-    if (!validateEstimateStep(currentEstimateStep)) {
-      estimateStatus.textContent = 'Please answer this question to continue.';
-      estimateStatus.style.color = '#b91c1c';
-      return;
-    }
+    const collectAuditText = (audit) => {
+      if (!audit) return "";
+      const payloads = [audit.mobile, audit.desktop].filter(Boolean).map((result) => {
+        const networkItems = result.audits && result.audits["network-requests"] && result.audits["network-requests"].details
+          ? result.audits["network-requests"].details.items || []
+          : [];
+        return {
+          finalUrl: result.finalDisplayedUrl || result.finalUrl || "",
+          stackPacks: result.stackPacks || [],
+          requests: networkItems.slice(0, 80).map((item) => item.url || "")
+        };
+      });
+      return JSON.stringify(payloads);
+    };
 
-    estimateStatus.textContent = '';
-    setEstimateStep(currentEstimateStep + 1);
-    trackEvent('estimate_step_next', {
-      step: currentEstimateStep
+    const detectPlatform = (inputs, audit) => {
+      if (inputs.selectedPlatform && inputs.selectedPlatform !== "auto") {
+        return {
+          key: inputs.selectedPlatform,
+          label: platformLabels[inputs.selectedPlatform] || "Manual platform choice",
+          source: "Selected manually"
+        };
+      }
+
+      const text = collectAuditText(audit);
+      if (/wp-content|wp-includes|wordpress/i.test(text)) {
+        return { key: "wordpress", label: platformLabels.wordpress, source: "Detected from public files and requests" };
+      }
+      if (/cdn\.shopify|myshopify|shopify/i.test(text)) {
+        return { key: "shop", label: platformLabels.shop, source: "Detected from ecommerce assets" };
+      }
+      if (/wixstatic|squarespace|webflow|weebly|framerusercontent/i.test(text)) {
+        return { key: "builder", label: platformLabels.builder, source: "Detected from builder assets" };
+      }
+      if (/__NEXT_DATA__|\/_next\/|react|gatsby|nuxt|vite|webpack|\/static\/js\/|angular|vue/i.test(text)) {
+        return { key: "react", label: platformLabels.react, source: "Detected from rendered JavaScript assets" };
+      }
+      if (audit && (audit.mobile || audit.desktop)) {
+        return { key: "static", label: platformLabels.static, source: "No CMS or SPA signal found in the public scan" };
+      }
+      return { key: "unknown", label: platformLabels.unknown, source: "Manual estimate only" };
+    };
+
+    const scoreClass = (value) => {
+      if (value === null) return "score-empty";
+      if (value < 50) return "score-low";
+      if (value < 85) return "score-mid";
+      return "score-good";
+    };
+
+    const renderScores = (audit) => {
+      if (!scoreGrid) return;
+      const mobileSource = audit && audit.mobile ? audit.mobile : null;
+      const desktopSource = audit && audit.desktop ? audit.desktop : null;
+      const metrics = [
+        ["Mobile performance", scoreFrom(mobileSource, "performance")],
+        ["Desktop performance", scoreFrom(desktopSource, "performance")],
+        ["SEO", scoreFrom(mobileSource || desktopSource, "seo")],
+        ["Accessibility", scoreFrom(mobileSource || desktopSource, "accessibility")]
+      ];
+      scoreGrid.replaceChildren(...metrics.map(([label, value]) => {
+        const item = document.createElement("div");
+        item.className = `stat ${scoreClass(value)}`;
+        const strong = document.createElement("strong");
+        strong.textContent = value === null ? "--" : String(value);
+        const copy = document.createElement("p");
+        copy.textContent = label;
+        item.append(strong, copy);
+        return item;
+      }));
+    };
+
+    const renderList = (element, items) => {
+      if (!element) return;
+      const cleanItems = items.filter(Boolean).slice(0, 8);
+      element.replaceChildren(...cleanItems.map((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        return li;
+      }));
+    };
+
+    const addPlatformCost = (estimate, platformKey, goal) => {
+      if (platformKey === "wordpress") {
+        estimate.min += 150;
+        estimate.max += 500;
+        estimate.reasons.push("WordPress plugin, theme and speed review");
+      }
+      if (platformKey === "react") {
+        estimate.min += goal === "app" ? 0 : 300;
+        estimate.max += goal === "app" ? 0 : 900;
+        estimate.reasons.push("Rendered SEO and JavaScript performance checks");
+      }
+      if (platformKey === "builder") {
+        estimate.min += 200;
+        estimate.max += 600;
+        estimate.reasons.push("Builder cleanup or migration planning");
+      }
+      if (platformKey === "shop") {
+        estimate.min += 400;
+        estimate.max += 1200;
+        estimate.reasons.push("Ecommerce template, product and tracking review");
+      }
+      if (platformKey === "unknown") {
+        estimate.max += 250;
+        estimate.reasons.push("Manual technical discovery");
+      }
+    };
+
+    const baseEstimate = (goal, pages) => {
+      if (goal === "app") {
+        return { label: "App design prototype", min: 799, max: 2499, monthlyMin: 0, monthlyMax: 0, reasons: ["UX screens, clickable prototype and build planning"] };
+      }
+      if (goal === "hosting") {
+        return { label: "Hosting and website care", min: 0, max: 149, monthlyMin: 49, monthlyMax: 99, reasons: ["Hosting move, backups, updates and uptime checks"] };
+      }
+      if (goal === "seo") {
+        return { label: "SEO foundations", min: 149, max: 499, monthlyMin: 149, monthlyMax: 349, reasons: ["Metadata, technical checks and service page plan"] };
+      }
+      if (goal === "redesign") {
+        return pages <= 3
+          ? { label: "Website redesign sprint", min: 399, max: 799, monthlyMin: 0, monthlyMax: 0, reasons: ["Rewrite the offer and rebuild the main conversion path"] }
+          : { label: "Website redesign sprint", min: 599, max: 1299, monthlyMin: 0, monthlyMax: 0, reasons: ["Redesign key pages, forms, SEO basics and tracking"] };
+      }
+      if (goal === "new_static_site") {
+        if (pages <= 1) {
+          return { label: "HTML/CSS/JS landing page", min: 249, max: 449, monthlyMin: 0, monthlyMax: 0, reasons: ["Fast single page build with enquiry form"] };
+        }
+        if (pages <= 5) {
+          return { label: "Static small business website", min: 599, max: 1199, monthlyMin: 0, monthlyMax: 0, reasons: ["Fast HTML/CSS/JS website built for enquiries"] };
+        }
+        return { label: "Static growth website", min: 899, max: 2499, monthlyMin: 0, monthlyMax: 0, reasons: ["Multi-page static website with service pages and SEO structure"] };
+      }
+      return pages <= 1
+        ? { label: "Conversion landing page", min: 249, max: 449, monthlyMin: 0, monthlyMax: 0, reasons: ["Sharper offer, direct CTA and enquiry form"] }
+        : { label: "Conversion website rebuild", min: 599, max: 1499, monthlyMin: 0, monthlyMax: 0, reasons: ["Clear services, lower-friction enquiry path and tracking"] };
+    };
+
+    const applyAddons = (estimate, inputs) => {
+      inputs.addons.forEach((addon) => {
+        if (addon === "copywriting") {
+          estimate.min += 180;
+          estimate.max += 360;
+          estimate.reasons.push("Conversion copywriting help");
+        }
+        if (addon === "forms") {
+          estimate.min += 99;
+          estimate.max += 220;
+          estimate.reasons.push("Booking or enquiry form setup");
+        }
+        if (addon === "tracking") {
+          estimate.min += 99;
+          estimate.max += 220;
+          estimate.reasons.push("Analytics and conversion tracking");
+        }
+        if (addon === "seo_pages") {
+          estimate.min += 149;
+          estimate.max += 447;
+          estimate.reasons.push("Extra SEO service page content");
+        }
+        if (addon === "hosting") {
+          estimate.min += 0;
+          estimate.max += 99;
+          estimate.monthlyMin = Math.max(estimate.monthlyMin, 49);
+          estimate.monthlyMax = Math.max(estimate.monthlyMax, 99);
+          estimate.reasons.push("Hosting move or care setup");
+        }
+        if (addon === "app_design") {
+          estimate.min += 799;
+          estimate.max += 2499;
+          estimate.reasons.push("App design prototype");
+        }
+      });
+
+      if (inputs.support === "care") {
+        estimate.monthlyMin = Math.max(estimate.monthlyMin, 49);
+        estimate.monthlyMax = Math.max(estimate.monthlyMax, 79);
+        estimate.reasons.push("Monthly hosting and care");
+      }
+      if (inputs.support === "growth") {
+        estimate.monthlyMin = Math.max(estimate.monthlyMin, 99);
+        estimate.monthlyMax = Math.max(estimate.monthlyMax, 179);
+        estimate.reasons.push("Monthly growth support");
+      }
+      if (inputs.support === "seo") {
+        estimate.monthlyMin = Math.max(estimate.monthlyMin, 149);
+        estimate.monthlyMax = Math.max(estimate.monthlyMax, 349);
+        estimate.reasons.push("Monthly SEO foundations");
+      }
+    };
+
+    const estimateFromContext = (inputs, platform, audit) => {
+      const estimate = baseEstimate(inputs.goal, inputs.pages);
+      addPlatformCost(estimate, platform.key, inputs.goal);
+      applyAddons(estimate, inputs);
+
+      const mobilePerf = scoreFrom(audit && audit.mobile, "performance");
+      const desktopPerf = scoreFrom(audit && audit.desktop, "performance");
+      const seoScore = scoreFrom((audit && (audit.mobile || audit.desktop)), "seo");
+      const worstPerf = [mobilePerf, desktopPerf].filter((value) => value !== null).sort((a, b) => a - b)[0];
+
+      if (worstPerf !== undefined && worstPerf < 50) {
+        estimate.min += 150;
+        estimate.max += 500;
+        estimate.reasons.push("Urgent performance repair");
+      } else if (worstPerf !== undefined && worstPerf < 80) {
+        estimate.min += 99;
+        estimate.max += 250;
+        estimate.reasons.push("Image, script and page speed optimisation");
+      }
+
+      if (seoScore !== null && seoScore < 80) {
+        estimate.min += 99;
+        estimate.max += 299;
+        estimate.reasons.push("SEO metadata and indexability fixes");
+      }
+
+      return estimate;
+    };
+
+    const getPriorities = (inputs, platform, audit, blockedMessage) => {
+      const priorities = [];
+      const mobilePerf = scoreFrom(audit && audit.mobile, "performance");
+      const desktopPerf = scoreFrom(audit && audit.desktop, "performance");
+      const seoScore = scoreFrom((audit && (audit.mobile || audit.desktop)), "seo");
+      const accessibilityScore = scoreFrom((audit && (audit.mobile || audit.desktop)), "accessibility");
+      const worstPerf = [mobilePerf, desktopPerf].filter((value) => value !== null).sort((a, b) => a - b)[0];
+
+      if (blockedMessage) {
+        priorities.push("Automated scan was blocked or unavailable, so use a manual review before final scope.");
+      }
+      if (worstPerf !== undefined && worstPerf < 50) {
+        priorities.push("Speed is likely costing enquiries; reduce scripts, heavy images and layout delay first.");
+      } else if (worstPerf !== undefined && worstPerf < 80) {
+        priorities.push("Improve page speed with image compression, script cleanup and lighter page sections.");
+      }
+      if (seoScore !== null && seoScore < 85) {
+        priorities.push("Fix SEO basics: titles, descriptions, headings, crawlability and service page targeting.");
+      }
+      if (accessibilityScore !== null && accessibilityScore < 85) {
+        priorities.push("Resolve accessibility issues so forms, buttons, contrast and labels work properly.");
+      }
+      if (platform.key === "wordpress") {
+        priorities.push("Review plugins, theme weight, caching and form reliability.");
+      }
+      if (platform.key === "react") {
+        priorities.push("Check rendered route metadata, crawlable content and JavaScript bundle weight.");
+      }
+      if (platform.key === "builder") {
+        priorities.push("Decide whether to keep the builder or rebuild as a faster static site.");
+      }
+      if (inputs.goal === "more_enquiries") {
+        priorities.push("Make the enquiry path obvious above the fold and track every form or booking click.");
+      }
+      if (!priorities.length) {
+        priorities.push("Audit looks healthy at top level; focus on offer clarity, page copy and lead capture.");
+      }
+      return priorities;
+    };
+
+    const getRecommendations = (inputs, platform, estimate, audit, blockedMessage) => {
+      const recommendations = [];
+      if (blockedMessage) {
+        recommendations.push("Start with the free manual website audit so Octopye can check what the scanner could not access.");
+      }
+      recommendations.push(`${estimate.label}: ${formatMoney(estimate.min)} - ${formatMoney(estimate.max)} guide range.`);
+      if (estimate.monthlyMin || estimate.monthlyMax) {
+        recommendations.push(`Optional support: ${formatMoney(estimate.monthlyMin)} - ${formatMoney(estimate.monthlyMax)} per month.`);
+      }
+      if (platform.key === "static" && inputs.goal !== "app") {
+        recommendations.push("Best fit: a fast HTML/CSS/JS build with direct enquiry forms and service pages.");
+      }
+      if (platform.key === "wordpress") {
+        recommendations.push("Best fit: either a lean WordPress cleanup or a static rebuild if speed and maintenance are the problem.");
+      }
+      if (platform.key === "react") {
+        recommendations.push("Best fit: rendered SEO checks, route metadata, performance cleanup and conversion-focused page templates.");
+      }
+      if (inputs.goal === "app" || inputs.addons.includes("app_design")) {
+        recommendations.push("App work should begin with a clickable prototype before any build budget is committed.");
+      }
+      if (audit && audit.partial) {
+        recommendations.push("Only part of the automated audit returned, so final pricing should include a manual confirmation.");
+      }
+      recommendations.push("Send the summary to Octopye for a fixed recommendation before paying for any build.");
+      return recommendations;
+    };
+
+    const renderEstimate = (estimate) => {
+      if (!estimateOutput) return;
+      const monthly = estimate.monthlyMin || estimate.monthlyMax
+        ? `<p class="muted">Support option: ${formatMoney(estimate.monthlyMin)} - ${formatMoney(estimate.monthlyMax)} per month.</p>`
+        : "";
+      estimateOutput.innerHTML = `<span>${estimate.label}</span><strong>${formatMoney(estimate.min)} - ${formatMoney(estimate.max)}</strong>${monthly}<p class="muted">Guide price only. Octopye should confirm a fixed scope after checking the site and goals.</p>`;
+    };
+
+    const buildSummary = (inputs, platform, estimate, priorities, blockedMessage) => {
+      const urlLine = inputs.url ? `Website: ${inputs.url}` : "Website: not supplied";
+      const scanLine = blockedMessage ? `Scan status: blocked or unavailable (${blockedMessage})` : "Scan status: automated audit completed";
+      const monthlyLine = estimate.monthlyMin || estimate.monthlyMax
+        ? `Monthly support: ${formatMoney(estimate.monthlyMin)} - ${formatMoney(estimate.monthlyMax)} per month`
+        : "Monthly support: not included";
+      return [
+        "Octopye audit and estimate summary",
+        urlLine,
+        scanLine,
+        `Goal: ${goalLabels[inputs.goal] || inputs.goal}`,
+        `Detected setup: ${platform.label} (${platform.source})`,
+        `Recommended package: ${estimate.label}`,
+        `Guide range: ${formatMoney(estimate.min)} - ${formatMoney(estimate.max)}`,
+        monthlyLine,
+        `Priority work: ${priorities.slice(0, 4).join(" | ")}`
+      ].join("\n");
+    };
+
+    const updateBookingLink = (inputs, estimate) => {
+      if (!bookingLink) return;
+      const url = new URL("booking.html", window.location.href);
+      url.searchParams.set("package", bookingPackageLabels[estimate.label] || "Free Website Audit");
+      if (inputs.url) {
+        url.searchParams.set("website", inputs.url);
+      }
+      url.searchParams.set("summary", lastSummary.slice(0, 1400));
+      url.hash = "booking-form";
+      bookingLink.href = `${url.pathname.split("/").pop()}${url.search}${url.hash}`;
+    };
+
+    const renderAuditContext = (inputs, audit, blockedMessage) => {
+      const platform = detectPlatform(inputs, audit);
+      const estimate = estimateFromContext(inputs, platform, audit);
+      const priorities = getPriorities(inputs, platform, audit, blockedMessage);
+      const recommendations = getRecommendations(inputs, platform, estimate, audit, blockedMessage);
+
+      renderScores(audit);
+      renderEstimate(estimate);
+      renderList(priorityList, priorities);
+      renderList(recommendationList, recommendations);
+
+      if (platformOutput) {
+        platformOutput.textContent = `${platform.label}. ${platform.source}.`;
+      }
+
+      lastSummary = buildSummary(inputs, platform, estimate, priorities, blockedMessage);
+      if (auditSummary) {
+        auditSummary.textContent = blockedMessage
+          ? "The automated scan could not complete, so this estimate uses your manual answers and flags the site for review."
+          : "Audit completed. The guide price is based on detected platform signals, Lighthouse-style scores, pages, goals and selected extras.";
+      }
+      updateBookingLink(inputs, estimate);
+      lastAuditContext = { inputs, audit, blockedMessage };
+    };
+
+    const runManualEstimate = (message) => {
+      try {
+        const inputs = readAuditInputs(true);
+        renderAuditContext(inputs, null, message || "Manual estimate requested without an automated scan.");
+        setAuditStatus("Manual estimate ready. Add or keep the URL before sending the summary.", "success");
+      } catch (error) {
+        setAuditStatus(error.message, "error");
+      }
+    };
+
+    auditForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!auditForm.reportValidity()) return;
+      let inputs;
+      try {
+        inputs = readAuditInputs(false);
+      } catch (error) {
+        setAuditStatus(error.message, "error");
+        return;
+      }
+
+      setBusy(true);
+      setAuditStatus("Running rendered mobile and desktop checks. This can take up to a minute...", "");
+
+      try {
+        const audit = await runRenderedAudit(inputs.url);
+        renderAuditContext(inputs, audit, audit.partial ? audit.error || "Only part of the scan returned." : "");
+        setAuditStatus(audit.partial ? "Partial audit ready. Manual confirmation is recommended." : "Audit and estimate ready.", audit.partial ? "" : "success");
+      } catch (error) {
+        renderAuditContext(inputs, null, error.message || "The scan was blocked.");
+        setAuditStatus("Scanner blocked or unavailable. Manual estimate created instead.", "error");
+      } finally {
+        setBusy(false);
+      }
     });
-  });
 
-  estimateBackButton?.addEventListener('click', () => {
-    estimateStatus.textContent = '';
-    setEstimateStep(currentEstimateStep - 1);
-    trackEvent('estimate_step_back', {
-      step: currentEstimateStep
-    });
-  });
-
-  estimateForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    if (!validateEstimateStep(currentEstimateStep)) {
-      estimateStatus.textContent = 'Please answer the final question to get your estimate.';
-      estimateStatus.style.color = '#b91c1c';
-      return;
+    if (estimateOnlyButton) {
+      estimateOnlyButton.addEventListener("click", () => {
+        runManualEstimate("Manual estimate requested without an automated scan.");
+      });
     }
 
-    const data = new FormData(estimateForm);
-    const details = getEstimateDetails(data);
-    showEstimateResult(details);
-    estimateStatus.textContent = 'Estimate ready. You can now book or request a full proposal.';
-    estimateStatus.style.color = '#065f46';
-
-    trackEvent('estimate_generated', {
-      project_type: details.projectType,
-      industry: details.industry,
-      page_scope: details.pageCount,
-      timeline: details.timeline,
-      min_estimate: details.min,
-      max_estimate: details.max,
-      integration_count: details.integrations.length,
-      offer_name: details.offerName
+    auditForm.addEventListener("change", () => {
+      if (lastAuditContext) {
+        try {
+          const inputs = readAuditInputs(true);
+          renderAuditContext(inputs, lastAuditContext.audit, lastAuditContext.blockedMessage);
+          setAuditStatus("Estimate updated from your latest options.", "success");
+        } catch (error) {
+          setAuditStatus(error.message, "error");
+        }
+      }
     });
-  });
-}
+
+    if (copyButton) {
+      copyButton.addEventListener("click", async () => {
+        if (!lastSummary) {
+          runManualEstimate("Manual estimate requested before copying.");
+        }
+        try {
+          if (!lastSummary) {
+            throw new Error("No summary is available yet.");
+          }
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(lastSummary);
+          } else {
+            const area = document.createElement("textarea");
+            area.value = lastSummary;
+            area.setAttribute("readonly", "");
+            area.style.position = "fixed";
+            area.style.left = "-9999px";
+            document.body.append(area);
+            area.select();
+            document.execCommand("copy");
+            area.remove();
+          }
+          if (copyStatus) {
+            copyStatus.textContent = "Audit summary copied.";
+            copyStatus.className = "form-status success";
+          }
+        } catch (error) {
+          if (copyStatus) {
+            copyStatus.textContent = "Copy failed. Use the booking link instead.";
+            copyStatus.className = "form-status error";
+          }
+        }
+      });
+    }
+  }
+
+  const estimateForm = document.querySelector("#estimate-form");
+  const estimateOutput = document.querySelector("#estimate-output");
+
+  if (estimateForm && estimateOutput) {
+    const prices = {
+      rescue: { min: 0, max: 99, label: "Free audit or GBP 99 rescue check" },
+      fix: { min: 99, max: 149, label: "Form or Tracking Fix" },
+      lead: { min: 249, max: 449, label: "HTML/CSS/JS Landing Page" },
+      redesign: { min: 399, max: 699, label: "Website Redesign Sprint" },
+      growth: { min: 599, max: 1199, label: "Static Small Business Website" },
+      app: { min: 799, max: 2499, label: "App Design Prototype" },
+      seo: { min: 149, max: 349, label: "SEO Foundations" }
+    };
+
+    const addOns = {
+      extra_pages: 240,
+      copywriting: 180,
+      booking: 160,
+      tracking: 90,
+      logo: 150
+    };
+
+    const format = (value) => new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      maximumFractionDigits: 0
+    }).format(value);
+
+    const updateEstimate = () => {
+      const selected = estimateForm.querySelector("[name='estimate_package']").value;
+      const base = prices[selected] || prices.lead;
+      let min = base.min;
+      let max = base.max;
+      estimateForm.querySelectorAll("[name='addon']:checked").forEach((checkbox) => {
+        min += addOns[checkbox.value] || 0;
+        max += addOns[checkbox.value] || 0;
+      });
+      estimateOutput.innerHTML = `<span>${base.label}</span><strong>${format(min)} - ${format(max)}</strong><p class="muted">This is a guide price. The fastest route is to send the form and get a fixed recommendation.</p>`;
+    };
+
+    estimateForm.addEventListener("change", updateEstimate);
+    updateEstimate();
+  }
+})();

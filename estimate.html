@@ -3,34 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Run an automatic website audit and instant Octopye estimate for HTML CSS JS websites, WordPress, React SPAs, static sites, SEO, hosting and app design." />
+  <meta name="description" content="Use Octopye tools to run a website audit and answer guided questions for a detailed estimate across web design, app design, SEO, hosting and care." />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <link rel="canonical" href="https://octopye.com/estimate" />
-  <link rel="icon" type="image/webp" href="images/app-icon-180.webp" />
+  <link rel="icon" type="image/webp" href="images/octopye-logo-icon-32.webp" />
+  <link rel="apple-touch-icon" href="images/octopye-logo-icon-180.webp" />
   <link rel="manifest" href="site.webmanifest" />
-  <meta property="og:title" content="Automatic Website Audit and Instant Estimator | Octopye" />
-  <meta property="og:description" content="Audit a website, detect common platform signals, find priority fixes and get a realistic Octopye price range." />
+  <meta property="og:title" content="Website Audit Tools and Instant Estimator | Octopye" />
+  <meta property="og:description" content="Use Octopye tools to run a website audit and answer guided questions for a detailed estimate across web design, app design, SEO, hosting and care." />
   <meta property="og:image" content="https://octopye.com/images/og-image.png" />
-  <title>Automatic Website Audit and Instant Estimator | Octopye</title>
+  <title>Website Audit Tools and Instant Estimator | Octopye</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="container header-wrap">
-      <a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a>
-      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button>
-      <nav class="main-nav" aria-label="Primary navigation"><a href="web-design.html">Web Design</a><a href="app-design.html">App Design</a><a href="seo.html">SEO</a><a href="website-care.html">Hosting</a><a href="packages.html">Pricing</a><a href="booking.html">Contact</a></nav>
-      <a class="button header-cta" href="booking.html#booking-form">Get free audit</a>
-    </div>
-  </header>
+  <header class="site-header"><div class="container header-wrap"><a class="brand" href="index.html" aria-label="Octopye home"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a><button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button><nav class="main-nav" aria-label="Primary navigation"><a href="web-design.html">Web Design</a><a href="app-design.html">App Design</a><a href="seo.html">SEO</a><a href="industries.html">Industries</a><a href="website-care.html">Hosting</a><a href="estimate.html">Tools</a><a href="packages.html">Pricing</a><a href="booking.html">Contact</a></nav><a class="button header-cta" href="estimate.html#audit-estimator-form">Use tools</a></div></header>
   <main id="main">
     <section class="hero compact">
       <div class="container">
         <div class="hero-content">
-          <p class="eyebrow">Automatic audit and instant estimate</p>
-          <h1>Audit any website, then see what it should cost to fix or rebuild.</h1>
-          <p class="lead">Enter a URL and Octopye will run rendered checks for speed, SEO, accessibility and technical quality. It works across static HTML sites, WordPress, React/SPAs and other platforms where automated scanning is allowed, with a fallback estimate when a site blocks tools.</p>
+          <p class="eyebrow">Tools: audit and estimator</p>
+          <h1>Answer a few questions, then run the audit if the site allows it.</h1>
+          <p class="lead">The estimator works fully on a static GitHub Pages site. The scanner uses public PageSpeed checks where possible, then falls back to the guided estimate when a website blocks public audit tools.</p>
+          <div class="hero-actions"><a class="button" href="#audit-estimator-form">Start questions</a><a class="button secondary" href="booking.html#booking-form">Ask Octopye manually</a></div>
         </div>
       </div>
     </section>
@@ -39,57 +34,115 @@
       <div class="container">
         <div class="section-head split">
           <div>
-            <p class="eyebrow">Run the tool</p>
-            <h2>Start with the website URL.</h2>
+            <p class="eyebrow">Question-led estimator</p>
+            <h2>Build a detailed estimate before asking for a quote.</h2>
           </div>
-          <p class="page-lead">Some hosts, firewalls, login walls and bot rules block scanners. When that happens, the estimator still works from the manual inputs and flags the scan as blocked instead of giving fake results.</p>
+          <p class="page-lead">GitHub Pages cannot run backend audit code. That makes the question-led estimate the dependable part of this tool, while the automatic scan is a useful bonus when the target website allows public testing.</p>
         </div>
 
         <form class="form-panel lead-form audit-tool" id="audit-estimator-form">
-          <div class="form-grid">
-            <label class="field full">Website URL
-              <input name="audit_url" id="audit-url" inputmode="url" placeholder="https://example.com" required />
-            </label>
-            <label class="field">Current platform
-              <select name="platform" id="audit-platform">
-                <option value="auto">Auto-detect if possible</option>
-                <option value="static">Static HTML/CSS/JS</option>
-                <option value="wordpress">WordPress</option>
-                <option value="react">React or SPA</option>
-                <option value="builder">Wix, Squarespace or builder</option>
-                <option value="shop">Shopify or ecommerce</option>
-                <option value="unknown">Not sure</option>
-              </select>
-            </label>
-            <label class="field">Main goal
-              <select name="goal" id="audit-goal">
-                <option value="more_enquiries">More enquiries or bookings</option>
-                <option value="new_static_site">New HTML/CSS/JS website</option>
-                <option value="redesign">Fix or redesign current website</option>
-                <option value="seo">SEO and organic visibility</option>
-                <option value="hosting">Hosting, care and support</option>
-                <option value="app">App design or prototype</option>
-              </select>
-            </label>
-            <label class="field">Estimated pages
-              <select name="pages" id="audit-pages">
-                <option value="1">1 page</option>
-                <option value="3">2-3 pages</option>
-                <option value="5" selected>4-5 pages</option>
-                <option value="8">6-8 pages</option>
-                <option value="12">9-12 pages</option>
-              </select>
-            </label>
-            <label class="field">Monthly support
-              <select name="support" id="audit-support">
-                <option value="none">No monthly support</option>
-                <option value="care">Hosting and care</option>
-                <option value="growth">Growth care</option>
-                <option value="seo">SEO foundations</option>
-              </select>
-            </label>
+          <div class="wizard-progress" aria-live="polite"><span id="wizard-step-label">Step 1 of 6</span><div class="wizard-track"><span id="wizard-progress-bar"></span></div></div>
+          <div class="wizard-step" data-wizard-step>
+            <p class="eyebrow">Step 1</p>
+            <h3>What website should Octopye review?</h3>
+            <div class="form-grid">
+              <label class="field full">Website URL
+                <input name="audit_url" id="audit-url" inputmode="url" placeholder="https://example.com" required />
+              </label>
+              <label class="field">Current platform
+                <select name="platform" id="audit-platform">
+                  <option value="auto">Auto-detect if possible</option>
+                  <option value="static">Static HTML/CSS/JS</option>
+                  <option value="wordpress">WordPress</option>
+                  <option value="react">React or SPA</option>
+                  <option value="builder">Wix, Squarespace or builder</option>
+                  <option value="shop">Shopify or ecommerce</option>
+                  <option value="unknown">Not sure</option>
+                </select>
+              </label>
+              <label class="field">Industry
+                <select name="business_type" id="audit-business">
+                  <option value="service">Local service business</option>
+                  <option value="trade">Trade or contractor</option>
+                  <option value="health">Health, wellbeing or beauty</option>
+                  <option value="food">Restaurant, cafe or hospitality</option>
+                  <option value="professional">Professional services</option>
+                  <option value="ecommerce">Ecommerce or product brand</option>
+                  <option value="app">App, SaaS or digital product</option>
+                  <option value="charity">Charity or community project</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="wizard-step" data-wizard-step hidden>
+            <p class="eyebrow">Step 2</p>
+            <h3>What outcome matters most?</h3>
+            <div class="form-grid">
+              <label class="field">Main goal
+                <select name="goal" id="audit-goal">
+                  <option value="more_enquiries">More enquiries or bookings</option>
+                  <option value="new_static_site">New HTML/CSS/JS website</option>
+                  <option value="redesign">Fix or redesign current website</option>
+                  <option value="seo">SEO and organic visibility</option>
+                  <option value="hosting">Hosting, care and support</option>
+                  <option value="app">App design or prototype</option>
+                </select>
+              </label>
+              <label class="field">Budget comfort
+                <select name="budget" id="audit-budget">
+                  <option value="starter">Smallest sensible option</option>
+                  <option value="standard">Strong small-business build</option>
+                  <option value="growth">Growth site or app prototype</option>
+                  <option value="not_sure">Need advice</option>
+                </select>
+              </label>
+              <label class="field">Timeline
+                <select name="urgency" id="audit-urgency">
+                  <option value="normal">Normal launch</option>
+                  <option value="fast">Fast launch</option>
+                  <option value="urgent">Urgent repair or launch</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="wizard-step" data-wizard-step hidden>
+            <p class="eyebrow">Step 3</p>
+            <h3>How much needs building?</h3>
+            <div class="form-grid">
+              <label class="field">Estimated pages
+                <select name="pages" id="audit-pages">
+                  <option value="1">1 page</option>
+                  <option value="3">2-3 pages</option>
+                  <option value="5" selected>4-5 pages</option>
+                  <option value="8">6-8 pages</option>
+                  <option value="12">9-12 pages</option>
+                </select>
+              </label>
+              <label class="field">Content readiness
+                <select name="content" id="audit-content">
+                  <option value="ready">I have usable copy and images</option>
+                  <option value="rough">I have rough notes</option>
+                  <option value="none">I need copywriting help</option>
+                </select>
+              </label>
+              <label class="field">Monthly support
+                <select name="support" id="audit-support">
+                  <option value="none">No monthly support</option>
+                  <option value="care">Hosting and care</option>
+                  <option value="growth">Growth care</option>
+                  <option value="seo">SEO foundations</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="wizard-step" data-wizard-step hidden>
+            <p class="eyebrow">Step 4</p>
+            <h3>Which extras are likely needed?</h3>
             <fieldset class="field full audit-checks">
-              <span>Likely extras</span>
+              <span>Pick any that apply</span>
               <label><input type="checkbox" name="addon" value="copywriting" /> Copywriting help</label>
               <label><input type="checkbox" name="addon" value="forms" /> Booking or enquiry forms</label>
               <label><input type="checkbox" name="addon" value="tracking" /> Analytics and conversion tracking</label>
@@ -98,7 +151,25 @@
               <label><input type="checkbox" name="addon" value="app_design" /> App design or prototype</label>
             </fieldset>
           </div>
-          <div class="hero-actions">
+
+          <div class="wizard-step" data-wizard-step hidden>
+            <p class="eyebrow">Step 5</p>
+            <h3>Audit mode.</h3>
+            <div class="grid two">
+              <article class="card"><h3>Try automatic audit</h3><p>Best when the site is public and Google's PageSpeed endpoint can access it.</p></article>
+              <article class="card"><h3>Estimate without scan</h3><p>Best when a firewall, login, host rule or browser security blocks the scanner.</p></article>
+            </div>
+          </div>
+
+          <div class="wizard-step" data-wizard-step hidden>
+            <p class="eyebrow">Step 6</p>
+            <h3>Generate the recommendation.</h3>
+            <p class="page-lead">Run the audit if possible, or produce the detailed estimate from your answers. Either route creates a summary you can send to Octopye.</p>
+          </div>
+
+          <div class="wizard-actions">
+            <button class="button secondary" type="button" id="wizard-prev">Back</button>
+            <button class="button" type="button" id="wizard-next">Next</button>
             <button class="button" type="submit" id="run-audit">Run audit and estimate</button>
             <button class="button secondary" type="button" id="estimate-only">Estimate without scan</button>
           </div>
@@ -110,76 +181,28 @@
     <section class="section" id="audit-results-section">
       <div class="container">
         <div class="section-head split">
-          <div>
-            <p class="eyebrow">Results</p>
-            <h2>Audit findings and instant quote.</h2>
-          </div>
-          <p class="page-lead" id="audit-summary">Run the audit to generate scores, detected platform signals, priority fixes and a recommended Octopye package.</p>
+          <div><p class="eyebrow">Results</p><h2>Audit findings and detailed quote.</h2></div>
+          <p class="page-lead" id="audit-summary">Complete the questions to generate scores, detected platform signals, priority fixes and a recommended Octopye package.</p>
         </div>
-
         <div class="audit-result-grid">
-          <div class="calculator-result audit-estimate-card" id="estimate-output" aria-live="polite">
-            <span>Instant estimate</span>
-            <strong>Complete the form</strong>
-            <p class="muted">The estimate updates after a scan or when you choose manual options.</p>
-          </div>
-          <div class="card audit-platform-card">
-            <h3>Detected setup</h3>
-            <p id="platform-output">No scan yet. Manual platform choice will be used if scanning is blocked.</p>
-          </div>
+          <div class="calculator-result audit-estimate-card" id="estimate-output" aria-live="polite"><span>Instant estimate</span><strong>Complete the questions</strong><p class="muted">The estimate updates after a scan or when you choose manual options.</p></div>
+          <div class="card audit-platform-card"><h3>Detected setup</h3><p id="platform-output">No scan yet. Manual platform choice will be used if scanning is blocked.</p></div>
         </div>
-
-        <div class="score-grid" id="score-grid" aria-live="polite">
-          <div class="stat"><strong>--</strong><p>Mobile performance</p></div>
-          <div class="stat"><strong>--</strong><p>Desktop performance</p></div>
-          <div class="stat"><strong>--</strong><p>SEO</p></div>
-          <div class="stat"><strong>--</strong><p>Accessibility</p></div>
-        </div>
-
-        <div class="grid two audit-panels">
-          <article class="card">
-            <h3>Priority work</h3>
-            <ul class="check-list" id="priority-list">
-              <li>Run a scan to see recommended actions.</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3>Recommended route</h3>
-            <ul class="check-list" id="recommendation-list">
-              <li>Complete the form to get a package recommendation.</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="form-panel audit-send-panel">
-          <h3>Send this audit to Octopye</h3>
-          <p class="muted">The audit summary is copied into the booking link so the enquiry starts with context.</p>
-          <div class="hero-actions">
-            <a class="button" id="audit-booking-link" href="booking.html#booking-form">Send audit and estimate</a>
-            <button class="button secondary" type="button" id="copy-audit-summary">Copy summary</button>
-          </div>
-          <p class="form-status" id="copy-status" role="status" aria-live="polite"></p>
-        </div>
+        <div class="score-grid" id="score-grid" aria-live="polite"><div class="stat"><strong>--</strong><p>Mobile performance</p></div><div class="stat"><strong>--</strong><p>Desktop performance</p></div><div class="stat"><strong>--</strong><p>SEO</p></div><div class="stat"><strong>--</strong><p>Accessibility</p></div></div>
+        <div class="grid two audit-panels"><article class="card"><h3>Priority work</h3><ul class="check-list" id="priority-list"><li>Complete the questions to see recommended actions.</li></ul></article><article class="card"><h3>Recommended route</h3><ul class="check-list" id="recommendation-list"><li>Complete the questions to get a package recommendation.</li></ul></article></div>
+        <div class="form-panel audit-send-panel"><h3>Send this audit to Octopye</h3><p class="muted">The audit summary is copied into the booking link so the enquiry starts with context.</p><div class="hero-actions"><a class="button" id="audit-booking-link" href="booking.html#booking-form">Send audit and estimate</a><button class="button secondary" type="button" id="copy-audit-summary">Copy summary</button></div><p class="form-status" id="copy-status" role="status" aria-live="polite"></p></div>
       </div>
     </section>
 
     <section class="section white">
       <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Scanning coverage</p>
-          <h2>How the auditor handles different website types.</h2>
-        </div>
-        <div class="grid four">
-          <article class="card"><h3>HTML sites</h3><p>Checks speed, SEO metadata, accessibility, best practices, forms and conversion basics.</p></article>
-          <article class="card"><h3>WordPress</h3><p>Looks for WordPress signals, plugin-heavy performance issues, image weight and SEO structure.</p></article>
-          <article class="card"><h3>React and SPAs</h3><p>Uses rendered Lighthouse-style checks so client-rendered pages can still be assessed where public crawling is allowed.</p></article>
-          <article class="card"><h3>Blocked scans</h3><p>If a firewall, login, robots rule or host blocks scanners, the tool explains the block and produces a manual estimate instead of fake scores.</p></article>
-        </div>
+        <div class="section-head"><p class="eyebrow">GitHub Pages limits</p><h2>What the static auditor can and cannot do.</h2></div>
+        <div class="grid four"><article class="card"><h3>HTML sites</h3><p>Can be checked when PageSpeed can publicly fetch the page and return rendered results.</p></article><article class="card"><h3>WordPress</h3><p>Can show speed and SEO signals when the site allows public testing; blocked hosts fall back to the estimate.</p></article><article class="card"><h3>React and SPAs</h3><p>Can be assessed through rendered PageSpeed results where public crawling is allowed.</p></article><article class="card"><h3>Optional upgrade</h3><p>For fewer blocked scans, deploy <code>audit-worker.js</code> separately on Cloudflare Workers or similar and set <code>window.OCTOPYE_AUDIT_ENDPOINT</code>.</p></article></div>
       </div>
     </section>
   </main>
-  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a><p class="muted">Email designs@octopye.com for direct enquiries.</p></div><nav class="footer-links" aria-label="Footer navigation"><a href="web-design.html">Web Design</a><a href="app-design.html">App Design</a><a href="packages.html">Pricing</a><a href="sitemap.xml">Sitemap</a></nav></div></footer>
-  <div class="sticky-mobile-cta"><a class="button secondary" href="packages.html">Pricing</a><a class="button" href="#audit-estimator-form">Run audit</a></div>
+  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a><p class="muted">Email designs@octopye.com for direct enquiries.</p></div><nav class="footer-links" aria-label="Footer navigation"><a href="packages.html">Pricing</a><a href="estimate.html">Tools</a><a href="industries.html">Industries</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="sitemap.xml">Sitemap</a></nav></div></footer>
+  <div class="sticky-mobile-cta"><a class="button secondary" href="packages.html">Pricing</a><a class="button" href="estimate.html#audit-estimator-form">Use tools</a></div>
   <script src="script.js" defer></script>
 </body>
 </html>

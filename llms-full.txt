@@ -6,33 +6,61 @@ Primary pages:
 - Home: https://octopye.com/
 - Services: https://octopye.com/services
 - Packages: https://octopye.com/packages
-- Automatic audit and instant estimate: https://octopye.com/estimate
-- Web design: https://octopye.com/web-design
-- App design: https://octopye.com/app-design
-- SEO: https://octopye.com/seo
+- Tools, audit and estimate: https://octopye.com/estimate
+- Industries: https://octopye.com/industries
+- Projects: https://octopye.com/projects
 - Booking: https://octopye.com/booking
-- Conversion audit: https://octopye.com/conversion-audit
-- Landing page design: https://octopye.com/landing-page-design
-- Small business websites: https://octopye.com/small-business-websites
-- Website redesign: https://octopye.com/website-redesign
-- Conversion rate optimisation: https://octopye.com/conversion-rate-optimisation
-- Local SEO foundations: https://octopye.com/local-seo
-- SEO content pages: https://octopye.com/seo-content-pages
-- Technical SEO: https://octopye.com/technical-seo
-- Booking form setup: https://octopye.com/booking-form-setup
-- Analytics tracking: https://octopye.com/analytics-tracking
-- Website care: https://octopye.com/website-care
 
 Primary offers:
-- Automatic website auditor and instant estimator: checks public websites with rendered Lighthouse-style scans where allowed, detects common HTML, WordPress, React/SPA, ecommerce and builder signals, and falls back to a manual estimate when scanners are blocked.
+- Website audit tools and guided instant estimator: a GitHub Pages-compatible question-led estimator plus best-effort public PageSpeed checks for HTML, WordPress, React/SPA, ecommerce, builder and static websites. Automatic scans can be blocked by target sites; the estimator still works without backend code.
 - Free website conversion audit: review of messaging, page structure, SEO basics, calls to action, and lead capture.
-- Form or tracking fix: from GBP 99. Suited to websites with weak lead capture, broken forms, or no useful conversion tracking.
-- HTML/CSS/JS landing page design: from GBP 249 setup, with optional GBP 49/month support. Suited to businesses that need one focused page for one offer or organic search intent.
-- Static small business website: from GBP 599 setup, with optional GBP 79/month support. Suited to businesses that need a 5-page website, service pages, SEO foundations, analytics, and a clearer enquiry path.
-- App design prototype: from GBP 799. Suited to businesses that need app screens, user flows, clickable prototype direction, and app build scoping.
-- Website redesign sprint: from GBP 399. Suited to existing sites that look acceptable but fail to convert.
-- SEO Growth Plan: from GBP 149/month. Suited to businesses that already have a useful website and need organic search visibility and monthly improvement.
-- SEO content pages: from GBP 149 each. Suited to building out pages for buyer-intent service searches.
+- HTML/CSS/JS landing page design: from GBP 249 setup.
+- Static small business website: from GBP 599 setup.
+- App design prototype: from GBP 799.
+- Website redesign sprint: from GBP 399.
+- SEO Growth Plan: from GBP 149/month.
+
+Industry pages:
+- Trade businesses: https://octopye.com/web-design-for-trades
+- Plumbers: https://octopye.com/web-design-for-plumbers
+- Electricians: https://octopye.com/web-design-for-electricians
+- Builders: https://octopye.com/web-design-for-builders
+- Roofers: https://octopye.com/web-design-for-roofers
+- Landscapers: https://octopye.com/web-design-for-landscapers
+- Cleaning companies: https://octopye.com/web-design-for-cleaning-companies
+- Beauty salons: https://octopye.com/web-design-for-beauty-salons
+- Fitness coaches: https://octopye.com/web-design-for-fitness-coaches
+- Restaurants: https://octopye.com/web-design-for-restaurants
+- Cafes: https://octopye.com/web-design-for-cafes
+- Health clinics: https://octopye.com/web-design-for-health-clinics
+- Dentists: https://octopye.com/web-design-for-dentists
+- Law firms: https://octopye.com/web-design-for-law-firms
+- Accountants: https://octopye.com/web-design-for-accountants
+- Estate agents: https://octopye.com/web-design-for-estate-agents
+- Ecommerce brands: https://octopye.com/web-design-for-ecommerce
+- Coaches: https://octopye.com/web-design-for-coaches
+- Consultants: https://octopye.com/web-design-for-consultants
+- Education providers: https://octopye.com/web-design-for-education
+- Charities: https://octopye.com/web-design-for-charities
+- SaaS and apps: https://octopye.com/web-design-for-saas
+- Music and entertainment: https://octopye.com/web-design-for-music-and-entertainment
+- Automotive businesses: https://octopye.com/web-design-for-automotive
+- Industrial companies: https://octopye.com/web-design-for-industrial
+
+Project pages:
+- Install It Right: https://octopye.com/project-installitright
+- Prestige Flow: https://octopye.com/project-prestige-flow
+- Upfront Dance: https://octopye.com/project-upfrontdance
+- Rewind UK Live: https://octopye.com/project-rewinduk-live
+- SEO IT: https://octopye.com/project-seo-it
+- OctoPass: https://octopye.com/project-octopass
+- Cyber Sentinel: https://octopye.com/project-cyber-sentinel
+- Family Tapestry: https://octopye.com/project-family-tapestry
+- RC Ltd: https://octopye.com/project-rcltd
+- Tuned Performance: https://octopye.com/project-tuned-performance
+- Allergen Helper: https://octopye.com/project-allergen
+- Quit It: https://octopye.com/project-quit-it
+- Is This Safe: https://octopye.com/project-is-this-safe
 
 Contact:
 - Email: designs@octopye.com

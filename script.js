@@ -1,7 +1,21 @@
 (function () {
   const body = document.body;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  body.classList.add("js-enabled");
   const navToggle = document.querySelector(".nav-toggle");
   const mainNav = document.querySelector(".main-nav");
+
+  const loader = document.createElement("div");
+  loader.className = "site-loader";
+  loader.setAttribute("aria-hidden", "true");
+  loader.innerHTML = '<div class="loader-card"><img src="images/octopye-logo-icon-180.webp" alt="" /><strong>Octopye</strong><span>Building the conversion path</span><i></i></div>';
+  document.body.prepend(loader);
+  window.setTimeout(() => {
+    loader.classList.add("is-done");
+  }, 620);
+  window.setTimeout(() => {
+    loader.remove();
+  }, 1250);
 
   if (navToggle && mainNav) {
     navToggle.addEventListener("click", () => {
@@ -16,6 +30,315 @@
     if (current === href || current === `${href}.html`) {
       link.setAttribute("aria-current", "page");
     }
+  });
+
+  const header = document.querySelector(".site-header");
+  if (header && !document.querySelector(".site-ticker")) {
+    const ticker = document.createElement("div");
+    ticker.className = "site-ticker";
+    ticker.innerHTML = '<div><span>HTML/CSS/JS websites from GBP 249</span><span>Static business sites from GBP 599</span><span>App prototypes from GBP 799</span><span>SEO foundations from GBP 149/mo</span><span>Instant estimator in Tools</span><span>HTML/CSS/JS websites from GBP 249</span><span>Static business sites from GBP 599</span><span>App prototypes from GBP 799</span><span>SEO foundations from GBP 149/mo</span><span>Instant estimator in Tools</span></div>';
+    header.insertAdjacentElement("afterend", ticker);
+  }
+
+  const hero = document.querySelector(".hero");
+  if (hero && !hero.querySelector(".hero-showcase")) {
+    const showcase = document.createElement("aside");
+    showcase.className = "hero-showcase";
+    showcase.setAttribute("aria-label", "Live Octopye build preview");
+    showcase.innerHTML = '<div class="showcase-window"><div class="showcase-top"><img src="images/octopye-logo-icon-180.webp" alt="" /><span>Live build preview</span></div><div class="showcase-screen"><img src="images/cms_development_interface-BkFef1Xl.webp" alt="Website build interface preview" /><div class="showcase-scan"></div></div><div class="showcase-steps"><span class="is-active">Offer</span><span>SEO</span><span>Speed</span><span>Enquiry</span></div><div class="showcase-bars"><i style="--bar:92%"></i><i style="--bar:78%"></i><i style="--bar:86%"></i></div></div>';
+    hero.append(showcase);
+    if (!reduceMotion.matches) {
+      const showcaseSteps = Array.from(showcase.querySelectorAll(".showcase-steps span"));
+      let showcaseIndex = 0;
+      window.setInterval(() => {
+        showcaseIndex = (showcaseIndex + 1) % showcaseSteps.length;
+        showcaseSteps.forEach((step, index) => {
+          step.classList.toggle("is-active", index === showcaseIndex);
+        });
+      }, 1600);
+    }
+  }
+
+  const quickTools = document.createElement("aside");
+  quickTools.className = "quick-tools";
+  quickTools.innerHTML = '<button class="quick-tools-toggle" type="button" aria-expanded="false"><span>Tools</span></button><div class="quick-tools-panel" hidden><a href="estimate.html#audit-estimator-form">Instant estimator</a><a href="industries.html">Industry pages</a><a href="projects.html">Project proof</a><a href="booking.html#booking-form">Book audit</a></div>';
+  document.body.append(quickTools);
+  const quickToggle = quickTools.querySelector(".quick-tools-toggle");
+  const quickPanel = quickTools.querySelector(".quick-tools-panel");
+  quickToggle.addEventListener("click", () => {
+    const isOpen = quickPanel.hidden;
+    quickPanel.hidden = !isOpen;
+    quickTools.classList.toggle("is-open", isOpen);
+    quickToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  const progress = document.createElement("span");
+  progress.className = "scroll-progress";
+  progress.setAttribute("aria-hidden", "true");
+  document.body.append(progress);
+
+  const updateProgress = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
+    progress.style.width = `${percent}%`;
+  };
+
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+  window.requestAnimationFrame(() => body.classList.add("is-ready"));
+
+  const heroes = document.querySelectorAll(".hero");
+  const updateHeroMotion = () => {
+    if (reduceMotion.matches) return;
+    heroes.forEach((hero) => {
+      const rect = hero.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      const shift = Math.max(-26, Math.min(26, rect.top * -0.04));
+      hero.style.setProperty("--hero-shift", `${shift}px`);
+    });
+  };
+
+  window.addEventListener("scroll", updateHeroMotion, { passive: true });
+  window.addEventListener("resize", updateHeroMotion);
+  updateHeroMotion();
+
+  const revealTargets = document.querySelectorAll(".section, .offer-strip, .card, .price-card, .work-card, .step, .faq-item, .stat, .calculator-result, .service-band, .interactive-panel, .filter-panel");
+  revealTargets.forEach((element, index) => {
+    element.classList.add("reveal");
+    element.style.setProperty("--reveal-delay", `${Math.min((index % 6) * 55, 275)}ms`);
+  });
+
+  if ("IntersectionObserver" in window && !reduceMotion.matches) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealTargets.forEach((element) => observer.observe(element));
+  } else {
+    revealTargets.forEach((element) => element.classList.add("is-visible"));
+  }
+
+  const animateNumbers = (root) => {
+    if (reduceMotion.matches) return;
+    const numbers = (root || document).querySelectorAll("[data-count-to], .score-grid .stat strong");
+    numbers.forEach((node) => {
+      const finalValue = Number(node.dataset.countTo || node.textContent);
+      if (!Number.isFinite(finalValue) || node.dataset.counted === "true") return;
+      node.dataset.counted = "true";
+      const duration = 700;
+      const start = performance.now();
+      const tick = (now) => {
+        const progressValue = Math.min(1, (now - start) / duration);
+        node.textContent = String(Math.round(finalValue * progressValue));
+        if (progressValue < 1) {
+          window.requestAnimationFrame(tick);
+        }
+      };
+      window.requestAnimationFrame(tick);
+    });
+  };
+
+  const bindButtonPress = (button) => {
+    if (button.dataset.pressBound === "true") return;
+    button.dataset.pressBound = "true";
+    button.addEventListener("pointerdown", (event) => {
+      const rect = button.getBoundingClientRect();
+      button.style.setProperty("--press-x", `${event.clientX - rect.left}px`);
+      button.style.setProperty("--press-y", `${event.clientY - rect.top}px`);
+      button.classList.remove("is-pressing");
+      void button.offsetWidth;
+      button.classList.add("is-pressing");
+    });
+    button.addEventListener("animationend", () => {
+      button.classList.remove("is-pressing");
+    });
+  };
+
+  document.querySelectorAll(".button").forEach((button) => {
+    bindButtonPress(button);
+  });
+
+  const motionSurfaces = document.querySelectorAll(".card, .price-card, .work-card, .step, .faq-item, .form-panel, .calculator-result, .interactive-panel, .filter-panel");
+  motionSurfaces.forEach((surface) => {
+    surface.classList.add("motion-surface");
+    if (reduceMotion.matches || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    let frame = 0;
+    surface.addEventListener("pointermove", (event) => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const rect = surface.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
+        const rotateY = ((x - 50) / 50) * 2.6;
+        const rotateX = ((50 - y) / 50) * 2.2;
+        surface.style.setProperty("--mx", `${x}%`);
+        surface.style.setProperty("--my", `${y}%`);
+        surface.style.setProperty("--rx", `${rotateX}deg`);
+        surface.style.setProperty("--ry", `${rotateY}deg`);
+      });
+    });
+    surface.addEventListener("pointerleave", () => {
+      window.cancelAnimationFrame(frame);
+      surface.style.setProperty("--rx", "0deg");
+      surface.style.setProperty("--ry", "0deg");
+    });
+  });
+
+  const sections = Array.from(document.querySelectorAll("main > section"));
+  if (sections.length > 3) {
+    const sectionRail = document.createElement("nav");
+    sectionRail.className = "section-rail";
+    sectionRail.setAttribute("aria-label", "Page section navigation");
+    sections.forEach((section, index) => {
+      if (!section.id) {
+        section.id = `section-${index + 1}`;
+      }
+      const label = section.querySelector("h2, h1, .eyebrow");
+      const button = document.createElement("a");
+      button.href = `#${section.id}`;
+      button.className = "section-rail-dot";
+      button.dataset.label = label ? label.textContent.trim().slice(0, 52) : `Section ${index + 1}`;
+      button.setAttribute("aria-label", button.dataset.label);
+      sectionRail.append(button);
+    });
+    document.body.append(sectionRail);
+
+    if ("IntersectionObserver" in window) {
+      const railLinks = Array.from(sectionRail.querySelectorAll("a"));
+      const railObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            railLinks.forEach((link) => {
+              link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
+            });
+          }
+        });
+      }, { rootMargin: "-38% 0px -52% 0px", threshold: 0.01 });
+      sections.forEach((section) => railObserver.observe(section));
+    }
+  }
+
+  const projectFilters = document.querySelectorAll("[data-project-filter]");
+  const projectCards = document.querySelectorAll("[data-project-card]");
+  projectFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.projectFilter;
+      projectFilters.forEach((item) => item.classList.toggle("is-active", item === button));
+      projectCards.forEach((card) => {
+        const type = card.dataset.type || "";
+        card.hidden = filter !== "all" && !type.includes(filter);
+      });
+    });
+  });
+
+  const industrySearch = document.querySelector("#industry-search");
+  const industryCards = document.querySelectorAll("[data-industry-card]");
+  const industryCount = document.querySelector("#industry-count");
+  if (industrySearch && industryCards.length) {
+    industrySearch.addEventListener("input", () => {
+      const query = industrySearch.value.trim().toLowerCase();
+      let visible = 0;
+      industryCards.forEach((card) => {
+        const match = !query || (card.dataset.search || "").includes(query);
+        card.hidden = !match;
+        if (match) visible += 1;
+      });
+      if (industryCount) {
+        industryCount.textContent = `${visible} industry page${visible === 1 ? "" : "s"} matched.`;
+      }
+    });
+  }
+
+  const pathChoices = document.querySelectorAll("[data-path-choice]");
+  const pathOutput = document.querySelector("#path-choice-output");
+  const routeContent = {
+    website: {
+      title: "Static HTML/CSS/JS Website",
+      copy: "Best when the business needs clearer services, faster loading, SEO basics and an enquiry path from day one.",
+      primary: ["Estimate website", "estimate.html#audit-estimator-form"],
+      secondary: ["View web design", "web-design.html"]
+    },
+    app: {
+      title: "App Design Prototype",
+      copy: "Best when the idea needs screens, user journeys and scope before spending on a full app build.",
+      primary: ["Estimate app", "estimate.html#audit-estimator-form"],
+      secondary: ["View app design", "app-design.html"]
+    },
+    seo: {
+      title: "SEO Foundations",
+      copy: "Best when the website exists but needs service pages, metadata, technical fixes and organic search structure.",
+      primary: ["Estimate SEO", "estimate.html#audit-estimator-form"],
+      secondary: ["View SEO", "seo.html"]
+    },
+    care: {
+      title: "Hosting and Website Care",
+      copy: "Best when the site needs hosting, SSL, form checks, uptime checks and small monthly improvements.",
+      primary: ["Estimate care", "estimate.html#audit-estimator-form"],
+      secondary: ["View hosting", "website-care.html"]
+    }
+  };
+
+  pathChoices.forEach((button) => {
+    button.addEventListener("click", () => {
+      const content = routeContent[button.dataset.pathChoice] || routeContent.website;
+      pathChoices.forEach((item) => item.classList.toggle("is-active", item === button));
+      if (pathOutput) {
+        pathOutput.classList.remove("is-swapping");
+        void pathOutput.offsetWidth;
+        pathOutput.classList.add("is-swapping");
+        pathOutput.innerHTML = `<span>Recommended first step</span><strong>${content.title}</strong><p class="muted">${content.copy}</p><div class="hero-actions"><a class="button" href="${content.primary[1]}">${content.primary[0]}</a><a class="button secondary" href="${content.secondary[1]}">${content.secondary[0]}</a></div>`;
+        pathOutput.querySelectorAll(".button").forEach((newButton) => bindButtonPress(newButton));
+      }
+    });
+  });
+
+  document.querySelectorAll(".faq-item").forEach((item, index) => {
+    const heading = item.querySelector("h3");
+    if (!heading || item.dataset.faqReady === "true") return;
+    item.dataset.faqReady = "true";
+    const panelId = `faq-panel-${index + 1}`;
+    const trigger = document.createElement("button");
+    trigger.className = "faq-trigger";
+    trigger.type = "button";
+    trigger.setAttribute("aria-expanded", index === 0 ? "true" : "false");
+    trigger.setAttribute("aria-controls", panelId);
+    trigger.innerHTML = `<span>${heading.textContent}</span><span class="faq-symbol" aria-hidden="true">+</span>`;
+    heading.textContent = "";
+    heading.append(trigger);
+    const panel = document.createElement("div");
+    panel.className = "faq-panel";
+    panel.id = panelId;
+    while (heading.nextSibling) {
+      panel.append(heading.nextSibling);
+    }
+    item.append(panel);
+    item.classList.toggle("is-open", index === 0);
+    panel.hidden = index !== 0;
+    trigger.addEventListener("click", () => {
+      const isOpen = item.classList.toggle("is-open");
+      trigger.setAttribute("aria-expanded", String(isOpen));
+      panel.hidden = !isOpen;
+    });
+  });
+
+  document.querySelectorAll("input, select, textarea").forEach((field) => {
+    const wrapper = field.closest(".field");
+    const updateFieldState = () => {
+      if (!wrapper) return;
+      const hasValue = field.type === "checkbox" ? field.checked : Boolean(field.value && field.value.trim ? field.value.trim() : field.value);
+      wrapper.classList.toggle("is-filled", hasValue);
+      wrapper.classList.toggle("is-focused", document.activeElement === field);
+    };
+    field.addEventListener("focus", updateFieldState);
+    field.addEventListener("blur", updateFieldState);
+    field.addEventListener("input", updateFieldState);
+    field.addEventListener("change", updateFieldState);
+    updateFieldState();
   });
 
   const params = new URLSearchParams(window.location.search);
@@ -102,11 +425,20 @@
   if (auditForm) {
     const auditUrl = auditForm.querySelector("#audit-url");
     const platformInput = auditForm.querySelector("#audit-platform");
+    const businessInput = auditForm.querySelector("#audit-business");
     const goalInput = auditForm.querySelector("#audit-goal");
+    const budgetInput = auditForm.querySelector("#audit-budget");
+    const urgencyInput = auditForm.querySelector("#audit-urgency");
     const pagesInput = auditForm.querySelector("#audit-pages");
+    const contentInput = auditForm.querySelector("#audit-content");
     const supportInput = auditForm.querySelector("#audit-support");
     const runAuditButton = auditForm.querySelector("#run-audit");
     const estimateOnlyButton = auditForm.querySelector("#estimate-only");
+    const wizardSteps = Array.from(auditForm.querySelectorAll("[data-wizard-step]"));
+    const wizardPrev = auditForm.querySelector("#wizard-prev");
+    const wizardNext = auditForm.querySelector("#wizard-next");
+    const wizardStepLabel = auditForm.querySelector("#wizard-step-label");
+    const wizardProgressBar = auditForm.querySelector("#wizard-progress-bar");
     const auditStatus = document.querySelector("#audit-status");
     const auditSummary = document.querySelector("#audit-summary");
     const estimateOutput = document.querySelector("#estimate-output");
@@ -117,6 +449,8 @@
     const bookingLink = document.querySelector("#audit-booking-link");
     const copyButton = document.querySelector("#copy-audit-summary");
     const copyStatus = document.querySelector("#copy-status");
+    const auditEndpoint = window.OCTOPYE_AUDIT_ENDPOINT || (document.querySelector("meta[name='octopye-audit-endpoint']") || {}).content || "";
+    let wizardIndex = 0;
     let lastSummary = "";
     let lastAuditContext = null;
 
@@ -137,6 +471,36 @@
       seo: "SEO and organic visibility",
       hosting: "Hosting, care and support",
       app: "App design or prototype"
+    };
+
+    const businessLabels = {
+      service: "Local service business",
+      trade: "Trade or contractor",
+      health: "Health, wellbeing or beauty",
+      food: "Restaurant, cafe or hospitality",
+      professional: "Professional services",
+      ecommerce: "Ecommerce or product brand",
+      app: "App, SaaS or digital product",
+      charity: "Charity or community project"
+    };
+
+    const budgetLabels = {
+      starter: "Smallest sensible option",
+      standard: "Strong small-business build",
+      growth: "Growth site or app prototype",
+      not_sure: "Need advice"
+    };
+
+    const urgencyLabels = {
+      normal: "Normal launch",
+      fast: "Fast launch",
+      urgent: "Urgent repair or launch"
+    };
+
+    const contentLabels = {
+      ready: "Usable copy and images ready",
+      rough: "Rough notes ready",
+      none: "Copywriting help needed"
     };
 
     const bookingPackageLabels = {
@@ -164,7 +528,7 @@
     };
 
     const setBusy = (isBusy) => {
-      [runAuditButton, estimateOnlyButton].forEach((button) => {
+      [runAuditButton, estimateOnlyButton, wizardPrev, wizardNext].forEach((button) => {
         if (button) {
           button.disabled = isBusy;
         }
@@ -173,6 +537,56 @@
         runAuditButton.textContent = isBusy ? "Running audit..." : "Run audit and estimate";
       }
     };
+
+    const updateWizard = () => {
+      if (!wizardSteps.length) return;
+      wizardSteps.forEach((step, index) => {
+        step.hidden = index !== wizardIndex;
+      });
+      const isFirst = wizardIndex === 0;
+      const isLast = wizardIndex === wizardSteps.length - 1;
+      if (wizardPrev) {
+        wizardPrev.hidden = isFirst;
+      }
+      if (wizardNext) {
+        wizardNext.hidden = isLast;
+      }
+      if (runAuditButton) {
+        runAuditButton.hidden = !isLast;
+      }
+      if (estimateOnlyButton) {
+        estimateOnlyButton.hidden = !isLast;
+      }
+      if (wizardStepLabel) {
+        wizardStepLabel.textContent = `Step ${wizardIndex + 1} of ${wizardSteps.length}`;
+      }
+      if (wizardProgressBar) {
+        wizardProgressBar.style.width = `${((wizardIndex + 1) / wizardSteps.length) * 100}%`;
+      }
+    };
+
+    const validateWizardStep = () => {
+      if (!wizardSteps.length) return true;
+      const fields = wizardSteps[wizardIndex].querySelectorAll("input, select, textarea");
+      return Array.from(fields).every((field) => field.reportValidity());
+    };
+
+    if (wizardNext) {
+      wizardNext.addEventListener("click", () => {
+        if (!validateWizardStep()) return;
+        wizardIndex = Math.min(wizardSteps.length - 1, wizardIndex + 1);
+        updateWizard();
+      });
+    }
+
+    if (wizardPrev) {
+      wizardPrev.addEventListener("click", () => {
+        wizardIndex = Math.max(0, wizardIndex - 1);
+        updateWizard();
+      });
+    }
+
+    updateWizard();
 
     const normalizeAuditUrl = (rawValue, allowEmpty) => {
       let value = rawValue.trim();
@@ -195,11 +609,38 @@
     const readAuditInputs = (allowEmptyUrl) => ({
       url: normalizeAuditUrl(auditUrl ? auditUrl.value : "", allowEmptyUrl),
       selectedPlatform: platformInput ? platformInput.value : "auto",
+      businessType: businessInput ? businessInput.value : "service",
       goal: goalInput ? goalInput.value : "more_enquiries",
+      budget: budgetInput ? budgetInput.value : "starter",
+      urgency: urgencyInput ? urgencyInput.value : "normal",
       pages: pagesInput ? Number(pagesInput.value) : 5,
+      content: contentInput ? contentInput.value : "ready",
       support: supportInput ? supportInput.value : "none",
       addons: Array.from(auditForm.querySelectorAll("[name='addon']:checked")).map((field) => field.value)
     });
+
+    const fetchAuditEndpoint = async (url) => {
+      if (!auditEndpoint) return null;
+      const endpoint = new URL(auditEndpoint, window.location.href);
+      endpoint.searchParams.set("url", url);
+      const response = await fetch(endpoint.toString(), { headers: { Accept: "application/json" } });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || payload.error) {
+        throw new Error(payload.error || "Server audit route failed.");
+      }
+      const audit = payload.audit || payload;
+      if (!audit.mobile && !audit.desktop && !audit.basic) {
+        throw new Error("Server audit route returned no usable data.");
+      }
+      return {
+        mobile: audit.mobile || null,
+        desktop: audit.desktop || null,
+        basic: audit.basic || null,
+        partial: Boolean(audit.partial || (!audit.mobile || !audit.desktop)),
+        error: audit.error || (!audit.mobile || !audit.desktop ? "Rendered scores unavailable; basic server fetch completed." : ""),
+        source: "server audit worker"
+      };
+    };
 
     const fetchPageSpeed = async (url, strategy) => {
       const controller = new AbortController();
@@ -224,6 +665,16 @@
     };
 
     const runRenderedAudit = async (url) => {
+      let serverError = "";
+      try {
+        const serverAudit = await fetchAuditEndpoint(url);
+        if (serverAudit) {
+          return serverAudit;
+        }
+      } catch (error) {
+        serverError = error.message || "Server audit route failed.";
+      }
+
       const [mobile, desktop] = await Promise.allSettled([
         fetchPageSpeed(url, "mobile"),
         fetchPageSpeed(url, "desktop")
@@ -232,13 +683,15 @@
       const desktopResult = desktop.status === "fulfilled" ? desktop.value : null;
       if (!mobileResult && !desktopResult) {
         const reason = mobile.status === "rejected" ? mobile.reason.message : "The scan was blocked.";
-        throw new Error(reason || "The scan was blocked.");
+        throw new Error(serverError ? `${serverError} Browser audit also failed: ${reason}` : reason || "The scan was blocked.");
       }
       return {
         mobile: mobileResult,
         desktop: desktopResult,
+        basic: null,
         partial: !mobileResult || !desktopResult,
-        error: mobile.status === "rejected" ? mobile.reason.message : desktop.status === "rejected" ? desktop.reason.message : ""
+        error: mobile.status === "rejected" ? mobile.reason.message : desktop.status === "rejected" ? desktop.reason.message : "",
+        source: "browser PageSpeed check"
       };
     };
 
@@ -259,6 +712,9 @@
           requests: networkItems.slice(0, 80).map((item) => item.url || "")
         };
       });
+      if (audit.basic) {
+        payloads.push(audit.basic);
+      }
       return JSON.stringify(payloads);
     };
 
@@ -286,6 +742,9 @@
       }
       if (audit && (audit.mobile || audit.desktop)) {
         return { key: "static", label: platformLabels.static, source: "No CMS or SPA signal found in the public scan" };
+      }
+      if (audit && audit.basic) {
+        return { key: "static", label: platformLabels.static, source: "Basic server fetch returned no CMS or SPA signal" };
       }
       return { key: "unknown", label: platformLabels.unknown, source: "Manual estimate only" };
     };
@@ -317,6 +776,7 @@
         item.append(strong, copy);
         return item;
       }));
+      animateNumbers(scoreGrid);
     };
 
     const renderList = (element, items) => {
@@ -386,6 +846,42 @@
     };
 
     const applyAddons = (estimate, inputs) => {
+      if (inputs.content === "rough" && !inputs.addons.includes("copywriting")) {
+        estimate.min += 90;
+        estimate.max += 220;
+        estimate.reasons.push("Copy cleanup from rough notes");
+      }
+
+      if (inputs.content === "none" && !inputs.addons.includes("copywriting")) {
+        estimate.min += 180;
+        estimate.max += 420;
+        estimate.reasons.push("Conversion copywriting from scratch");
+      }
+
+      if (inputs.urgency === "fast") {
+        estimate.min += 120;
+        estimate.max += 320;
+        estimate.reasons.push("Fast launch scheduling");
+      }
+
+      if (inputs.urgency === "urgent") {
+        estimate.min += 250;
+        estimate.max += 650;
+        estimate.reasons.push("Urgent repair or launch priority");
+      }
+
+      if (inputs.businessType === "ecommerce") {
+        estimate.min += 250;
+        estimate.max += 900;
+        estimate.reasons.push("Product, checkout and tracking complexity");
+      }
+
+      if (inputs.businessType === "app" && inputs.goal !== "app" && !inputs.addons.includes("app_design")) {
+        estimate.min += 299;
+        estimate.max += 799;
+        estimate.reasons.push("Product landing page and app scope planning");
+      }
+
       inputs.addons.forEach((addon) => {
         if (addon === "copywriting") {
           estimate.min += 180;
@@ -435,6 +931,10 @@
         estimate.monthlyMin = Math.max(estimate.monthlyMin, 149);
         estimate.monthlyMax = Math.max(estimate.monthlyMax, 349);
         estimate.reasons.push("Monthly SEO foundations");
+      }
+
+      if (inputs.budget === "starter" && inputs.goal !== "app" && estimate.max > 999) {
+        estimate.reasons.push("Starter budget selected, so scope should be phased before build.");
       }
     };
 
@@ -498,6 +998,12 @@
       if (platform.key === "builder") {
         priorities.push("Decide whether to keep the builder or rebuild as a faster static site.");
       }
+      if (inputs.content === "none") {
+        priorities.push("Create conversion copy before design so the page can sell the right offer.");
+      }
+      if (inputs.urgency === "urgent") {
+        priorities.push("Separate urgent fixes from nice-to-have improvements so the first launch stays focused.");
+      }
       if (inputs.goal === "more_enquiries") {
         priorities.push("Make the enquiry path obvious above the fold and track every form or booking click.");
       }
@@ -515,6 +1021,12 @@
       recommendations.push(`${estimate.label}: ${formatMoney(estimate.min)} - ${formatMoney(estimate.max)} guide range.`);
       if (estimate.monthlyMin || estimate.monthlyMax) {
         recommendations.push(`Optional support: ${formatMoney(estimate.monthlyMin)} - ${formatMoney(estimate.monthlyMax)} per month.`);
+      }
+      if (inputs.budget === "starter" && estimate.min > 599) {
+        recommendations.push("Because you chose the smallest sensible option, phase the work into audit, lead page, then wider website.");
+      }
+      if (inputs.budget === "growth") {
+        recommendations.push("Growth budget selected, so include SEO pages, tracking and support instead of only a visual refresh.");
       }
       if (platform.key === "static" && inputs.goal !== "app") {
         recommendations.push("Best fit: a fast HTML/CSS/JS build with direct enquiry forms and service pages.");
@@ -553,7 +1065,11 @@
         "Octopye audit and estimate summary",
         urlLine,
         scanLine,
+        `Business type: ${businessLabels[inputs.businessType] || inputs.businessType}`,
         `Goal: ${goalLabels[inputs.goal] || inputs.goal}`,
+        `Budget comfort: ${budgetLabels[inputs.budget] || inputs.budget}`,
+        `Timeline: ${urgencyLabels[inputs.urgency] || inputs.urgency}`,
+        `Content readiness: ${contentLabels[inputs.content] || inputs.content}`,
         `Detected setup: ${platform.label} (${platform.source})`,
         `Recommended package: ${estimate.label}`,
         `Guide range: ${formatMoney(estimate.min)} - ${formatMoney(estimate.max)}`,
@@ -586,7 +1102,8 @@
       renderList(recommendationList, recommendations);
 
       if (platformOutput) {
-        platformOutput.textContent = `${platform.label}. ${platform.source}.`;
+        const source = audit && audit.source ? ` Scan route: ${audit.source}.` : "";
+        platformOutput.textContent = `${platform.label}. ${platform.source}.${source}`;
       }
 
       lastSummary = buildSummary(inputs, platform, estimate, priorities, blockedMessage);

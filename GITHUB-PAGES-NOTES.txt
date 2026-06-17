@@ -1,0 +1,29 @@
+Octopye GitHub Pages notes
+
+This site is built to run as a static GitHub Pages site.
+
+What works fully on GitHub Pages:
+- All HTML pages, industry pages and project pages.
+- The guided estimator wizard.
+- Booking form handoff and prefilled audit summaries.
+- Animations, filters, search and interactive route finder.
+- Manifest, favicon and install icons.
+
+Audit limitation:
+GitHub Pages cannot run backend code. A browser-based audit cannot force third-party websites to be scanned if the target site, host, firewall, robots rules, login wall, or public audit API blocks access.
+
+Current static audit behaviour:
+- The tool attempts public rendered checks through the PageSpeed endpoint.
+- If the scan fails, the estimator still produces a detailed recommendation from the question flow.
+- The site does not pretend blocked scans succeeded.
+
+Optional upgrade:
+The included audit-worker.js is not executed by GitHub Pages. It can be deployed separately on a worker platform such as Cloudflare Workers. After deployment, add:
+
+window.OCTOPYE_AUDIT_ENDPOINT = "https://your-worker-url.example";
+
+before script.js loads, or add a meta tag:
+
+<meta name="octopye-audit-endpoint" content="https://your-worker-url.example" />
+
+That gives the static site a server-side audit route while keeping the main website hosted on GitHub Pages.

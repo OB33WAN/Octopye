@@ -59,9 +59,53 @@
     }
   }
 
+  const routeName = (window.location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "") || "index";
+  const pageTitle = (document.querySelector("h1") || document.querySelector("title") || {}).textContent || "Octopye enquiry";
+  const suggestedPackage = (() => {
+    if (/app|project-(seo-it|octopass|cyber|family|allergen|quit|safe)/.test(routeName)) return "App Design Prototype";
+    if (/seo|organic-google-reach|technical-seo|seo-content/.test(routeName)) return "Local SEO Foundations";
+    if (/care|hosting/.test(routeName)) return "Hosting and Website Care";
+    if (/landing/.test(routeName)) return "HTML/CSS/JS Landing Page";
+    if (/redesign/.test(routeName)) return "Website Redesign";
+    if (/estimate|audit|booking/.test(routeName)) return "Free Website Audit";
+    return "Static Small Business Website";
+  })();
+  const escapeHtml = (value) => String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+  const bookingSummary = `Interested after viewing: ${pageTitle.trim()} (${window.location.href})`;
+  const safeSuggestedPackage = escapeHtml(suggestedPackage);
+  const safeBookingSummary = escapeHtml(bookingSummary);
+  const bookingPopupHasShown = () => {
+    try {
+      return window.sessionStorage.getItem("octopye-booking-popup-shown") === "true";
+    } catch {
+      return false;
+    }
+  };
+  const rememberBookingPopup = () => {
+    try {
+      window.sessionStorage.setItem("octopye-booking-popup-shown", "true");
+    } catch {
+      // Some privacy modes block storage; the popup should still work manually.
+    }
+  };
+  const bookingHref = (packageName, summary) => {
+    if (routeName === "booking") {
+      return "#booking-form";
+    }
+    const url = new URL("booking.html", window.location.href);
+    url.searchParams.set("package", packageName || suggestedPackage);
+    url.searchParams.set("summary", (summary || bookingSummary).slice(0, 1400));
+    url.hash = "booking-form";
+    return `${url.pathname.split("/").pop()}${url.search}${url.hash}`;
+  };
+
   const quickTools = document.createElement("aside");
   quickTools.className = "quick-tools";
-  quickTools.innerHTML = '<button class="quick-tools-toggle" type="button" aria-expanded="false"><span>Tools</span></button><div class="quick-tools-panel" hidden><a href="estimate.html#audit-estimator-form">Instant estimator</a><a href="industries.html">Industry pages</a><a href="projects.html">Project proof</a><a href="booking.html#booking-form">Book audit</a></div>';
+  quickTools.innerHTML = '<button class="quick-tools-toggle" type="button" aria-expanded="false"><span>Tools</span></button><div class="quick-tools-panel" hidden><a href="booking.html?package=Free%20Website%20Audit#booking-form">Book free audit</a><a href="estimate.html#audit-estimator-form">Instant estimator</a><a href="packages.html">Pricing</a><a href="projects.html">Project proof</a><a href="organic-google-reach.html">Organic growth</a></div>';
   document.body.append(quickTools);
   const quickToggle = quickTools.querySelector(".quick-tools-toggle");
   const quickPanel = quickTools.querySelector(".quick-tools-panel");
@@ -72,15 +116,76 @@
     quickToggle.setAttribute("aria-expanded", String(isOpen));
   });
 
+  const bookingNudge = document.createElement("aside");
+  bookingNudge.className = "booking-nudge";
+  bookingNudge.innerHTML = '<button class="booking-nudge-button" type="button"><span>Want bookings?</span><strong>Book free audit</strong></button>';
+  document.body.append(bookingNudge);
+
+  const bookingStrip = document.createElement("aside");
+  bookingStrip.className = "booking-intent-strip";
+  bookingStrip.innerHTML = '<p><strong>Need bookings, not page views?</strong><span>Get the free audit and the smallest sensible route to enquiries.</span></p><div><a class="button" href="' + bookingHref("Free Website Audit", "Free audit requested from sticky booking strip.") + '">Book audit</a><button class="button secondary" type="button" data-open-booking-popup>Quick book</button></div>';
+  document.body.append(bookingStrip);
+
+  const bookingModal = document.createElement("div");
+  bookingModal.className = "booking-modal";
+  bookingModal.hidden = true;
+  bookingModal.innerHTML = '<div class="booking-modal-backdrop" data-close-booking-popup></div><section class="booking-modal-panel" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title"><button class="booking-modal-close" type="button" aria-label="Close booking popup" data-close-booking-popup>Close</button><p class="eyebrow">Book before you browse away</p><h2 id="booking-modal-title">Get a free website audit and a clear booking route.</h2><p class="page-lead">Send the minimum details now. Octopye can reply with the quickest way to turn the site into enquiries: page, website, app prototype, SEO, forms or care.</p><div class="booking-choice-grid"><a href="' + bookingHref("Free Website Audit", "Free audit requested from booking popup.") + '"><strong>Free audit</strong><span>Best first step</span></a><a href="' + bookingHref(suggestedPackage, "Fixed quote requested from booking popup.") + '"><strong>Fixed quote</strong><span>' + safeSuggestedPackage + '</span></a><a href="estimate.html#audit-estimator-form"><strong>Use estimator</strong><span>Work out cost first</span></a></div><form class="popup-booking-form js-lead-form" action="https://api.web3forms.com/submit" method="POST"><input type="hidden" name="access_key" value="def6e6ac-11ac-4b24-9c11-6238ea733b58" /><input type="hidden" name="subject" value="New Octopye quick booking request" /><input type="hidden" name="from_name" value="Octopye quick booking popup" /><input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" /><div class="form-grid compact"><label class="field">Name<input name="name" autocomplete="name" required /></label><label class="field">Email<input type="email" name="email" autocomplete="email" required /></label><label class="field">Website, optional<input name="website" inputmode="url" placeholder="https://..." /></label><label class="field">Need<select name="package"><option>' + safeSuggestedPackage + '</option><option>Free Website Audit</option><option>HTML/CSS/JS Landing Page</option><option>Static Small Business Website</option><option>Website Redesign</option><option>App Design Prototype</option><option>Local SEO Foundations</option><option>Hosting and Website Care</option></select></label><label class="field full">What do you want more of?<textarea name="message" required>More bookings/enquiries. ' + safeBookingSummary + '</textarea></label></div><button class="button full" type="submit">Send quick booking request</button><p class="form-status" role="status" aria-live="polite"></p></form><p class="muted booking-modal-email">Prefer email? <a href="mailto:designs@octopye.com?subject=Octopye%20booking%20request">designs@octopye.com</a></p></section>';
+  document.body.append(bookingModal);
+
+  const bookingModalPanel = bookingModal.querySelector(".booking-modal-panel");
+  const openBookingPopup = (manual) => {
+    if (routeName === "booking" && manual) {
+      const form = document.querySelector("#booking-form");
+      if (form) form.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
+      return;
+    }
+    if (!manual && (routeName === "booking" || routeName === "estimate")) return;
+    if (!manual && bookingPopupHasShown()) return;
+    bookingModal.hidden = false;
+    body.classList.add("booking-modal-open");
+    rememberBookingPopup();
+    const firstField = bookingModal.querySelector("input[name='name']") || bookingModalPanel;
+    window.setTimeout(() => firstField.focus(), 60);
+  };
+
+  const closeBookingPopup = () => {
+    bookingModal.hidden = true;
+    body.classList.remove("booking-modal-open");
+  };
+
+  bookingNudge.querySelector("button").addEventListener("click", () => openBookingPopup(true));
+  bookingModal.querySelectorAll("[data-close-booking-popup]").forEach((control) => {
+    control.addEventListener("click", closeBookingPopup);
+  });
+  document.querySelectorAll("[data-open-booking-popup]").forEach((control) => {
+    control.addEventListener("click", () => openBookingPopup(true));
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !bookingModal.hidden) {
+      closeBookingPopup();
+    }
+  });
+  document.addEventListener("mousemove", (event) => {
+    if (event.clientY <= 8 && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      openBookingPopup(false);
+    }
+  });
+  window.setTimeout(() => openBookingPopup(false), 14000);
+
   const progress = document.createElement("span");
   progress.className = "scroll-progress";
   progress.setAttribute("aria-hidden", "true");
   document.body.append(progress);
 
+  let scrollPrompted = false;
   const updateProgress = () => {
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const percent = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
     progress.style.width = `${percent}%`;
+    if (!scrollPrompted && percent > 42) {
+      scrollPrompted = true;
+      openBookingPopup(false);
+    }
   };
 
   window.addEventListener("scroll", updateProgress, { passive: true });

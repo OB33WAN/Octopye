@@ -1150,7 +1150,7 @@ tr:last-child td {
 .quick-tools {
   position: fixed;
   right: 22px;
-  bottom: 22px;
+  bottom: 96px;
   z-index: 40;
   display: grid;
   justify-items: end;
@@ -1213,6 +1213,175 @@ tr:last-child td {
 .quick-tools-panel a:hover {
   background: #edf6f5;
   color: var(--teal-dark);
+}
+
+.booking-nudge {
+  position: fixed;
+  left: 22px;
+  bottom: 96px;
+  z-index: 42;
+}
+
+.booking-nudge-button {
+  display: grid;
+  gap: 0;
+  min-height: 58px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--teal);
+  color: #fff;
+  padding: 10px 16px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  animation: tool-pulse 3.2s ease-in-out infinite;
+}
+
+.booking-nudge-button span {
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.booking-nudge-button strong {
+  font-size: 1rem;
+}
+
+.booking-intent-strip {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  z-index: 39;
+  display: flex;
+  width: min(760px, calc(100vw - 32px));
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.96);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  transform: translateX(-50%);
+  backdrop-filter: blur(12px);
+}
+
+.booking-intent-strip p {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+}
+
+.booking-intent-strip span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.booking-intent-strip div {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.booking-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.booking-modal[hidden] {
+  display: none;
+}
+
+.booking-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 18, 0.62);
+  backdrop-filter: blur(8px);
+}
+
+.booking-modal-panel {
+  position: relative;
+  z-index: 1;
+  overflow: auto;
+  width: min(760px, 100%);
+  max-height: calc(100vh - 36px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 26px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
+  animation: quick-panel-in 220ms ease;
+}
+
+.booking-modal-open {
+  overflow: hidden;
+}
+
+.booking-modal-close {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+  padding: 7px 10px;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.booking-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.booking-choice-grid a {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #f7f9fb;
+  padding: 13px;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.booking-choice-grid a:hover {
+  border-color: var(--teal);
+  background: #edf6f5;
+  transform: translateY(-1px);
+}
+
+.booking-choice-grid span,
+.booking-modal-email {
+  color: var(--muted);
+}
+
+.popup-booking-form {
+  display: grid;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #f7f9fb;
+  padding: 16px;
+}
+
+.form-grid.compact {
+  gap: 10px;
+}
+
+.form-grid.compact textarea {
+  min-height: 94px;
 }
 
 .calculator-result {
@@ -1460,6 +1629,127 @@ tr:last-child td {
   box-shadow: 0 22px 54px rgba(21, 23, 26, 0.16);
 }
 
+.intent-map {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.intent-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 210px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 12px 30px rgba(21, 23, 26, 0.08);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.intent-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--teal), var(--blue), var(--amber));
+}
+
+.intent-card:hover {
+  transform: translateY(-3px);
+  border-color: #b8c9d4;
+  box-shadow: 0 18px 44px rgba(21, 23, 26, 0.12);
+}
+
+.intent-card span,
+.case-meta-grid span {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: 999px;
+  background: #edf6f5;
+  color: var(--teal-dark);
+  padding: 5px 9px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.intent-card h3 {
+  margin: 14px 0 0;
+  font-size: 1.1rem;
+}
+
+.intent-card p {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.blueprint-card ol {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0 0;
+  padding-left: 22px;
+  color: #344150;
+  font-weight: 700;
+}
+
+.price-card.compact {
+  padding: 20px;
+}
+
+.price-card.compact .price span {
+  font-size: 1.85rem;
+}
+
+.faq-list {
+  display: grid;
+  gap: 12px;
+}
+
+.case-study-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(260px, 0.42fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.case-study-hero img {
+  width: 100%;
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+  transition: transform 420ms ease, box-shadow 420ms ease;
+}
+
+.case-study-hero:hover img {
+  transform: translateY(-3px) scale(1.015);
+  box-shadow: 0 22px 54px rgba(21, 23, 26, 0.16);
+}
+
+.case-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.case-meta-grid article {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 16px;
+}
+
+.case-meta-grid strong {
+  font-size: 1.05rem;
+}
+
+.case-card {
+  min-height: 260px;
+}
+
 @keyframes faq-open {
   from {
     opacity: 0;
@@ -1683,6 +1973,10 @@ tr:last-child td {
 
   .section-head.split,
   .service-band,
+  .intent-map,
+  .case-study-hero,
+  .case-meta-grid,
+  .booking-choice-grid,
   .grid.two,
   .grid.three,
   .grid.four,
@@ -1770,6 +2064,32 @@ tr:last-child td {
   .quick-tools {
     right: 12px;
     bottom: 88px;
+  }
+
+  .booking-intent-strip {
+    display: none;
+  }
+
+  .booking-nudge {
+    left: 12px;
+    right: auto;
+    bottom: 88px;
+  }
+
+  .booking-nudge-button {
+    min-height: 52px;
+    padding: 8px 12px;
+  }
+
+  .booking-modal {
+    align-items: end;
+    padding: 10px;
+  }
+
+  .booking-modal-panel {
+    width: 100%;
+    max-height: calc(100vh - 20px);
+    padding: 22px 16px 16px;
   }
 
   .quick-tools-panel {

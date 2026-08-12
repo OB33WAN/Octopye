@@ -13,24 +13,168 @@
   <meta property="og:description" content="Clear prices for static websites, app design, SEO and hosting support." />
   <meta property="og:image" content="https://octopye.com/images/og-image.png" />
   <title>Web Design and App Design Pricing | Octopye</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "OfferCatalog",
-    "name": "Octopye Digital Designs pricing",
-    "url": "https://octopye.com/packages",
-    "itemListElement": [
-      { "@type": "Offer", "name": "Free Website Audit", "price": "0", "priceCurrency": "GBP" },
-      { "@type": "Offer", "name": "HTML CSS JS Landing Page", "price": "249", "priceCurrency": "GBP" },
-      { "@type": "Offer", "name": "Static Small Business Website", "price": "599", "priceCurrency": "GBP" },
-      { "@type": "Offer", "name": "Website Redesign Sprint", "price": "399", "priceCurrency": "GBP" },
-      { "@type": "Offer", "name": "App Design Prototype", "price": "799", "priceCurrency": "GBP" },
-      { "@type": "Offer", "name": "Website Care and Hosting", "price": "49", "priceCurrency": "GBP" },
-      { "@type": "Offer", "name": "SEO Foundations", "price": "149", "priceCurrency": "GBP" }
-    ]
-  }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
+      "@id": "https://octopye.com/#organization",
+      "name": "Octopye Digital Designs",
+      "alternateName": "Octopye",
+      "url": "https://octopye.com/",
+      "logo": "https://octopye.com/images/octopye-logo-icon-512.webp",
+      "image": "https://octopye.com/images/og-image.png",
+      "email": "designs@octopye.com",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "designs@octopye.com",
+        "contactType": "sales",
+        "availableLanguage": "en-GB"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United Kingdom"
+      },
+      "knowsAbout": [
+        "HTML website design",
+        "CSS website design",
+        "JavaScript website design",
+        "Static websites",
+        "App design",
+        "SEO foundations",
+        "Conversion rate optimisation",
+        "Website hosting",
+        "Lead generation websites"
+      ],
+      "priceRange": "GBP 0-799+",
+      "description": "Octopye Digital Designs builds HTML, CSS and JavaScript websites, app prototypes, SEO foundations, hosting support and conversion-focused lead capture for small businesses."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://octopye.com/#website",
+      "name": "Octopye Digital Designs",
+      "url": "https://octopye.com/",
+      "publisher": {
+        "@id": "https://octopye.com/#organization"
+      },
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://octopye.com/packages#webpage",
+      "url": "https://octopye.com/packages",
+      "name": "Web Design and App Design Pricing | Octopye",
+      "description": "Octopye Digital Designs pricing for HTML CSS JS websites, app design, SEO, hosting, forms and tracking. Website pages from GBP 249 and static sites from GBP 599.",
+      "isPartOf": {
+        "@id": "https://octopye.com/#website"
+      },
+      "publisher": {
+        "@id": "https://octopye.com/#organization"
+      },
+      "inLanguage": "en-GB",
+      "dateModified": "2026-08-12",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://octopye.com/images/og-image.png"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://octopye.com/packages#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://octopye.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Pricing",
+          "item": "https://octopye.com/packages"
+        }
+      ]
+    },
+    {
+      "@type": "OfferCatalog",
+      "@id": "https://octopye.com/packages#offers",
+      "name": "Octopye website, app and SEO packages",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Free Website Audit",
+          "price": "0",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://octopye.com/estimate",
+          "description": "Free website audit and estimate tools."
+        },
+        {
+          "@type": "Offer",
+          "name": "HTML CSS JS Landing Page",
+          "price": "249",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://octopye.com/landing-page-design",
+          "description": "A focused landing page for one service or campaign."
+        },
+        {
+          "@type": "Offer",
+          "name": "Static Small Business Website",
+          "price": "599",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://octopye.com/small-business-websites",
+          "description": "A fast static website with pages, forms and SEO foundations."
+        },
+        {
+          "@type": "Offer",
+          "name": "Website Redesign Sprint",
+          "price": "399",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://octopye.com/website-redesign",
+          "description": "A focused redesign sprint for an existing website."
+        },
+        {
+          "@type": "Offer",
+          "name": "App Design Prototype",
+          "price": "799",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://octopye.com/app-design",
+          "description": "App screens, flows and prototype direction."
+        },
+        {
+          "@type": "Offer",
+          "name": "Website Care and Hosting",
+          "price": "49",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://octopye.com/website-care",
+          "description": "Hosting support, checks and small updates."
+        },
+        {
+          "@type": "Offer",
+          "name": "SEO Foundations",
+          "price": "149",
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://octopye.com/seo",
+          "description": "Technical, content and internal-link SEO foundations."
+        }
+      ]
+    }
+  ]
+}
   </script>
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -38,8 +182,8 @@
     <div class="container header-wrap">
       <a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a>
       <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button>
-      <nav class="main-nav" aria-label="Primary navigation"><a href="web-design.html">Web Design</a><a href="app-design.html">App Design</a><a href="seo.html">SEO</a><a href="industries.html">Industries</a><a href="website-care.html">Hosting</a><a href="estimate.html">Tools</a><a href="packages.html">Pricing</a><a href="booking.html">Contact</a></nav>
-      <a class="button header-cta" href="estimate.html#audit-estimator-form">Run tools</a>
+      <nav class="main-nav" aria-label="Primary navigation"><a href="web-design.html">Web Design</a><a href="app-design.html">App Design</a><a href="seo.html">SEO</a><a href="industries.html">Industries</a><a href="website-care.html">Hosting</a><a href="estimate.html">Tools</a><a href="packages.html">Pricing</a><a href="booking.html">Book</a></nav>
+      <a class="button header-cta" href="booking.html#booking-form">Book free audit</a>
     </div>
   </header>
   <main id="main">
@@ -96,7 +240,7 @@
       </div>
     </section>
   </main>
-  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a><p class="muted">Email designs@octopye.com for direct enquiries.</p></div><nav class="footer-links" aria-label="Footer navigation"><a href="packages.html">Pricing</a><a href="estimate.html">Tools</a><a href="industries.html">Industries</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="sitemap.xml">Sitemap</a></nav></div></footer>
+  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand" href="index.html"><img class="brand-logo" src="images/octopye-transparent.webp" alt="Octopye logo" /><span class="brand-copy"><strong>Octopye Digital Designs</strong><small>HTML, CSS, JS websites and apps</small></span></a><p class="muted">Email designs@octopye.com for direct enquiries.</p></div><nav class="footer-links" aria-label="Footer navigation"><a href="packages.html">Pricing</a><a href="booking.html">Book</a><a href="estimate.html">Tools</a><a href="organic-google-reach.html">Organic Growth</a><a href="industries.html">Industries</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="sitemap.xml">Sitemap</a></nav></div></footer>
   <div class="sticky-mobile-cta"><a class="button secondary" href="web-design.html">Web design</a><a class="button" href="booking.html#booking-form">Free audit</a></div>
   <script src="script.js" defer></script>
 </body>

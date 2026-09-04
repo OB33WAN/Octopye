@@ -3,7 +3,7 @@
 Octopye Digital Designs builds affordable HTML, CSS and JavaScript websites for small businesses. App design is the second core service, with SEO, hosting, forms, tracking and care available as supporting services.
 
 Core offers:
-- Website audit tools and guided instant estimator: https://octopye.com/estimate
+- Guided website and app estimator: https://octopye.com/estimate
 - Organic Google reach plan: https://octopye.com/organic-google-reach
 - Free website conversion audit.
 - HTML/CSS/JS landing page design from GBP 249 setup plus optional GBP 49/month support.

@@ -42,4 +42,4 @@ Weekly organic routine:
 - Check Search Console impressions and clicks.
 - Improve pages with impressions but weak clicks.
 - Add one proof-led update, case study note or buyer-intent page.
-- Strengthen internal links to the main web design, pricing, tools and project pages.
+- Strengthen internal links to the main web design, pricing, estimator and project pages.

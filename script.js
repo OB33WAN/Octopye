@@ -36,7 +36,7 @@
   if (header && !document.querySelector(".site-ticker")) {
     const ticker = document.createElement("div");
     ticker.className = "site-ticker";
-    ticker.innerHTML = '<div><span>HTML/CSS/JS websites from GBP 249</span><span>Static business sites from GBP 599</span><span>App prototypes from GBP 799</span><span>SEO foundations from GBP 149/mo</span><span>Instant estimator in Tools</span><span>HTML/CSS/JS websites from GBP 249</span><span>Static business sites from GBP 599</span><span>App prototypes from GBP 799</span><span>SEO foundations from GBP 149/mo</span><span>Instant estimator in Tools</span></div>';
+    ticker.innerHTML = '<div><span>HTML/CSS/JS websites from GBP 249</span><span>Static business sites from GBP 599</span><span>App prototypes from GBP 799</span><span>SEO foundations from GBP 149/mo</span><span>Instant estimator available</span><span>Book a free human audit</span><span>HTML/CSS/JS websites from GBP 249</span><span>Static business sites from GBP 599</span><span>App prototypes from GBP 799</span><span>SEO foundations from GBP 149/mo</span><span>Instant estimator available</span><span>Book a free human audit</span></div>';
     header.insertAdjacentElement("afterend", ticker);
   }
 
@@ -45,21 +45,55 @@
     const showcase = document.createElement("aside");
     showcase.className = "hero-showcase";
     showcase.setAttribute("aria-label", "Live Octopye build preview");
-    showcase.innerHTML = '<div class="showcase-window"><div class="showcase-top"><img src="images/octopye-logo-icon-180.webp" alt="" /><span>Live build preview</span></div><div class="showcase-screen"><img src="images/cms_development_interface-BkFef1Xl.webp" alt="Website build interface preview" /><div class="showcase-scan"></div></div><div class="showcase-steps"><span class="is-active">Offer</span><span>SEO</span><span>Speed</span><span>Enquiry</span></div><div class="showcase-bars"><i style="--bar:92%"></i><i style="--bar:78%"></i><i style="--bar:86%"></i></div></div>';
+    showcase.innerHTML = '<div class="showcase-window light-preview"><div class="showcase-top"><img src="images/octopye-logo-icon-180.webp" alt="" /><span>Website launch plan</span></div><div class="console-grid"><div class="console-copy"><span>Primary page</span><strong>HTML/CSS/JS build</strong><i></i><i></i><i></i></div><div class="conversion-meter"><strong>Book</strong><span>Free audit</span></div></div><div class="signal-stack"><span>SEO route mapped</span><span>Pricing visible</span><span>Form ready</span><span>Proof linked</span></div><div class="showcase-steps"><span class="is-active">Offer</span><span>Pages</span><span>Proof</span><span>Enquiry</span></div><div class="showcase-bars"><i style="--bar:92%"></i><i style="--bar:84%"></i><i style="--bar:88%"></i></div></div>';
     hero.append(showcase);
+    const preview = showcase.querySelector(".light-preview");
+    if (preview && !reduceMotion.matches && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      let previewFrame = 0;
+      hero.addEventListener("pointermove", (event) => {
+        window.cancelAnimationFrame(previewFrame);
+        previewFrame = window.requestAnimationFrame(() => {
+          const rect = hero.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) - 0.5;
+          const y = ((event.clientY - rect.top) / rect.height) - 0.5;
+          preview.style.setProperty("--preview-x", `${x * 18}px`);
+          preview.style.setProperty("--preview-y", `${y * 12}px`);
+          preview.style.setProperty("--preview-rx", `${y * -2.4}deg`);
+          preview.style.setProperty("--preview-ry", `${x * 3.2}deg`);
+        });
+      });
+      hero.addEventListener("pointerleave", () => {
+        window.cancelAnimationFrame(previewFrame);
+        preview.style.setProperty("--preview-x", "0px");
+        preview.style.setProperty("--preview-y", "0px");
+        preview.style.setProperty("--preview-rx", "0deg");
+        preview.style.setProperty("--preview-ry", "0deg");
+      });
+    }
     if (!reduceMotion.matches) {
       const showcaseSteps = Array.from(showcase.querySelectorAll(".showcase-steps span"));
+      const signalNodes = Array.from(showcase.querySelectorAll(".signal-stack span"));
+      const barNodes = Array.from(showcase.querySelectorAll(".showcase-bars i"));
       let showcaseIndex = 0;
-      window.setInterval(() => {
+      const advanceShowcase = () => {
         showcaseIndex = (showcaseIndex + 1) % showcaseSteps.length;
         showcaseSteps.forEach((step, index) => {
           step.classList.toggle("is-active", index === showcaseIndex);
         });
-      }, 1600);
+        signalNodes.forEach((signal, index) => {
+          signal.classList.toggle("is-signal-live", index === showcaseIndex);
+        });
+        barNodes.forEach((bar, index) => {
+          bar.classList.toggle("is-bar-live", index === showcaseIndex % barNodes.length);
+        });
+      };
+      advanceShowcase();
+      window.setInterval(advanceShowcase, 1600);
     }
   }
 
   const routeName = (window.location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "") || "index";
+  body.classList.add(`route-${routeName}`);
   const pageTitle = (document.querySelector("h1") || document.querySelector("title") || {}).textContent || "Octopye enquiry";
   const suggestedPackage = (() => {
     if (/app|project-(seo-it|octopass|cyber|family|allergen|quit|safe)/.test(routeName)) return "App Design Prototype";
@@ -105,7 +139,7 @@
 
   const quickTools = document.createElement("aside");
   quickTools.className = "quick-tools";
-  quickTools.innerHTML = '<button class="quick-tools-toggle" type="button" aria-expanded="false"><span>Tools</span></button><div class="quick-tools-panel" hidden><a href="booking.html?package=Free%20Website%20Audit#booking-form">Book free audit</a><a href="estimate.html#audit-estimator-form">Instant estimator</a><a href="packages.html">Pricing</a><a href="projects.html">Project proof</a><a href="organic-google-reach.html">Organic growth</a></div>';
+  quickTools.innerHTML = '<button class="quick-tools-toggle" type="button" aria-expanded="false"><span>Book</span></button><div class="quick-tools-panel" hidden><a href="booking.html?package=Free%20Website%20Audit#booking-form">Book free audit</a><a href="estimate.html#audit-estimator-form">Instant estimator</a><a href="packages.html">Pricing</a><a href="projects.html">Project proof</a><a href="organic-google-reach.html">Organic growth</a></div>';
   document.body.append(quickTools);
   const quickToggle = quickTools.querySelector(".quick-tools-toggle");
   const quickPanel = quickTools.querySelector(".quick-tools-panel");
@@ -114,6 +148,9 @@
     quickPanel.hidden = !isOpen;
     quickTools.classList.toggle("is-open", isOpen);
     quickToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+  quickTools.querySelectorAll(".quick-tools-panel a").forEach((link, index) => {
+    link.style.setProperty("--quick-delay", `${index * 45}ms`);
   });
 
   const bookingNudge = document.createElement("aside");
@@ -166,11 +203,11 @@
     }
   });
   document.addEventListener("mousemove", (event) => {
-    if (event.clientY <= 8 && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    if (event.clientY <= 8 && window.scrollY > 260 && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       openBookingPopup(false);
     }
   });
-  window.setTimeout(() => openBookingPopup(false), 14000);
+  window.setTimeout(() => openBookingPopup(false), 26000);
 
   const progress = document.createElement("span");
   progress.className = "scroll-progress";
@@ -182,7 +219,7 @@
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const percent = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
     progress.style.width = `${percent}%`;
-    if (!scrollPrompted && percent > 42) {
+    if (!scrollPrompted && percent > 68) {
       scrollPrompted = true;
       openBookingPopup(false);
     }
@@ -268,6 +305,14 @@
     bindButtonPress(button);
   });
 
+  const flashElement = (element, className) => {
+    if (!element || reduceMotion.matches) return;
+    element.classList.remove(className);
+    void element.offsetWidth;
+    element.classList.add(className);
+    window.setTimeout(() => element.classList.remove(className), 620);
+  };
+
   const motionSurfaces = document.querySelectorAll(".card, .price-card, .work-card, .step, .faq-item, .form-panel, .calculator-result, .interactive-panel, .filter-panel");
   motionSurfaces.forEach((surface) => {
     surface.classList.add("motion-surface");
@@ -294,6 +339,26 @@
     });
   });
 
+  const priceCards = Array.from(document.querySelectorAll(".price-card"));
+  if (priceCards.length) {
+    const selectPriceCard = (card) => {
+      priceCards.forEach((item) => {
+        item.classList.toggle("is-selected-price", item === card);
+      });
+    };
+    selectPriceCard(document.querySelector(".price-card.featured") || priceCards[0]);
+    priceCards.forEach((card) => {
+      card.addEventListener("pointerenter", () => selectPriceCard(card));
+      card.addEventListener("focusin", () => selectPriceCard(card));
+      card.addEventListener("click", (event) => {
+        selectPriceCard(card);
+        if (!event.target.closest("a, button")) {
+          flashElement(card, "is-card-pulse");
+        }
+      });
+    });
+  }
+
   const sections = Array.from(document.querySelectorAll("main > section"));
   if (sections.length > 3) {
     const sectionRail = document.createElement("nav");
@@ -318,6 +383,9 @@
       const railObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            sections.forEach((section) => {
+              section.classList.toggle("is-current", section === entry.target);
+            });
             railLinks.forEach((link) => {
               link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
             });
@@ -328,18 +396,55 @@
     }
   }
 
-  const projectFilters = document.querySelectorAll("[data-project-filter]");
-  const projectCards = document.querySelectorAll("[data-project-card]");
-  projectFilters.forEach((button) => {
-    button.addEventListener("click", () => {
-      const filter = button.dataset.projectFilter;
-      projectFilters.forEach((item) => item.classList.toggle("is-active", item === button));
+  const processSteps = Array.from(document.querySelectorAll(".process .step"));
+  if (processSteps.length && !reduceMotion.matches) {
+    let activeStep = 0;
+    processSteps[activeStep].classList.add("is-active-step");
+    window.setInterval(() => {
+      activeStep = (activeStep + 1) % processSteps.length;
+      processSteps.forEach((step, index) => {
+        step.classList.toggle("is-active-step", index === activeStep);
+      });
+    }, 2200);
+  }
+
+  const projectFilters = Array.from(document.querySelectorAll("[data-project-filter]"));
+  const projectCards = Array.from(document.querySelectorAll("[data-project-card]"));
+  if (projectFilters.length && projectCards.length) {
+    const filterHost = projectFilters[0].closest(".filter-bar") || projectFilters[0].parentElement;
+    const filterCount = document.createElement("p");
+    filterCount.className = "filter-result-count";
+    filterCount.setAttribute("aria-live", "polite");
+    if (filterHost) {
+      filterHost.insertAdjacentElement("afterend", filterCount);
+    }
+    const updateProjectCount = (filter) => {
+      let visible = 0;
       projectCards.forEach((card) => {
         const type = card.dataset.type || "";
-        card.hidden = filter !== "all" && !type.includes(filter);
+        const isVisible = filter === "all" || type.includes(filter);
+        card.hidden = !isVisible;
+        card.classList.toggle("is-filtered-in", isVisible);
+        if (isVisible) visible += 1;
+      });
+      filterCount.textContent = `${visible} project${visible === 1 ? "" : "s"} shown.`;
+    };
+    projectFilters.forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
+      button.addEventListener("click", () => {
+        const filter = button.dataset.projectFilter;
+        projectFilters.forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+        flashElement(button, "is-choice-flash");
+        updateProjectCount(filter);
       });
     });
-  });
+    const activeProjectFilter = projectFilters.find((button) => button.classList.contains("is-active")) || projectFilters[0];
+    updateProjectCount(activeProjectFilter.dataset.projectFilter || "all");
+  }
 
   const industrySearch = document.querySelector("#industry-search");
   const industryCards = document.querySelectorAll("[data-industry-card]");
@@ -389,14 +494,21 @@
   };
 
   pathChoices.forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
     button.addEventListener("click", () => {
       const content = routeContent[button.dataset.pathChoice] || routeContent.website;
-      pathChoices.forEach((item) => item.classList.toggle("is-active", item === button));
+      pathChoices.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle("is-active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+      flashElement(button, "is-choice-flash");
       if (pathOutput) {
         pathOutput.classList.remove("is-swapping");
         void pathOutput.offsetWidth;
         pathOutput.classList.add("is-swapping");
         pathOutput.innerHTML = `<span>Recommended first step</span><strong>${content.title}</strong><p class="muted">${content.copy}</p><div class="hero-actions"><a class="button" href="${content.primary[1]}">${content.primary[0]}</a><a class="button secondary" href="${content.secondary[1]}">${content.secondary[0]}</a></div>`;
+        flashElement(pathOutput, "is-output-pulse");
         pathOutput.querySelectorAll(".button").forEach((newButton) => bindButtonPress(newButton));
       }
     });
@@ -426,6 +538,8 @@
     panel.hidden = index !== 0;
     trigger.addEventListener("click", () => {
       const isOpen = item.classList.toggle("is-open");
+      item.classList.add("is-opening");
+      window.setTimeout(() => item.classList.remove("is-opening"), 360);
       trigger.setAttribute("aria-expanded", String(isOpen));
       panel.hidden = !isOpen;
     });
@@ -554,13 +668,36 @@
     const bookingLink = document.querySelector("#audit-booking-link");
     const copyButton = document.querySelector("#copy-audit-summary");
     const copyStatus = document.querySelector("#copy-status");
-    const auditEndpoint = window.OCTOPYE_AUDIT_ENDPOINT || (document.querySelector("meta[name='octopye-audit-endpoint']") || {}).content || "";
     let wizardIndex = 0;
     let lastSummary = "";
     let lastAuditContext = null;
+    let wizardMarkers = [];
+
+    if (wizardSteps.length) {
+      const wizardProgress = auditForm.querySelector(".wizard-progress");
+      const markerWrap = document.createElement("div");
+      markerWrap.className = "wizard-markers";
+      wizardMarkers = wizardSteps.map((step, index) => {
+        const marker = document.createElement("button");
+        marker.type = "button";
+        marker.className = "wizard-marker";
+        marker.setAttribute("aria-label", `Go to estimator step ${index + 1}`);
+        marker.addEventListener("click", () => {
+          if (index <= wizardIndex || validateWizardStep()) {
+            wizardIndex = index;
+            updateWizard();
+          }
+        });
+        markerWrap.append(marker);
+        return marker;
+      });
+      if (wizardProgress) {
+        wizardProgress.append(markerWrap);
+      }
+    }
 
     const platformLabels = {
-      auto: "Auto-detect",
+      auto: "Not sure yet",
       static: "Static HTML/CSS/JS",
       wordpress: "WordPress",
       react: "React or SPA",
@@ -639,7 +776,7 @@
         }
       });
       if (runAuditButton) {
-        runAuditButton.textContent = isBusy ? "Running audit..." : "Run audit and estimate";
+        runAuditButton.textContent = isBusy ? "Generating estimate..." : "Generate detailed estimate";
       }
     };
 
@@ -647,6 +784,8 @@
       if (!wizardSteps.length) return;
       wizardSteps.forEach((step, index) => {
         step.hidden = index !== wizardIndex;
+        step.classList.toggle("is-current-step", index === wizardIndex);
+        step.classList.toggle("is-complete-step", index < wizardIndex);
       });
       const isFirst = wizardIndex === 0;
       const isLast = wizardIndex === wizardSteps.length - 1;
@@ -668,6 +807,12 @@
       if (wizardProgressBar) {
         wizardProgressBar.style.width = `${((wizardIndex + 1) / wizardSteps.length) * 100}%`;
       }
+      wizardMarkers.forEach((marker, index) => {
+        marker.classList.toggle("is-active", index === wizardIndex);
+        marker.classList.toggle("is-complete", index < wizardIndex);
+        marker.setAttribute("aria-current", index === wizardIndex ? "step" : "false");
+      });
+      flashElement(wizardSteps[wizardIndex], "is-card-pulse");
     };
 
     const validateWizardStep = () => {
@@ -699,7 +844,7 @@
         return "";
       }
       if (!value) {
-        throw new Error("Add a website URL before running the audit.");
+        throw new Error("Add a website URL or leave it blank and use the quick estimate.");
       }
       if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) {
         value = `https://${value}`;
@@ -723,82 +868,6 @@
       support: supportInput ? supportInput.value : "none",
       addons: Array.from(auditForm.querySelectorAll("[name='addon']:checked")).map((field) => field.value)
     });
-
-    const fetchAuditEndpoint = async (url) => {
-      if (!auditEndpoint) return null;
-      const endpoint = new URL(auditEndpoint, window.location.href);
-      endpoint.searchParams.set("url", url);
-      const response = await fetch(endpoint.toString(), { headers: { Accept: "application/json" } });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok || payload.error) {
-        throw new Error(payload.error || "Server audit route failed.");
-      }
-      const audit = payload.audit || payload;
-      if (!audit.mobile && !audit.desktop && !audit.basic) {
-        throw new Error("Server audit route returned no usable data.");
-      }
-      return {
-        mobile: audit.mobile || null,
-        desktop: audit.desktop || null,
-        basic: audit.basic || null,
-        partial: Boolean(audit.partial || (!audit.mobile || !audit.desktop)),
-        error: audit.error || (!audit.mobile || !audit.desktop ? "Rendered scores unavailable; basic server fetch completed." : ""),
-        source: "server audit worker"
-      };
-    };
-
-    const fetchPageSpeed = async (url, strategy) => {
-      const controller = new AbortController();
-      const timer = window.setTimeout(() => controller.abort(), 45000);
-      const endpoint = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
-      endpoint.searchParams.set("url", url);
-      endpoint.searchParams.set("strategy", strategy);
-      ["performance", "accessibility", "best-practices", "seo"].forEach((category) => {
-        endpoint.searchParams.append("category", category);
-      });
-
-      try {
-        const response = await fetch(endpoint.toString(), { signal: controller.signal });
-        const payload = await response.json().catch(() => ({}));
-        if (!response.ok || payload.error) {
-          throw new Error(payload.error && payload.error.message ? payload.error.message : "Scan failed.");
-        }
-        return payload.lighthouseResult;
-      } finally {
-        window.clearTimeout(timer);
-      }
-    };
-
-    const runRenderedAudit = async (url) => {
-      let serverError = "";
-      try {
-        const serverAudit = await fetchAuditEndpoint(url);
-        if (serverAudit) {
-          return serverAudit;
-        }
-      } catch (error) {
-        serverError = error.message || "Server audit route failed.";
-      }
-
-      const [mobile, desktop] = await Promise.allSettled([
-        fetchPageSpeed(url, "mobile"),
-        fetchPageSpeed(url, "desktop")
-      ]);
-      const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
-      const desktopResult = desktop.status === "fulfilled" ? desktop.value : null;
-      if (!mobileResult && !desktopResult) {
-        const reason = mobile.status === "rejected" ? mobile.reason.message : "The scan was blocked.";
-        throw new Error(serverError ? `${serverError} Browser audit also failed: ${reason}` : reason || "The scan was blocked.");
-      }
-      return {
-        mobile: mobileResult,
-        desktop: desktopResult,
-        basic: null,
-        partial: !mobileResult || !desktopResult,
-        error: mobile.status === "rejected" ? mobile.reason.message : desktop.status === "rejected" ? desktop.reason.message : "",
-        source: "browser PageSpeed check"
-      };
-    };
 
     const scoreFrom = (result, category) => {
       const categoryData = result && result.categories ? result.categories[category] : null;
@@ -846,12 +915,12 @@
         return { key: "react", label: platformLabels.react, source: "Detected from rendered JavaScript assets" };
       }
       if (audit && (audit.mobile || audit.desktop)) {
-        return { key: "static", label: platformLabels.static, source: "No CMS or SPA signal found in the public scan" };
+        return { key: "static", label: platformLabels.static, source: "No CMS or SPA signal selected" };
       }
       if (audit && audit.basic) {
-        return { key: "static", label: platformLabels.static, source: "Basic server fetch returned no CMS or SPA signal" };
+        return { key: "static", label: platformLabels.static, source: "No CMS or SPA signal selected" };
       }
-      return { key: "unknown", label: platformLabels.unknown, source: "Manual estimate only" };
+      return { key: "unknown", label: platformLabels.unknown, source: "Guided estimate" };
     };
 
     const scoreClass = (value) => {
@@ -903,7 +972,7 @@
       if (platformKey === "react") {
         estimate.min += goal === "app" ? 0 : 300;
         estimate.max += goal === "app" ? 0 : 900;
-        estimate.reasons.push("Rendered SEO and JavaScript performance checks");
+        estimate.reasons.push("SPA route, metadata and JavaScript performance planning");
       }
       if (platformKey === "builder") {
         estimate.min += 200;
@@ -1081,7 +1150,7 @@
       const worstPerf = [mobilePerf, desktopPerf].filter((value) => value !== null).sort((a, b) => a - b)[0];
 
       if (blockedMessage) {
-        priorities.push("Automated scan was blocked or unavailable, so use a manual review before final scope.");
+        priorities.push("Use the free human review before final scope so Octopye can confirm the fastest route.");
       }
       if (worstPerf !== undefined && worstPerf < 50) {
         priorities.push("Speed is likely costing enquiries; reduce scripts, heavy images and layout delay first.");
@@ -1113,7 +1182,7 @@
         priorities.push("Make the enquiry path obvious above the fold and track every form or booking click.");
       }
       if (!priorities.length) {
-        priorities.push("Audit looks healthy at top level; focus on offer clarity, page copy and lead capture.");
+        priorities.push("Focus on offer clarity, page copy and lead capture before spending on wider marketing.");
       }
       return priorities;
     };
@@ -1121,7 +1190,7 @@
     const getRecommendations = (inputs, platform, estimate, audit, blockedMessage) => {
       const recommendations = [];
       if (blockedMessage) {
-        recommendations.push("Start with the free manual website audit so Octopye can check what the scanner could not access.");
+        recommendations.push("Start with the free human website review so Octopye can confirm the scope before you pay.");
       }
       recommendations.push(`${estimate.label}: ${formatMoney(estimate.min)} - ${formatMoney(estimate.max)} guide range.`);
       if (estimate.monthlyMin || estimate.monthlyMax) {
@@ -1145,9 +1214,6 @@
       if (inputs.goal === "app" || inputs.addons.includes("app_design")) {
         recommendations.push("App work should begin with a clickable prototype before any build budget is committed.");
       }
-      if (audit && audit.partial) {
-        recommendations.push("Only part of the automated audit returned, so final pricing should include a manual confirmation.");
-      }
       recommendations.push("Send the summary to Octopye for a fixed recommendation before paying for any build.");
       return recommendations;
     };
@@ -1162,20 +1228,20 @@
 
     const buildSummary = (inputs, platform, estimate, priorities, blockedMessage) => {
       const urlLine = inputs.url ? `Website: ${inputs.url}` : "Website: not supplied";
-      const scanLine = blockedMessage ? `Scan status: blocked or unavailable (${blockedMessage})` : "Scan status: automated audit completed";
+      const methodLine = `Estimate method: guided questions${blockedMessage ? ` (${blockedMessage})` : ""}`;
       const monthlyLine = estimate.monthlyMin || estimate.monthlyMax
         ? `Monthly support: ${formatMoney(estimate.monthlyMin)} - ${formatMoney(estimate.monthlyMax)} per month`
         : "Monthly support: not included";
       return [
-        "Octopye audit and estimate summary",
+        "Octopye project estimate summary",
         urlLine,
-        scanLine,
+        methodLine,
         `Business type: ${businessLabels[inputs.businessType] || inputs.businessType}`,
         `Goal: ${goalLabels[inputs.goal] || inputs.goal}`,
         `Budget comfort: ${budgetLabels[inputs.budget] || inputs.budget}`,
         `Timeline: ${urgencyLabels[inputs.urgency] || inputs.urgency}`,
         `Content readiness: ${contentLabels[inputs.content] || inputs.content}`,
-        `Detected setup: ${platform.label} (${platform.source})`,
+        `Selected setup: ${platform.label} (${platform.source})`,
         `Recommended package: ${estimate.label}`,
         `Guide range: ${formatMoney(estimate.min)} - ${formatMoney(estimate.max)}`,
         monthlyLine,
@@ -1207,15 +1273,12 @@
       renderList(recommendationList, recommendations);
 
       if (platformOutput) {
-        const source = audit && audit.source ? ` Scan route: ${audit.source}.` : "";
-        platformOutput.textContent = `${platform.label}. ${platform.source}.${source}`;
+        platformOutput.textContent = `${platform.label}. ${platform.source}.`;
       }
 
       lastSummary = buildSummary(inputs, platform, estimate, priorities, blockedMessage);
       if (auditSummary) {
-        auditSummary.textContent = blockedMessage
-          ? "The automated scan could not complete, so this estimate uses your manual answers and flags the site for review."
-          : "Audit completed. The guide price is based on detected platform signals, Lighthouse-style scores, pages, goals and selected extras.";
+        auditSummary.textContent = "Guided estimate ready. The guide price is based on platform choice, pages, goals, timeline, content readiness and selected extras.";
       }
       updateBookingLink(inputs, estimate);
       lastAuditContext = { inputs, audit, blockedMessage };
@@ -1224,42 +1287,27 @@
     const runManualEstimate = (message) => {
       try {
         const inputs = readAuditInputs(true);
-        renderAuditContext(inputs, null, message || "Manual estimate requested without an automated scan.");
-        setAuditStatus("Manual estimate ready. Add or keep the URL before sending the summary.", "success");
+        renderAuditContext(inputs, null, message || "Generated from guided questions.");
+        setAuditStatus("Estimate ready. You can send it to Octopye for a fixed recommendation.", "success");
       } catch (error) {
         setAuditStatus(error.message, "error");
       }
     };
 
-    auditForm.addEventListener("submit", async (event) => {
+    auditForm.addEventListener("submit", (event) => {
       event.preventDefault();
       if (!auditForm.reportValidity()) return;
-      let inputs;
-      try {
-        inputs = readAuditInputs(false);
-      } catch (error) {
-        setAuditStatus(error.message, "error");
-        return;
-      }
-
       setBusy(true);
-      setAuditStatus("Running rendered mobile and desktop checks. This can take up to a minute...", "");
-
-      try {
-        const audit = await runRenderedAudit(inputs.url);
-        renderAuditContext(inputs, audit, audit.partial ? audit.error || "Only part of the scan returned." : "");
-        setAuditStatus(audit.partial ? "Partial audit ready. Manual confirmation is recommended." : "Audit and estimate ready.", audit.partial ? "" : "success");
-      } catch (error) {
-        renderAuditContext(inputs, null, error.message || "The scan was blocked.");
-        setAuditStatus("Scanner blocked or unavailable. Manual estimate created instead.", "error");
-      } finally {
+      setAuditStatus("Building your estimate from the project details...", "");
+      window.setTimeout(() => {
+        runManualEstimate("Generated from guided questions.");
         setBusy(false);
-      }
+      }, reduceMotion.matches ? 0 : 260);
     });
 
     if (estimateOnlyButton) {
       estimateOnlyButton.addEventListener("click", () => {
-        runManualEstimate("Manual estimate requested without an automated scan.");
+        runManualEstimate("Quick estimate generated from guided questions.");
       });
     }
 
@@ -1278,7 +1326,7 @@
     if (copyButton) {
       copyButton.addEventListener("click", async () => {
         if (!lastSummary) {
-          runManualEstimate("Manual estimate requested before copying.");
+          runManualEstimate("Generated before copying.");
         }
         try {
           if (!lastSummary) {
@@ -1298,7 +1346,7 @@
             area.remove();
           }
           if (copyStatus) {
-            copyStatus.textContent = "Audit summary copied.";
+            copyStatus.textContent = "Estimate summary copied.";
             copyStatus.className = "form-status success";
           }
         } catch (error) {

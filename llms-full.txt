@@ -6,14 +6,14 @@ Primary pages:
 - Home: https://octopye.com/
 - Services: https://octopye.com/services
 - Packages: https://octopye.com/packages
-- Tools, audit and estimate: https://octopye.com/estimate
+- Instant estimator: https://octopye.com/estimate
 - Organic Google reach plan: https://octopye.com/organic-google-reach
 - Industries: https://octopye.com/industries
 - Projects: https://octopye.com/projects
 - Booking: https://octopye.com/booking
 
 Primary offers:
-- Website audit tools and guided instant estimator: a GitHub Pages-compatible question-led estimator plus best-effort public PageSpeed checks for HTML, WordPress, React/SPA, ecommerce, builder and static websites. Automatic scans can be blocked by target sites; the estimator still works without backend code.
+- Guided website and app estimator: a GitHub Pages-compatible question-led estimator for HTML, WordPress, React/SPA, ecommerce, builder and static website projects.
 - Organic Google reach plan: a no-ads plan for Search Console setup, sitemap submission, crawlable internal links, Google Business Profile signals where eligible, real reviews, client backlinks, proof-led case studies and weekly content improvement.
 - Free website conversion audit: review of messaging, page structure, SEO basics, calls to action, and lead capture.
 - HTML/CSS/JS landing page design: from GBP 249 setup.
@@ -26,7 +26,7 @@ Organic and local reach notes:
 - Local reach for a web design business should be built through legitimate Google Business Profile information, real reviews, service descriptions, project photos, client mentions and partner backlinks.
 - Octopye should avoid fake location pages because web design is not limited to physical service areas.
 - Search Console should be used after launch to submit https://octopye.com/sitemap.xml, inspect key URLs, request indexing and improve pages that receive impressions but low clicks.
-- The most important internal targets are the home page, web design page, small business websites page, packages page, estimator/auditor, projects page, industries hub and organic Google reach page.
+- The most important internal targets are the home page, web design page, small business websites page, packages page, estimator, projects page, industries hub and organic Google reach page.
 
 Industry pages:
 - Trade businesses: https://octopye.com/web-design-for-trades

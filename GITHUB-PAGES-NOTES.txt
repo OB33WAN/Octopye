@@ -1,18 +1,3 @@
-Octopye GitHub Pages notes
+Octopye is a static GitHub Pages site.
 
-This site is built to run as a static GitHub Pages site.
-
-What works fully on GitHub Pages:
-- All HTML pages, industry pages and project pages.
-- The guided estimator wizard.
-- Booking form handoff and prefilled audit summaries.
-- Animations, filters, search and interactive route finder.
-- Manifest, favicon and install icons.
-
-Tool decision:
-The old automatic website check has been removed from the live static site because third-party websites can block public scanning from a browser or public audit API.
-
-Current static tool behaviour:
-- The estimator uses guided questions that work on GitHub Pages.
-- The booking link carries the selected package, URL and summary into the enquiry form.
-- A free human conversion audit is still offered as a booking action, without promising an automatic scan.
+Deploy the contents of this folder. No server-side rendering, scanner backend or API secret is required.

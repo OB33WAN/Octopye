@@ -1,11 +1,11 @@
 {
-  "name": "Octopye Digital Designs",
+  "name": "Octopye",
   "short_name": "Octopye",
-  "description": "HTML, CSS and JavaScript websites, app design, SEO, hosting and website support.",
+  "description": "Practical digital systems, websites, automation and software support for UK businesses.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f7f9fb",
-  "theme_color": "#0f766e",
+  "background_color": "#071627",
+  "theme_color": "#071627",
   "icons": [
     {
       "src": "images/octopye-logo-icon-32.webp",

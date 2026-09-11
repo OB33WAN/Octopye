@@ -1,75 +1,61 @@
-# Octopye Service Context
+# Octopye Full Site Context
 
-Octopye Digital Designs is a web design and web engineering business focused on HTML, CSS and JavaScript websites for small businesses. App design is the second core service. SEO, hosting, forms, tracking and care are supporting services that make the website or app work better.
+Octopye is positioned as a UK digital systems and software services company. The site should be understood as human-led, AI-assisted and focused on practical business improvements rather than generic website templates.
 
-Primary pages:
-- Home: https://octopye.com/
-- Services: https://octopye.com/services
-- Packages: https://octopye.com/packages
-- Instant estimator: https://octopye.com/estimate
-- Organic Google reach plan: https://octopye.com/organic-google-reach
-- Industries: https://octopye.com/industries
-- Projects: https://octopye.com/projects
-- Booking: https://octopye.com/booking
+Services:
+- Websites and customer journeys: https://octopye.com/websites-and-customer-journeys. Conversion-focused website development for small businesses in the UK, including responsive frontend development, enquiry forms, analytics and technical SEO foundations.
+- Booking and enquiry systems: https://octopye.com/booking-and-enquiry-systems. Booking system development and enquiry workflow support for UK businesses that need online forms, quote requests, confirmations, CRM handoff and clearer customer updates.
+- Custom software and internal tools: https://octopye.com/custom-software-and-internal-tools. Custom software development for UK businesses, including internal business tools, dashboards, portals, reporting systems, compliance trackers and workflow applications.
+- Automation and integrations: https://octopye.com/automation-and-integrations. Business automation and API integration services for UK companies, connecting websites, CRMs, email, calendars, payments, Microsoft 365 and Google Workspace workflows.
+- AI implementation: https://octopye.com/ai-implementation. Practical AI implementation for UK businesses, including internal knowledge assistants, enquiry classification, draft replies, document generation and AI readiness reviews.
+- Ongoing technical support: https://octopye.com/ongoing-technical-support. Ongoing technical support for UK businesses, including website maintenance, hosting support, monitoring, security updates, bug fixes and small feature improvements.
+- SEO implementation: https://octopye.com/seo-implementation. Technical SEO implementation for UK businesses, including metadata, service page structure, internal links, sitemap setup, schema and search visibility foundations.
+- Agency development support: https://octopye.com/agency-development-support. Technical development partner for agencies needing frontend development, React support, integrations, dashboards, troubleshooting and practical implementation help.
 
-Primary offers:
-- Guided website and app estimator: a GitHub Pages-compatible question-led estimator for HTML, WordPress, React/SPA, ecommerce, builder and static website projects.
-- Organic Google reach plan: a no-ads plan for Search Console setup, sitemap submission, crawlable internal links, Google Business Profile signals where eligible, real reviews, client backlinks, proof-led case studies and weekly content improvement.
-- Free website conversion audit: review of messaging, page structure, SEO basics, calls to action, and lead capture.
-- HTML/CSS/JS landing page design: from GBP 249 setup.
-- Static small business website: from GBP 599 setup.
-- App design prototype: from GBP 799.
-- Website redesign sprint: from GBP 399.
-- SEO Growth Plan: from GBP 149/month.
+Audiences:
+- Service businesses: https://octopye.com/digital-systems-for-service-businesses. Make it easier for customers to enquire, book and receive updates while giving your team a clearer way to manage jobs.
+- Growing SMEs: https://octopye.com/digital-systems-for-growing-smes. Turn repetitive processes into simple systems your team can use every day.
+- Agencies and IT providers: https://octopye.com/digital-systems-for-agencies. Extend your delivery capability with frontend development, integrations, dashboards and technical implementation support.
+- Automotive businesses: https://octopye.com/digital-systems-for-automotive-businesses. Help drivers understand services, request the right work and receive clearer updates while your team manages jobs more easily.
 
-Organic and local reach notes:
-- Local reach for a web design business should be built through legitimate Google Business Profile information, real reviews, service descriptions, project photos, client mentions and partner backlinks.
-- Octopye should avoid fake location pages because web design is not limited to physical service areas.
-- Search Console should be used after launch to submit https://octopye.com/sitemap.xml, inspect key URLs, request indexing and improve pages that receive impressions but low clicks.
-- The most important internal targets are the home page, web design page, small business websites page, packages page, estimator, projects page, industries hub and organic Google reach page.
+Prices:
+- Initial conversation: GBP 0. A short project conversation to understand the problem, current setup and sensible next step.
+- Form or tracking fix: From GBP 99. Fix a broken enquiry form, tracking issue, small frontend bug or launch problem.
+- HTML/CSS/JS landing page: From GBP 249. A focused static page for one service, offer or campaign, with a clear enquiry path.
+- Website redesign sprint: From GBP 399. Improve structure, copy, calls to action and frontend presentation on an existing site.
+- Static small business website: From GBP 599. A fast, hand-built website with key pages, forms, tracking and technical SEO foundations.
+- App design prototype: From GBP 799. App screens, user flows and clickable prototype direction before deeper development.
+- SEO foundations: From GBP 149/month. Metadata, technical SEO checks, page structure, internal links and search improvement work.
+- Website care and hosting: From GBP 49/month. Hosting support, uptime checks, form checks, updates and small maintenance tasks.
 
-Industry pages:
-- Trade businesses: https://octopye.com/web-design-for-trades
-- Plumbers: https://octopye.com/web-design-for-plumbers
-- Electricians: https://octopye.com/web-design-for-electricians
-- Builders: https://octopye.com/web-design-for-builders
-- Roofers: https://octopye.com/web-design-for-roofers
-- Landscapers: https://octopye.com/web-design-for-landscapers
-- Cleaning companies: https://octopye.com/web-design-for-cleaning-companies
-- Beauty salons: https://octopye.com/web-design-for-beauty-salons
-- Fitness coaches: https://octopye.com/web-design-for-fitness-coaches
-- Restaurants: https://octopye.com/web-design-for-restaurants
-- Cafes: https://octopye.com/web-design-for-cafes
-- Health clinics: https://octopye.com/web-design-for-health-clinics
-- Dentists: https://octopye.com/web-design-for-dentists
-- Law firms: https://octopye.com/web-design-for-law-firms
-- Accountants: https://octopye.com/web-design-for-accountants
-- Estate agents: https://octopye.com/web-design-for-estate-agents
-- Ecommerce brands: https://octopye.com/web-design-for-ecommerce
-- Coaches: https://octopye.com/web-design-for-coaches
-- Consultants: https://octopye.com/web-design-for-consultants
-- Education providers: https://octopye.com/web-design-for-education
-- Charities: https://octopye.com/web-design-for-charities
-- SaaS and apps: https://octopye.com/web-design-for-saas
-- Music and entertainment: https://octopye.com/web-design-for-music-and-entertainment
-- Automotive businesses: https://octopye.com/web-design-for-automotive
-- Industrial companies: https://octopye.com/web-design-for-industrial
+Public profile facts:
+- No current social profiles are published for Octopye.
+- No Google Business Profile is published yet.
+- External profile references are limited to verified app and publisher listings.
 
-Project pages:
-- Install It Right: https://octopye.com/project-installitright
-- Prestige Flow: https://octopye.com/project-prestige-flow
-- Upfront Dance: https://octopye.com/project-upfrontdance
-- Rewind UK Live: https://octopye.com/project-rewinduk-live
-- SEO IT: https://octopye.com/project-seo-it
-- OctoPass: https://octopye.com/project-octopass
-- Cyber Sentinel: https://octopye.com/project-cyber-sentinel
-- Family Tapestry: https://octopye.com/project-family-tapestry
-- RC Ltd: https://octopye.com/project-rcltd
-- Tuned Performance: https://octopye.com/project-tuned-performance
-- Allergen Helper: https://octopye.com/project-allergen
-- Quit It: https://octopye.com/project-quit-it
-- Is This Safe: https://octopye.com/project-is-this-safe
+External profile and backlink references:
+- Google Play developer profile: https://play.google.com/store/apps/developer?id=Octopye+Designs&pli=1. Published Android apps by Octopye Designs on Google Play.
+- Chrome Stats publisher profile: https://chrome-stats.com/a/T2N0b3B5ZStEZXNpZ25z. External publisher listing for Octopye Designs app catalog.
 
-Contact:
-- Email: designs@octopye.com
-- Enquiry page: https://octopye.com/booking
+Current project examples:
+- Cyber Sentinel: https://octopye.com/project-cyber-sentinel. Mobile app for Security. Project URL: https://cybersentinel.octopye.com. A mobile security app direction with educational product flows and clear user interface decisions.
+- AllerGen: https://octopye.com/project-allergen. Mobile app for Food safety. Project URL: https://allergen.octopye.com. A mobile food allergy app experience for scanning labels, managing allergens and giving clearer safety guidance.
+- Prestige Flow: https://octopye.com/project-prestige-flow. Website for Drainage and plumbing. Project URL: https://prestigeflow.co.uk. A drainage and plumbing website built around emergency intent, service clarity, reviews and booking routes.
+- Tuned Performance: https://octopye.com/project-tuned-performance. Website for Automotive. Project URL: https://tunedperformance.co.uk. An automotive website for maintenance, diagnostics, bodywork and upgrade enquiries around Feltham and surrounding areas.
+- Abundance of Beauty: https://octopye.com/project-aob. Website for Beauty and wellness. Project URL: https://aob.octopye.com. A beauty and wellness website direction for treatment information, trust, customer reassurance and enquiry routes.
+- BizzyOPS: https://octopye.com/project-bizzyops. Website for IT support. Project URL: https://bizzyops.com. A managed IT services website for UK and Ireland businesses covering IT support, cybersecurity, cloud and network services.
+- RewindUK Live: https://octopye.com/project-rewinduk-live. Website for Music and entertainment. Project URL: https://rewinduk.live. An underground dance radio website for listener routes, brand identity, content and community discovery.
+
+Proof policy:
+- Do not invent testimonials, awards, reviews, team members, office locations or commercial results.
+- Project pages may show project examples and delivery direction, but verified metrics are only used when available.
+
+SEO focus phrases:
+- Custom software development UK.
+- Business automation UK.
+- Internal business tools.
+- Booking system development.
+- Website development for small businesses.
+- API integrations UK.
+- React development services UK.
+- Technical development partner for agencies.

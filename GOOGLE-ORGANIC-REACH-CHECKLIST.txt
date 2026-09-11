@@ -1,45 +1,11 @@
 # Octopye Google Organic Reach Checklist
 
-Publish first:
-- Upload the full static site folder to GitHub Pages.
-- Confirm https://octopye.com/ opens the new site.
-- Confirm https://octopye.com/sitemap.xml lists every HTML page.
-- Confirm https://octopye.com/robots.txt links to the sitemap, llms.txt and llms-full.txt.
-
-Google Search Console:
-- Verify octopye.com as a domain property.
+After publishing:
+- Verify octopye.com in Google Search Console.
 - Submit https://octopye.com/sitemap.xml.
-- Inspect and request indexing for:
-  - https://octopye.com/
-  - https://octopye.com/web-design
-  - https://octopye.com/small-business-websites
-  - https://octopye.com/packages
-  - https://octopye.com/estimate
-  - https://octopye.com/organic-google-reach
-  - https://octopye.com/projects
-  - https://octopye.com/industries
-  - https://octopye.com/web-design-for-trades
-  - https://octopye.com/web-design-for-plumbers
-  - https://octopye.com/web-design-for-electricians
-  - https://octopye.com/web-design-for-beauty-salons
-  - https://octopye.com/web-design-for-accountants
-
-Google Business Profile, if eligible:
-- Use the exact public name: Octopye Digital Designs.
-- Use real business location or service-area settings only.
-- Do not create fake location pages.
-- Add services for website design, app design, SEO, hosting and website care.
-- Add project screenshots, logo, service images and weekly posts.
-- Ask real clients for reviews and reply to each review.
-
-Backlinks and mentions:
-- Ask clients whether a small credit link is acceptable on launched websites.
-- Add Octopye to legitimate business, portfolio and web design directories.
-- Turn each real project into a case study and link it to the service page.
-- Ask partners, suppliers and collaborators for natural mentions where relevant.
-
-Weekly organic routine:
-- Check Search Console impressions and clicks.
-- Improve pages with impressions but weak clicks.
-- Add one proof-led update, case study note or buyer-intent page.
-- Strengthen internal links to the main web design, pricing, estimator and project pages.
+- Inspect and request indexing for the home page, services page, websites page, custom software page, automation page, pricing page, work page and contact page.
+- Do not add Google Business Profile links, LocalBusiness claims or GBP wording until a real profile exists and has been verified.
+- Do not add social profile links unless real current social profiles exist.
+- Current external profile references are the Google Play developer profile and Chrome Stats publisher profile.
+- Add real reviews, real project screenshots and natural client or partner mentions over time.
+- Improve pages that earn impressions but weak clicks.
